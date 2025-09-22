@@ -1,5 +1,4 @@
-# Footy Star v1.0.1 — Skill Set (18 Core)
-
+# Footy Star v1.0.1
 ## 1 Match & Moments Engine
 
 ### 1.1 Nº de moments por jogo

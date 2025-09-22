@@ -1,4 +1,5 @@
-# Contracts
+# Footy Star v1.0.1
+## Contracts
 1) Contratos (definem o salário — ponto)
 
 Cada oferta tem: clubTier (1–4), role (Bench/Rotation/Starter/Key), position (ST/MF/DF), weekly_wage, bonuses, duration=20 semanas.
