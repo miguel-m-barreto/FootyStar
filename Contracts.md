@@ -77,9 +77,8 @@ SPP is unlocked by a **DesireScore** (need + fit + wonderkid + marketing). Defau
 `AuctionPressureMult = 1.00 + 0.10 * (n_bidders - 1)` (cap at **1.30**)
 
 #### 2.7 Hard constraints (reality checks)
-
-- `target_wage ≤ club.max_weekly_wage`
-- `target_wage ≤ club.wage_bill_room`
+- **Bloqueador:** `target_wage ≤ club.max_weekly_wage`
+- **Bloqueador:** `target_wage ≤ club.wage_bill_room`
 
 ---
 

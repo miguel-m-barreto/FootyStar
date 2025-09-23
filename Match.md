@@ -19,9 +19,10 @@
 
 #### Difficulty (D) is continuous
 
-- `D = baseD(type) + Lfac + OppFac + TimeFatigue`
+- `D = baseD(tipo) + OppFac + k_league * (xp_index - 1.0) + TimeFatigue
+- `xp_index` vem do JSON da liga e representa a dificuldade/recompensa relativa da liga (ex.: 0.85/1.00/1.15/1.30).
+- `k_league` controla o impacto do xp_index na dificuldade (default **6**).
 - `baseD` (defaults): Box 50, 1v1 56, Header 54, LongShot 62, ThroughBall 55, Switch 52, EdgeShot 58, StandTackle 56, Interception 54, AerialClear 52.
-- `Lfac = (leagueTier - 2) * 3` ⇒ Tier1: −3, Tier2: 0, Tier3: +3, Tier4: +6.
 - `OppFac = clamp((OppTeamRating - 60) / 2, -10, +15)` (uses opponent’s team rating; MVP: team overall).
 - `TimeFatigue = max(0, (minute - 70)/20) * clamp(15 - 0.1*Stamina, 0, 15)`.
 
@@ -43,8 +44,8 @@
 - Offensive success: **+8 XP** to the primary skill, **+4 XP** to a secondary.
 - Offensive failure: **+3 XP** to the primary.
 - Defensive success: **+6 XP** (Tackling/Interception/Heading accordingly).
-- Then apply: `minFactor * rateFactor * leagueFactor * mmrFactor`.
-- **SP per match** (at the end): `base 5 + 2 per goal + 1 per assist + 1 if MOM`, also multiplied by `minFactor * rateFactor * leagueFactor * mmrFactor`.
+- Then apply: `minFactor * rateFactor * xp_index * mmrFactor`.
+- **SP per match** (at the end): `base 5 + 2 per goal + 1 per assist + 1 if MOM`, also multiplied by `minFactor * rateFactor * xp_index * mmrFactor`.
 
 ### 1.4 Match rating (1–10)
 
@@ -77,7 +78,7 @@ For ST/MF/DF = weighted average of the 18 skills (different weights per role; to
 
 ### Reputation
 
-Goes up if rating > 6.8; goes down if < 6.0 (scaled by `leagueFactor`).
+Goes up if rating > 6.8; goes down if < 6.0 (scaled by `xp_index`).
 
 ### CoachRelation
 
