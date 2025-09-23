@@ -24,12 +24,13 @@ Single pipeline; all knobs are data:
 
 ```
 target_wage = round_to_50(
-  LeagueBasePos[league][position]        // league median per position (weekly)
-  ClubPercentileMult(percentile)         // club’s place in league wage distribution (0..1)
-  PlayerQualityMult(OVR, Rep, Potential) // talent + fame + wonderkid premium
-  RoleMult(role)                         // Bench/Rot/Starter/Key
-  StrategicPriorityMult(SPP)             // how badly the club wants you
-  AuctionPressureMult(n_bidders)         // market competition
+  * LeagueBasePos[league][position]        // league median per position (weekly)
+  * ClubPercentileMult(percentile)         // club’s place in league wage distribution (0..1)
+  * PlayerQualityMult(OVR, Rep, Potential) // talent + fame + wonderkid premium
+  * RoleMult(role)                         // Bench/Rot/Starter/Key
+  * StrategicPriorityMult(SPP)             // how badly the club wants you
+  * AuctionPressureMult(n_bidders)         // market competition
+
 )
 ```
 
@@ -77,8 +78,8 @@ SPP is unlocked by a **DesireScore** (need + fit + wonderkid + marketing). Defau
 `AuctionPressureMult = 1.00 + 0.10 * (n_bidders - 1)` (cap at **1.30**)
 
 #### 2.7 Hard constraints (reality checks)
-- **Bloqueador:** `target_wage ≤ club.max_weekly_wage`
-- **Bloqueador:** `target_wage ≤ club.wage_bill_room`
+- **Blocker:** `target_wage ≤ club.max_weekly_wage`
+- **Blocker:** `target_wage ≤ club.wage_bill_room`
 
 ---
 
