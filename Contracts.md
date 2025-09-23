@@ -25,11 +25,11 @@ Single pipeline; all knobs are data:
 ```
 target_wage = round_to_50(
   LeagueBasePos[league][position]        // league median per position (weekly)
-* ClubPercentileMult(percentile)         // club’s place in league wage distribution (0..1)
-* PlayerQualityMult(OVR, Rep, Potential) // talent + fame + wonderkid premium
-* RoleMult(role)                         // Bench/Rot/Starter/Key
-* StrategicPriorityMult(SPP)             // how badly the club wants you
-* AuctionPressureMult(n_bidders)         // market competition
+  ClubPercentileMult(percentile)         // club’s place in league wage distribution (0..1)
+  PlayerQualityMult(OVR, Rep, Potential) // talent + fame + wonderkid premium
+  RoleMult(role)                         // Bench/Rot/Starter/Key
+  StrategicPriorityMult(SPP)             // how badly the club wants you
+  AuctionPressureMult(n_bidders)         // market competition
 )
 ```
 
