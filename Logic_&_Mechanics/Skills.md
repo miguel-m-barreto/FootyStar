@@ -73,34 +73,34 @@
 
 ### Option 1 - Progress with limits
 
-### Progression & Rewards (hooked to XP/SP/£)
-- **XP cap per level (5→100)**: continuous exponential with anchors:  
+### Progression & Rewards (hooked to XP/SP/$)
+- **XP cap per level (5->100)**: continuous exponential with anchors:  
   `XPcap(L) = round( X0 * (X1 / X0)^((L - 5)/95) )`  
   Recommended: `X0 = 30`, `X1 = 350` (≈ +2.6%/level).
 
-- **Promotion cost (£)**:  
+- **Promotion cost ($)**:  
   `Cost(L) = round( C0 * (C1 / C0)^((L - 5)/95) )`  
-  Recommended: `C0 = £300`, `C1 = £13,000` (≈ +4.0%/level).
+  Recommended: `C0 = $300`, `C1 = $13,000` (≈ +4.0%/level).
 
 - **SP per match** (before multipliers): `base 5 + 2 per goal + 1 per assist + 1 if MOM`.  
   Conversion: **1 SP = 10 XP** (no cap; SP does **not** promote).
 
 #### Multipliers
 - **Minutes:** `minFactor = clamp(min/90, 0.3..1.0)`  
-- **Rating:** `rateFactor = 0.6 + 0.1*rating` (5.0→1.1, 8.0→1.4)  
+- **Rating:** `rateFactor = 0.6 + 0.1*rating` (5.0->1.1, 8.0->1.4)  
 - **League:** `xp_index ∈ {0.85, 1.00, 1.15, 1.30}` - comes from the league JSON and represents the league’s relative difficulty/reward (e.g., 0.85/1.00/1.15/1.30)  
 - **MMR anti-farm:** `1/(1 + 0.015*ΔOVR^2)` (if you play far below your level)
 
 #### Minutes selection (no energy, consistent)
 `Selection Score = 0.6*RoleOVR + 0.2*Reputation + 0.2*CoachRelation (+ injury gates)`  
-Rep ≥ 40 → tends to 90’. Stamina only reduces late-match decay; it’s not “energy”.
+Rep ≥ 40 -> tends to 90’. Stamina only reduces late-match decay; it’s not “energy”.
 
 ---
 
 ### Option 2 - **Banked Progress** (Promotion Queue)
 - When a skill fills its XP bar, it **does not stop**. Extra XP keeps accumulating for subsequent levels of that skill, **without limits**, up to 100.
 - You get a **promotion queue**: `+N levels ready` **plus** partial XP for the next level.
-- Nothing levels up or affects OVR until you **pay**. When you have £, promote one, many, or all at once.
+- Nothing levels up or affects OVR until you **pay**. When you have $, promote one, many, or all at once.
 
 **Per-skill state:**  
 - **Level (L):** 5…100.  
@@ -111,8 +111,8 @@ Rep ≥ 40 → tends to 90’. Stamina only reduces late-match decay; it’s not
 - At **100**: if `VL == 100` and you earn more XP/SP, **convert 50% to SP** (no loss; encourages investing in other skills).
 
 **How XP/SP flows in**  
-- Match XP (moments with multipliers) and SP→XP always advance across the sequence:  
-  `L → L+1 → L+2 → …` (you can “fill” multiple levels in one go; nothing is wasted).  
+- Match XP (moments with multipliers) and SP->XP always advance across the sequence:  
+  `L -> L+1 -> L+2 -> …` (you can “fill” multiple levels in one go; nothing is wasted).  
 - SP remains: **1 SP = 10 XP**, no ceiling. You can fill 100% via SP and bank any number of levels.
 
 **Promotion (pay to apply)**  
@@ -129,16 +129,16 @@ Rep ≥ 40 → tends to 90’. Stamina only reduces late-match decay; it’s not
 **Example**  
 - You’re at **L=5**, `XPcap(5)=30`. After a strong match + SP spend, you inject **380 XP** into the same skill.  
 - It advances across levels as expected, ending with **`QL=9`** and **`QueuedXP=71`** toward **L14**.  
-- With £0 today, you can later pay **9 promotions** in one go; `QueuedXP` remains.
+- With $0 today, you can later pay **9 promotions** in one go; `QueuedXP` remains.
 
 **Impact**  
-- If **Option 2 (Banked Progress)** is active, **remove** the “Overflow → SP 25%” rule from Option 1 to avoid conflicts.  
+- If **Option 2 (Banked Progress)** is active, **remove** the “Overflow -> SP 25%” rule from Option 1 to avoid conflicts.  
 - MMR, league, minutes, rating multipliers stay - they only affect **how fast** you fill the queue, not promotion.  
-- Training = SP→XP efficiency bonus; same queue.  
+- Training = SP->XP efficiency bonus; same queue.  
 - OVR/Selection ignores VL; you must **pay** to apply.
 
 **Risks & safeguards**  
-- Late-game “+20 levels at once”: intentional and controlled by the **cost curve**. If too fast, raise `C1` (e.g., to £16–18k).  
+- Late-game “+20 levels at once”: intentional and controlled by the **cost curve**. If too fast, raise `C1` (e.g., to $16–18k).  
 - Feeling “I’m better but not stronger”: solved by clear UI + one-tap **Promote All**.  
 - At cap 100: extra XP converts to SP at 50%; encourages spreading.
 
@@ -162,33 +162,33 @@ Store all three RoleOVR for selection and contracts, even if OVR is locked to th
 
 ## Translation (PT -> EN) for future UI term mapping
 
-Aceleração → Acceleration  
-Agilidade → Agility  
-Antecipação → Anticipation  
-Bravura → Bravery  
-Cabeceio → Heading  
-Carrinho → Tackling  
-Chuto curto → Finishing  
-Remates curtos → Short Shots  
-Chuto longo → Long Shots  
-Compostura → Composure  
-Concentração → Consistency  
-Controlo → First Touch  
-Criatividade → Vision  
-Determinação → Determination (Work Rate)  
-Domínio de peito → First Touch  
-Drible → Dribbling  
-Flexibilidade → Flexibility  
-Recuperação → Recovery  
-Força – corpo → Body Strength  
-Força – perna → Power (Leg Strength)  
-Liderança → Leadership  
-Marcação → Marking  
-Passe curto → Short Passing  
-Passe longo → Long Passing  
-Posicionamento → Positioning  
-Salto → Jumping (Reach)  
-Velocidade → Sprint Speed  
-Técnica → Technique  
-Vigor → Stamina  
-Pontaria → (split into Finishing / Passing Accuracy)  
+Aceleração -> Acceleration  
+Agilidade -> Agility  
+Antecipação -> Anticipation  
+Bravura -> Bravery  
+Cabeceio -> Heading  
+Carrinho -> Tackling  
+Chuto curto -> Finishing  
+Remates curtos -> Short Shots  
+Chuto longo -> Long Shots  
+Compostura -> Composure  
+Concentração -> Consistency  
+Controlo -> First Touch  
+Criatividade -> Vision  
+Determinação -> Determination (Work Rate)  
+Domínio de peito -> First Touch  
+Drible -> Dribbling  
+Flexibilidade -> Flexibility  
+Recuperação -> Recovery  
+Força – corpo -> Body Strength  
+Força – perna -> Power (Leg Strength)  
+Liderança -> Leadership  
+Marcação -> Marking  
+Passe curto -> Short Passing  
+Passe longo -> Long Passing  
+Posicionamento -> Positioning  
+Salto -> Jumping (Reach)  
+Velocidade -> Sprint Speed  
+Técnica -> Technique  
+Vigor -> Stamina  
+Pontaria -> (split into Finishing / Passing Accuracy)  

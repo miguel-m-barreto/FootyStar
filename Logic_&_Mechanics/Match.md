@@ -1,4 +1,5 @@
 # Footy Star v1.0.1
+
 ## 1. Match & Moments Engine
 
 ### 1.1 Number of moments per match
@@ -54,13 +55,13 @@
 - Then apply: `minFactor * rateFactor * xp_index * mmrFactor`.  
 - **SP per match** (at the end): `base 5 + 2 per goal + 1 per assist + 1 if MOM`, also multiplied by `minFactor * rateFactor * xp_index * mmrFactor`.
 
-### 1.4 Match rating (1–10) with Consistency
+### 1.4 Match rating (1-10) with Consistency
 - Base 6.0.  
 - Positive events: Goal +1.2, Assist +0.8, Key Pass +0.3, Good Switch +0.2, Brave Block +0.2.  
 - Defensive events: Stand Tackle +0.5, Interception +0.4, Aerial Clear +0.3.  
 - Negative events: Clear missed 1v1 −0.4, bad First Touch that kills a play −0.3.  
 - **Consistency reduces volatility** of rating noise: `σ = σ_base * (1 − 0.007*(Consistency − 50))`, clamp `σ ∈ [0.25, 0.50]` with `σ_base = 0.45`.  
-- Clamp final rating **4.5–10.0**. MOM = highest rating; ties broken by offensive contribution.
+- Clamp final rating **4.5-10.0**. MOM = highest rating; ties broken by offensive contribution.
 
 ---
 
@@ -81,23 +82,23 @@ Weekly change:
                + team_lead_bonus
 ```
 - **BaseEvent** = +1 for good training (rating ≥7.0) / −2 for negative events or skipped training.  
-- **Consistency** → improves odds of stable positive relation.  
-- **Determination** → boosts effect of training & effort (up to ±1.5 swing).  
-- **Leadership** → if Leadership ≥ 75, teammates gain +0.1 each (team_lead_bonus).  
+- **Consistency** -> improves odds of stable positive relation.  
+- **Determination** -> boosts effect of training & effort (up to ±1.5 swing).  
+- **Leadership** -> if Leadership ≥ 75, teammates gain +0.1 each (team_lead_bonus).  
 - Clamp total Δ to [−3, +3] per week.
 
 ### Minutes played (unchanged)
 - If `Sel >= 70` -> **90’**.  
-- 60–69 -> **75–85’** (random).  
-- 50–59 -> **45–70’**.  
-- <50 -> **0–30’** (bench).
+- 60-69 -> **75-85’** (random).  
+- 50-59 -> **45-70’**.  
+- <50 -> **0-30’** (bench).
 
 ### RoleOVR
 Weighted average of the skills per role (see **Skills** doc).
 
 ---
 
-## 3. Injuries & knocks (unchanged from v1.0.2)
+## 3. Injuries & knocks
 - Risk uses Bravery (↑), Flexibility (↓).  
 - Downtime reduced by Recovery.  
 - Post-injury: Sel=0 until healed; −1 confidence in return match.

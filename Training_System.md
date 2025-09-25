@@ -1,1 +1,0 @@
-# Footy Star v1.0.1
