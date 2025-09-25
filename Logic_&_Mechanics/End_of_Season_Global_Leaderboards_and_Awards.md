@@ -1,4 +1,5 @@
 # Footy Star v1.0.1
+
 ## Global End‑of‑Season Leaderboards & Awards (cross‑league)
 
 This spec extends the per‑league end‑of‑season system to produce **one global table** and awards aggregating **all leagues** at season close. It is designed to be fair across leagues with different match counts and calendars by using **per‑90 metrics**, **minutes thresholds**, and optional **league prestige weights**.
@@ -9,7 +10,7 @@ This spec extends the per‑league end‑of‑season system to produce **one glo
 
 - **Scope:** league matches only (no cups/continentals in v1.0.1; can be toggled later).
 - **Season year window:** July 1 -> June 30 (European season window). MLS/other leagues whose seasons fall within the window are mapped to the nearest window end.
-- **Trigger:** Run global aggregation **after all configured leagues finish** within the window. If a league ends late, global waits (configurable timeout).a
+- **Trigger:** Run global aggregation **after all configured leagues finish** within the window. If a league ends late, global waits (configurable timeout).
 
 Transfers mid‑season: a player's stats are **aggregated across clubs/leagues** within the season window. The player appears once in global tables with the sum of minutes and events.
 

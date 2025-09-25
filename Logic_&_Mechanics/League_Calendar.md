@@ -1,4 +1,5 @@
 # Footy Star v1.0.1
+
 ## League_Calendar — Realistic League Durations (data‑driven)
 
 This file defines a **data model** and **ready‑to‑use presets** for real‑world league durations. The calendar is league‑scoped: each league has its own start/end, number of matchdays, transfer windows, cup rounds and international breaks. Systems that consume this (Match, Training, Weekly Economy, Random Events, Contracts) operate in **weeks** derived from these dates.
@@ -40,6 +41,7 @@ No emojis. All money is in USD elsewhere; this file has no currency usage.
     { "name": "winter", "start": "2026-01-01", "end": "2026-01-31" }
   ],
   "playoffs": { "enabled": false },
+  "prestige_weight": 1.0,
   "notes": "Dates are representative defaults; tune per season if needed."
 }
 ```
@@ -226,3 +228,11 @@ If you simulate continental competitions (UEFA/Libertadores), reserve **midweeks
 - Add/remove intl breaks for special seasons.  
 - Shift transfer windows within typical local rules if you later import an authoritative dataset.
 
+
+---
+
+## Season generation: advancing years
+
+Each new season automatically advances the calendar year. Templates per league (start month, end month, matchdays, intl breaks, transfer windows)
+are shifted forward one year (or season window) to generate the next season (e.g., 2025/26 → 2026/27 → 2027/28). This allows infinite progression
+without needing static datasets for future seasons.
