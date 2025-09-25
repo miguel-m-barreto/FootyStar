@@ -1,61 +1,77 @@
-# Footy Star v1.0.1 — Skill Set (18 Core)
+# Footy Star v1.0.1 – Skill Set (28 Core)
 
 ## Skills
-**Note:** Confidence is a derived state (affects moment %); it is **not** trainable.
+**Note:** Confidence is a derived state (affects moment %) and is **not** trainable.
 
-### Physical (6)
-1) **Acceleration** — How fast you explode from a standstill.
-2) **Sprint Speed** — Top speed sustained over distance.
-3) **Agility** — Quick body turns and direction changes.
-4) **Strength** — Shielding the ball and winning shoulder duels.
-5) **Jumping** — Vertical leap and timing in aerials.
-6) **Stamina** — Hold performance to 90’ (late-game decay reducer).
+### Physical (9)
+1. **Acceleration** – How fast you explode from a standstill.  
+2. **Sprint Speed** – Top speed sustained over distance.  
+3. **Agility** – Quick body turns and direction changes.  
+4. **Body Strength** – Shielding the ball and winning shoulder duels.  
+5. **Jumping** – Vertical leap and timing in aerials.  
+6. **Stamina** – Ability to hold performance to 90’ (reduces late-game decay).  
+7. **Power** – Leg strength for driving long shots and powerful passes.  
+8. **Flexibility** – Range of motion, reducing injury risk and aiding control.  
+9. **Recovery** – Ability to regain condition quickly between matches.  
 
-### Technical (7)
-*Derived parameter:* **Shot Power** = `round(0.7*Strength + 0.3*Stamina)` (0–100, clamped).
+### Technical (9)
+10. **First Touch** – Clean first control (foot/chest), fewer bad receptions.  
+11. **Dribbling** – Close control at pace; 1v1 take-ons.  
+12. **Technique** – Skill moves, flair, and difficult ball manipulation.  
+13. **Short Passing** – Accuracy and tempo up to ~20m.  
+14. **Long Passing** – Driven/lofted accuracy beyond ~20m.  
+15. **Vision** – Spotting and executing creative passes.  
+16. **Finishing** – Precision in box finishing and 1v1 outcomes.  
+17. **Short Shots** – Quick reactions and finishing in close-range or rebound situations.  
+18. **Long Shots** – Shooting from distance, scaled with Shot Power.  
+19. **Heading** – Direction and power on aerial contact.  
 
-7) **First Touch** — Clean first control (foot/chest), fewer bad receptions.  
-8) **Dribbling** — Close control at pace; 1v1 take-ons.  
-9) **Short Passing** — Accuracy and tempo up to ~20m.  
-10) **Long Passing** — Driven/lofted accuracy beyond ~20m.  
-11) **Finishing** — Quick box finishing and 1v1 outcomes.  
-12) **Long Shots** — Shooting from range; scales with Shot Power.  
-13) **Heading** — Direction and power on aerial contact.
+### Mental / Defensive (10)
+20. **Anticipation** – Reading play to arrive first and intercept.  
+21. **Positioning** – Being in the right spot (attack/defense context).  
+22. **Marking** – Staying tight and body-oriented without fouling.  
+23. **Tackling** – Winning the ball cleanly (includes slides).  
+24. **Composure** – Decision-making under pressure; fewer chokes in key moments.  
+25. **Consistency** – Reduces match-to-match performance volatility.  
+26. **Leadership** – Impacts team morale, confidence, and captaincy influence.  
+27. **Determination (Work Rate)** – Impacts selection, stamina application, and reputation growth.  
+28. **Bravery** – Willingness to engage in risky challenges, aerial duels and blocks.  
 
-### Mental/Defensive (5)
-14) **Anticipation** — Reading play to arrive first and intercept.  
-15) **Positioning** — Being in the right spot (attack/defense context).  
-16) **Marking** — Staying tight and body-orienting without fouling.  
-17) **Tackling** — Winning the ball cleanly (includes slides).  
-18) **Composure** — Decisions under pressure; fewer chokes in key moments.
+---
 
-------
+## Derived Parameters
+- **Shot Power** = `round(0.6*Power + 0.3*BodyStrength + 0.1*Stamina)` (0–100).  
+- **Shot Accuracy** = `round(0.6*Finishing + 0.3*Composure + 0.1*FirstTouch)`.  
+- **Pass Accuracy** = `round(0.45*ShortPassing + 0.35*LongPassing + 0.20*Vision)`.  
+- **1v1 Take-ons** = `round(0.5*Dribbling + 0.2*Agility + 0.2*Acceleration + 0.1*Technique)`.  
+
+---
 
 ## Moments (how each role uses skills)
 
 ### Forward (ST)
-- **Box Finish**: Finishing 60, Composure 20, First Touch 10, Positioning 10.  
-- **1v1 vs GK**: Finishing 45, Composure 35, Acceleration 10, Dribbling 10.  
-- **Offensive Header**: Heading 55, Jumping 25, Positioning 10, Strength 10.  
-- **Long Shot**: Long Shots 45 (with **Shot Power** bonus), Composure 20, Dribbling 10, Positioning 25.
+- **Box Finish**: Finishing 50, Short Shots 20, Composure 20, First Touch 10.  
+- **1v1 vs GK**: Finishing 40, Composure 30, Dribbling 15, Technique 10, Acceleration 5.  
+- **Offensive Header**: Heading 50, Jumping 25, Positioning 10, Body Strength 10, Bravery 5.  
+- **Long Shot**: Long Shots 35, Power 25, Composure 20, Positioning 20.  
 
 ### Midfielder (MF)
-- **Through Ball (short)**: Short Passing 55, Anticipation 20, Composure 15, Dribbling 10.  
-- **Switch of Play**: Long Passing 60, Anticipation 20, Composure 20.  
-- **Edge-of-Box Shot**: Long Shots 50, Composure 25, First Touch 15, Dribbling 10.
+- **Through Ball (short)**: Short Passing 35, Vision 30, Anticipation 20, Composure 10, Technique 5.  
+- **Switch of Play**: Long Passing 40, Vision 30, Composure 20, Technique 10.  
+- **Edge-of-Box Shot**: Long Shots 35, Power 20, Composure 20, First Touch 15, Technique 10.  
 
 ### Defender (DF)
-- **Stand Tackle**: Tackling 55, Marking 25, Anticipation 15, Strength 5.  
-- **Interception**: Anticipation 50, Positioning 30, Agility 20.  
-- **Aerial Clear**: Heading 50, Jumping 30, Strength 20.
+- **Stand Tackle**: Tackling 50, Marking 20, Anticipation 15, Body Strength 5, Bravery 10.  
+- **Interception**: Anticipation 40, Positioning 25, Agility 20, Determination 10, Vision 5.  
+- **Aerial Clear**: Heading 45, Jumping 25, Body Strength 15, Bravery 15.  
 
-*(Weights are percentages that sum to 100; they feed the moment engine.)*
+*(Weights are percentages that sum to 100; they feed the match engine.)*
 
 ---
 
 ## Costs, XP and progression
 
-### Option 1 — Progress with limits
+### Option 1 - Progress with limits
 
 ### Progression & Rewards (hooked to XP/SP/£)
 - **XP cap per level (5→100)**: continuous exponential with anchors:  
@@ -72,7 +88,7 @@
 #### Multipliers
 - **Minutes:** `minFactor = clamp(min/90, 0.3..1.0)`  
 - **Rating:** `rateFactor = 0.6 + 0.1*rating` (5.0→1.1, 8.0→1.4)  
-- **League:** `xp_index ∈ {0.85, 1.00, 1.15, 1.30}` — comes from the league JSON and represents the league’s relative difficulty/reward (e.g., 0.85/1.00/1.15/1.30)  
+- **League:** `xp_index ∈ {0.85, 1.00, 1.15, 1.30}` - comes from the league JSON and represents the league’s relative difficulty/reward (e.g., 0.85/1.00/1.15/1.30)  
 - **MMR anti-farm:** `1/(1 + 0.015*ΔOVR^2)` (if you play far below your level)
 
 #### Minutes selection (no energy, consistent)
@@ -81,7 +97,7 @@ Rep ≥ 40 → tends to 90’. Stamina only reduces late-match decay; it’s not
 
 ---
 
-### Option 2 — **Banked Progress** (Promotion Queue)
+### Option 2 - **Banked Progress** (Promotion Queue)
 - When a skill fills its XP bar, it **does not stop**. Extra XP keeps accumulating for subsequent levels of that skill, **without limits**, up to 100.
 - You get a **promotion queue**: `+N levels ready` **plus** partial XP for the next level.
 - Nothing levels up or affects OVR until you **pay**. When you have £, promote one, many, or all at once.
@@ -117,7 +133,7 @@ Rep ≥ 40 → tends to 90’. Stamina only reduces late-match decay; it’s not
 
 **Impact**  
 - If **Option 2 (Banked Progress)** is active, **remove** the “Overflow → SP 25%” rule from Option 1 to avoid conflicts.  
-- MMR, league, minutes, rating multipliers stay — they only affect **how fast** you fill the queue, not promotion.  
+- MMR, league, minutes, rating multipliers stay - they only affect **how fast** you fill the queue, not promotion.  
 - Training = SP→XP efficiency bonus; same queue.  
 - OVR/Selection ignores VL; you must **pay** to apply.
 
@@ -129,51 +145,50 @@ Rep ≥ 40 → tends to 90’. Stamina only reduces late-match decay; it’s not
 ---
 
 ## RoleOVR & OVR
-**RoleOVR(role)** is a weighted average of the 18 skills; weights differ per role (sum to 100).
+**RoleOVR(role)** is a weighted average of the 28 skills; weights differ per role (sum to 100).
 
-### Weights (v1.0.1 defaults)
-- **ST (Forward):** Fin 19, Comp 9, Pos 7, Drib 10, First 8, Acc 8, Sprint 6, Agil 5, LongS 5, Head 6, Jump 3, Str 4, ShortP 4, LongP 1, Ant 2, Mark 1, Tack 1, Stam 1.  
-- **MF (Midfielder):** ShortP 14, LongP 12, Ant 9, Pos 8, Comp 8, Drib 7, First 7, Stam 6, Acc 4, Agil 4, Sprint 3, LongS 5, Fin 3, Str 3, Mark 2, Tack 2, Head 2, Jump 1.  
-- **DF (Defender):** Tack 18, Mark 16, Pos 12, Ant 10, Str 10, Head 9, Jump 5, Stam 5, Acc 4, Agil 3, Sprint 3, ShortP 2, First 1, LongP 1, Comp 1.
+### Weights (v1.0.1 proposal)
+- **ST (Forward):** Finishing 15, Short Shots 6, Composure 7, Positioning 5, Dribbling 9, First Touch 7, Acceleration 7, Sprint 5, Agility 5, Long Shots 5, Power 6, Heading 6, Jumping 3, Body Strength 3, Short Passing 3, Long Passing 1, Vision 1, Anticipation 1, Tackling 1, Stamina 1.  
+- **MF (Midfielder):** Short Passing 11, Long Passing 10, Vision 10, Anticipation 7, Positioning 7, Composure 6, Determination 6, Dribbling 6, First Touch 6, Stamina 6, Acceleration 4, Agility 3, Sprint 3, Long Shots 5, Finishing 3, Body Strength 2, Tackling 2, Heading 2, Jumping 1, Technique 2.  
+- **DF (Defender):** Tackling 15, Marking 12, Positioning 9, Anticipation 8, Body Strength 7, Heading 7, Jumping 5, Stamina 5, Acceleration 3, Agility 3, Sprint 3, Determination 4, Leadership 3, Bravery 4, Short Passing 2, First Touch 1, Long Passing 1, Composure 1.  
 
-### OVR calculation
-Pick one policy for the build:
-1) **Locked Role OVR** (recommended for MVP): `OVR = RoleOVR(player_primary_role)`  
-2) **Best-of-three**: `OVR = max( RoleOVR(ST), RoleOVR(MF), RoleOVR(DF) )`  
+### OVR Calculation
+1. **Locked Role OVR** (recommended for MVP): `OVR = RoleOVR(player_primary_role)`.  
+2. **Best-of-three**: `OVR = max(RoleOVR(ST), RoleOVR(MF), RoleOVR(DF))`.  
 
-Store all three `RoleOVR` for Selection and market interest even if OVR is locked to the primary role.
-
+Store all three RoleOVR for selection and contracts, even if OVR is locked to the primary role.  
 
 ---
 
 ## Translation (PT -> EN) for future UI term mapping
 
-Aceleração -> Acceleration  
-Agilidade -> Agility  
-Antecipação -> Anticipation  
-Aproximação -> (covered by Acceleration/Positioning/Marking)  
-Bravura -> (future trait; small bonus to Tackling/Heading)  
-Cabeceio -> Heading  
-Carrinho -> Tackling  
-Chuto curto -> Finishing  
-Chuto longo -> Long Shots  
-Compostura -> Composure  
-Concentração -> (future trait “Consistency”)  
-Confiança -> Confidence (derived state, not a skill)  
-Controlo -> First Touch  
-Criatividade -> (v1.1: Vision)  
-Determinação -> (future trait “Work Rate/Drive”)  
-Domínio de peito -> First Touch  
-Drible -> Dribbling  
-Força – corpo -> Strength  
-Força – perna -> (Shot Power internal, bonus)  
-Liderança -> (future trait)  
-Marcação -> Marking  
-Passe curto -> Short Passing  
-Passe longo -> Long Passing  
-Posicionamento -> Positioning  
-Salto -> Jumping (Reach)  
-Velocidade -> Sprint Speed  
-Técnica -> (cut from MVP)  
-Vigor -> Stamina  
-Pontaria -> (split into Finishing/Passing)
+Aceleração → Acceleration  
+Agilidade → Agility  
+Antecipação → Anticipation  
+Bravura → Bravery  
+Cabeceio → Heading  
+Carrinho → Tackling  
+Chuto curto → Finishing  
+Remates curtos → Short Shots  
+Chuto longo → Long Shots  
+Compostura → Composure  
+Concentração → Consistency  
+Controlo → First Touch  
+Criatividade → Vision  
+Determinação → Determination (Work Rate)  
+Domínio de peito → First Touch  
+Drible → Dribbling  
+Flexibilidade → Flexibility  
+Recuperação → Recovery  
+Força – corpo → Body Strength  
+Força – perna → Power (Leg Strength)  
+Liderança → Leadership  
+Marcação → Marking  
+Passe curto → Short Passing  
+Passe longo → Long Passing  
+Posicionamento → Positioning  
+Salto → Jumping (Reach)  
+Velocidade → Sprint Speed  
+Técnica → Technique  
+Vigor → Stamina  
+Pontaria → (split into Finishing / Passing Accuracy)  
