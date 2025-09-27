@@ -9,7 +9,19 @@ This version is compatible with **Skills.md (28 skills)** and **Match.md v1.0.1*
 ---
 
 ## 1 Ownership & Visibility
-- **Coach‑driven:** Each week the coach selects sessions based on role, weaknesses, last match performance, fitness and calendar.
+- **Coach‑driven:** Each week the coach selects sessions based on role, weaknesses, last match performance, fitness and calendar, If the player sets a **Focus** in UI, apply a soft bias:
+  - **Focus clusters**
+    - **Attack:** Finishing, Composure, Dribbling, First Touch, Technique, Off‑the‑Ball.
+    - **Midfield:** Vision, Passing, Ball Control, Positioning, Stamina, Work Rate.
+    - **Defense:** Tackling, Marking, Interceptions, Bravery, Body Strength, Jumping.
+    - **Recovery (optional):** Recovery, Flexibility, Stamina.
+
+  - **Bias rules**:
+    - Allocate up to **20%** of `XP_week` to the selected cluster; distribute within it by current needs/weakness.
+    - Remaining **≥80%** follows coach priorities (role needs, weak skills, minutes, performance feedback).
+    - **Congestion / Intl Break:** reduce bias by up to **50%** automatically.
+    - **No micromanagement:** the player cannot specify exact drills.
+    
 - **Invisible plan:** The user does **not** see which routines were chosen.
 - **What the user sees:** Only lightweight outcomes on the **Home** screen:
   - “**{Skill}** reached 100% XP - ready to promote.”

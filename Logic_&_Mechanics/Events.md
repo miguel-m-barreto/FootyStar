@@ -131,21 +131,21 @@ All effects must be brief and understandable in a single popup.
 
 ## 7 Example events
 
-### 7.1 Social — Recognized on the street
+### 7.1 Social - Recognized on the street
 - Preconditions: OVR ≥ 8 or Reputation ≥ 5.
 - Text: "A fan recognizes you and asks for a quick selfie."
 - Choices:
   - A) Accept the selfie. Effects: `Reputation +0.3`, `Confidence +0.2`.
   - B) Decline politely, you are in a rush. Effects: `Reputation -0.2`, `Confidence -0.1`.
 
-### 7.2 Social — A date invite
+### 7.2 Social - A date invite
 - Preconditions: none.
 - Text: "You receive an invitation for a casual date."
 - Choices:
   - A) Go to the date. Effects: `Confidence +0.4`, `money -$60` (dinner); set `dating_active` for 2 weeks (no further date invites during that time).
   - B) Skip, focus on training. Effects: `CoachRelation +0.3`.
 
-### 7.3 Lifestyle — Adopt a pet
+### 7.3 Lifestyle - Adopt a pet
 - Preconditions: none.
 - Text: "You consider adopting a pet."
 - Choices:
@@ -153,21 +153,21 @@ All effects must be brief and understandable in a single popup.
   - B) Adopt a cat. Effects: `money -$150`, set `owns_pet_cat`, `Confidence +0.2`.
   - C) Not now. Effects: none.
 
-### 7.4 Family — Birthday
+### 7.4 Family - Birthday
 - Preconditions: once per year.
 - Text: "It is your birthday."
 - Choices:
   - A) Host a small dinner. Effects: `money -$100`, `Confidence +0.4`.
   - B) Quiet day at home. Effects: `Confidence +0.1`.
 
-### 7.5 Family — Parent’s birthday
+### 7.5 Family - Parent’s birthday
 - Preconditions: once per parent per year.
 - Text: "It is your mother's birthday."
 - Choices:
   - A) Buy a gift. Effects: `money -$80`, `Confidence +0.2`.
   - B) Call and send regards. Effects: `Confidence +0.1`.
 
-### 7.6 Career — Teammate gift (boots)
+### 7.6 Career - Teammate gift (boots)
 - Preconditions: none.
 - Text: "A teammate gives you a pair of signed boots."
 - Choices:
@@ -175,7 +175,7 @@ All effects must be brief and understandable in a single popup.
   - B) Sell them. Effects: `money +$250`.
   - C) Donate them to charity. Effects: `Reputation +0.4`.
 
-### 7.7 Items — Memorabilia at 17 (long arc)
+### 7.7 Items - Memorabilia at 17 (long arc)
 - Preconditions: age == 17, `flags_forbidden`: `memorabilia_received`.
 - Text: "You receive your first framed jersey, signed by the whole squad."
 - Immediate effects: set `memorabilia_received`.
@@ -191,7 +191,7 @@ All effects must be brief and understandable in a single popup.
     - A) Accept. Effects: `money +$offer`; clear `memorabilia_kept`.
     - B) Keep it. Effects: none; another offer may occur 1-2 years later.
 
-### 7.8 Finance — Friend asks for a loan
+### 7.8 Finance - Friend asks for a loan
 - Preconditions: balance ≥ $1,000.
 - Text: "A close friend asks for a $500 loan."
 - Choices:
@@ -201,14 +201,14 @@ All effects must be brief and understandable in a single popup.
   - 70% chance: friend repays `$600` (principal + $100), clears flag.
   - 30% chance: friend ghosts you (no repayment), clears flag.
 
-### 7.9 Career — Coach feedback
+### 7.9 Career - Coach feedback
 - Preconditions: last match rating ≤ 5.8.
 - Text: "Coach calls you in for frank feedback."
 - Choices:
   - A) Take it on the chin. Effects: `CoachRelation +1.0`, `Consistency +5 XP`.
   - B) Push back. Effects: `CoachRelation -1.0`, `Confidence +0.2` (short‑term).
 
-### 7.10 Lifestyle — Party invite before match
+### 7.10 Lifestyle - Party invite before match
 - Preconditions: match within 48h.
 - Text: "You are invited to a party right before matchday."
 - Choices:

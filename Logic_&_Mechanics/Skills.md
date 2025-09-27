@@ -2,6 +2,8 @@
 
 ## Skills
 **Note:** Confidence is a derived state (affects moment %) and is **not** trainable.
+**Minutes / Selection formula is authoritative in `Match.md ▸ Minutes / Selection`.**  
+This file does not duplicate that formula to prevent divergence. It only defines skills and OVR/RoleOVR.
 
 ### Physical (9)
 1. **Acceleration** – How fast you explode from a standstill.  
@@ -71,33 +73,7 @@
 
 ## Costs, XP and progression
 
-### Option 1 - Progress with limits
-
-### Progression & Rewards (hooked to XP/SP/$)
-- **XP cap per level (5->100)**: continuous exponential with anchors:  
-  `XPcap(L) = round( X0 * (X1 / X0)^((L - 5)/95) )`  
-  Recommended: `X0 = 30`, `X1 = 350` (≈ +2.6%/level).
-
-- **Promotion cost ($)**:  
-  `Cost(L) = round( C0 * (C1 / C0)^((L - 5)/95) )`  
-  Recommended: `C0 = $300`, `C1 = $13,000` (≈ +4.0%/level).
-
-- **SP per match** (before multipliers): `base 5 + 2 per goal + 1 per assist + 1 if MOM`.  
-  Conversion: **1 SP = 10 XP** (no cap; SP does **not** promote).
-
-#### Multipliers
-- **Minutes:** `minFactor = clamp(min/90, 0.3..1.0)`  
-- **Rating:** `rateFactor = 0.6 + 0.1*rating` (5.0->1.1, 8.0->1.4)  
-- **League:** `xp_index ∈ {0.85, 1.00, 1.15, 1.30}` - comes from the league JSON and represents the league’s relative difficulty/reward (e.g., 0.85/1.00/1.15/1.30)  
-- **MMR anti-farm:** `1/(1 + 0.015*ΔOVR^2)` (if you play far below your level)
-
-#### Minutes selection (no energy, consistent)
-`Selection Score = 0.6*RoleOVR + 0.2*Reputation + 0.2*CoachRelation (+ injury gates)`  
-Rep ≥ 40 -> tends to 90’. Stamina only reduces late-match decay; it’s not “energy”.
-
----
-
-### Option 2 - **Banked Progress** (Promotion Queue)
+### **Banked Progress** (Promotion Queue)
 - When a skill fills its XP bar, it **does not stop**. Extra XP keeps accumulating for subsequent levels of that skill, **without limits**, up to 100.
 - You get a **promotion queue**: `+N levels ready` **plus** partial XP for the next level.
 - Nothing levels up or affects OVR until you **pay**. When you have $, promote one, many, or all at once.

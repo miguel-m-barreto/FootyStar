@@ -31,9 +31,9 @@ This module defines the **visual and narrative layer** for matches. It wraps aro
 - Commentary is text-only, appearing in a panel (side or bottom).  
 - Templates filled with event data (player names, teams, minute).  
 - Examples:  
-  - “{minute} — {player} tries his luck from distance… just wide!”  
-  - “{minute} — GOAL for {team}! {player} with the finish!”  
-  - “{minute} — Brilliant save by the keeper!”  
+  - “{minute} - {player} tries his luck from distance… just wide!”  
+  - “{minute} - GOAL for {team}! {player} with the finish!”  
+  - “{minute} - Brilliant save by the keeper!”  
 - Commentary frequency: 1–2 lines per "moment".  
 - Variation: multiple templates per event type to avoid repetition.
 

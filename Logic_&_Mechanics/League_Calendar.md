@@ -1,10 +1,8 @@
 # Footy Star v1.0.1
 
-## League_Calendar — Realistic League Durations (data‑driven)
+## League_Calendar - Realistic League Durations (data‑driven)
 
 This file defines a **data model** and **ready‑to‑use presets** for real‑world league durations. The calendar is league‑scoped: each league has its own start/end, number of matchdays, transfer windows, cup rounds and international breaks. Systems that consume this (Match, Training, Weekly Economy, Random Events, Contracts) operate in **weeks** derived from these dates.
-
-No emojis. All money is in USD elsewhere; this file has no currency usage.
 
 ---
 
@@ -52,6 +50,8 @@ Guidelines:
 - **regular_week_pattern.midweek_probability** helps the engine schedule midweeks realistically without a full fixture list.
 - **transfer_windows** must align with Contracts (offer periods).
 
+> NOTE: contracts can be offered outside transfer_windows if they are from the club the player is currently in
+
 ---
 
 ## 2 Engine consumption
@@ -59,99 +59,38 @@ Guidelines:
 From any league record:
 1. Build a **week index** from `start_date` to `end_date` (inclusive).  
 2. Tag weeks as: **League MD**, **Midweek MD**, **Cup**, **International Break**, or **Idle** using the pattern and hints.  
-3. Training: when a **Midweek MD** or **International Break** occurs, Training System adapts volume (already supported).  
-4. Weekly Economy: salary posts each week; **match bonuses** post on played weeks; business income posts every week.  
-5. Random Events: roll after match/training and before economy close, respecting cooldowns and caps.  
-6. Contracts: enforce **transfer_windows** for offer creation/acceptance.
+3. **Training System** lowers volume on Midweeks/Intl breaks.  
+4. **Weekly Economy**: salaries each week; match bonuses only on match weeks; business income every week.  
+5. **Random Events** roll after match/training, before economy close. Flags may trigger follow‑ups (Events.md).  
+6. **Contracts/Transfers** enforce **transfer_windows** for offers and registrations.  
+7. **System Notifications** emit concise alerts (“Transfer window OPEN”, “Intl break this week”).
+
 
 ---
 
 ## 3 Presets (typical real‑world durations by league)
 
-> Dates below are **typical month windows** and **matchday counts**. Use them as defaults; adjust per actual season if you later ingest real schedules.
+> Dates below are **typical month windows** and **matchday counts**. Use as defaults; adjust per actual season if later ingest real schedules.
 
-### 3.1 Europe — Top 5
+### 3.1 Europe - Top 5
+- **Premier League (EPL)**: 20 teams, 38 MD, Aug–May, windows Jul–Aug + Jan.  
+- **LaLiga**: 20 teams, 38 MD, Aug–May. Cups midweeks.  
+- **Serie A**: 20 teams, 38 MD, Aug–May. Cups midweeks.  
+- **Bundesliga**: 18 teams, 34 MD, Aug–May. Cups = DFB Pokal.  
+- **Ligue 1**: 18 teams, 34 MD, Aug–May. Cups = Coupe de France.
 
-- **Premier League (EPL)**
-  - Teams: 20, Matchdays: **38**
-  - Season: **Aug-May**
-  - Transfer windows: **Jul-Aug (summer)**, **Jan (winter)**
-  - Domestic cups: FA/League Cup interspersed midweeks
-  - Intl breaks: Sep, Oct, Nov, Mar
-
-- **LaLiga**
-  - Teams: 20, Matchdays: **38**
-  - Season: **Aug-May**
-  - Windows: **Jul-Aug**, **Jan**
-  - Cups: Copa del Rey (midweeks), Supercopa (Jan)
-  - Intl breaks: Sep, Oct, Nov, Mar
-
-- **Serie A**
-  - Teams: 20, Matchdays: **38**
-  - Season: **Aug-May**
-  - Windows: **Jul-Aug**, **Jan**
-  - Cups: Coppa Italia (midweeks)
-  - Intl breaks: Sep, Oct, Nov, Mar
-
-- **Bundesliga**
-  - Teams: 18, Matchdays: **34**
-  - Season: **Aug-May**
-  - Windows: **Jul-Aug**, **Jan**
-  - Cups: DFB‑Pokal
-  - Intl breaks: Sep, Oct, Nov, Mar
-
-- **Ligue 1**
-  - Teams: **18**, Matchdays: **34** (since 2023/24)
-  - Season: **Aug-May**
-  - Windows: **Jul-Aug**, **Jan**
-  - Cups: Coupe de France
-  - Intl breaks: Sep, Oct, Nov, Mar
-
-### 3.2 Europe — Others
-
-- **Liga Portugal** (Primeira Liga)
-  - Teams: 18, Matchdays: **34**
-  - Season: **Aug-May**
-  - Windows: **Jul-Aug**, **Jan**
-  - Cups: Taça de Portugal, Taça da Liga (midweeks)
-  - Intl breaks: Sep, Oct, Nov, Mar
-
-- **Eredivisie**
-  - Teams: 18, Matchdays: **34**
-  - Season: **Aug-May**
-  - Windows: **Jul-Aug**, **Jan**
-  - Cups: KNVB Beker
-  - Intl breaks: Sep, Oct, Nov, Mar
-
-- **EFL Championship (England 2)**
-  - Teams: 24, Matchdays: **46**
-  - Season: **Aug-May**
-  - Windows: **Jul-Aug**, **Jan**
-  - Playoffs: Yes (May)
-  - Intl breaks: Sep, Oct, Nov, Mar
-
-- **LaLiga 2 (Spain Segunda)**
-  - Teams: 22, Matchdays: **42**
-  - Season: **Aug-Jun**
-  - Windows: **Jul-Aug**, **Jan**
-  - Playoffs: Yes (late May-Jun)
+### 3.2 Europe - Others
+- **Liga Portugal**: 18 teams, 34 MD, Aug–May. Cups: Taça Portugal + Taça Liga.  
+- **Eredivisie**: 18 teams, 34 MD, Aug–May. Cups: KNVB Beker.  
+- **EFL Championship**: 24 teams, 46 MD, Aug–May. Playoffs in May.  
+- **LaLiga 2**: 22 teams, 42 MD, Aug–Jun. Playoffs late May–Jun.
 
 ### 3.3 Americas
+- **MLS**: ~30 teams, 34 MD + playoffs, Feb–Nov. Two windows (Feb–Apr, Jul–Aug).  
+- **Brasileirão Série A**: 20 teams, 38 MD, Apr–Dec. Local window rules.
 
-- **MLS (USA/Canada)**
-  - Teams: ~28-30, Regular season ~**34** matches + playoffs
-  - Season: **Feb-Oct/Nov**
-  - Windows: primary **Feb-Apr**, secondary **Jul-Aug** (approx.)
-  - Intl breaks: typically partial observance
-
-- **Brasileirão Série A**
-  - Teams: 20, Matchdays: **38**
-  - Season: **Apr-Dec**
-  - Windows: vary (mid‑year & year‑end local windows)
-  - Cups: Copa do Brasil (midweeks)
-
-### 3.4 Optional cups/internationals
-If you simulate continental competitions (UEFA/Libertadores), reserve **midweeks** from Sep to May for group/knockout phases. Otherwise, keep midweek probability to ~0.30 for league catch‑ups.
+### 3.4 Continental cups
+If simulating UEFA/Libertadores, reserve midweeks from Sep–May. Otherwise set `midweek_probability ≈ 0.30`.
 
 ---
 
@@ -231,8 +170,9 @@ If you simulate continental competitions (UEFA/Libertadores), reserve **midweeks
 
 ---
 
-## Season generation: advancing years
+## 7 Season generation
 
-Each new season automatically advances the calendar year. Templates per league (start month, end month, matchdays, intl breaks, transfer windows)
-are shifted forward one year (or season window) to generate the next season (e.g., 2025/26 → 2026/27 → 2027/28). This allows infinite progression
-without needing static datasets for future seasons.
+Each new season advances dates by 1 year (2025/26 → 2026/27). Templates shift automatically: start/end, intl breaks, windows.  
+Supports infinite progression without static datasets.
+
+> Transfers between other teams can might occur, like players from other teams should be able to go to other teams and to our team etc, the player is not the only player that can swap teams.

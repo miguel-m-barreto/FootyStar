@@ -3,12 +3,13 @@
 ## 1. Match & Moments Engine
 
 ### 1.1 Number of moments per match
-- Base by role (for 90’): ST 4.0, MF 3.0, DF 2.5.  
-- Scaled by minutes: `exp = base * minFactor`, where `minFactor = clamp(min/90, 0.3..1.0)`.  
-- Jitter: ±0.8 random (normal), rounded to integer ≥ 1.  
-- Type distribution (ST): Box Finish 0.45, Header 0.25, 1v1 0.15, Long Shot 0.15.  
-- (MF): Through Ball 0.45, Switch 0.25, Edge Shot 0.30.  
-- (DF): Stand Tackle 0.50, Interception 0.30, Aerial Clear 0.20.
+- Base by role (90’): ST 4.0, MF 3.0, DF 2.5.  
+- Scale by minutes: `exp = base * minFactor`, where `minFactor = clamp(min/90, 0.3..1.0)`.  
+- Jitter: ±0.8 (normal), rounded ≥1.  
+- Moment type distribution:  
+  - ST: Box Finish 0.45, Header 0.25, 1v1 0.15, Long Shot 0.15.  
+  - MF: Through Ball 0.45, Switch 0.25, Edge Shot 0.30.  
+  - DF: Stand Tackle 0.50, Interception 0.30, Aerial Clear 0.20.
 
 ### 1.2 Success calculation (with new skills)
 
@@ -18,6 +19,7 @@
 - `m_confidence = −5…+5` (derived from the average of the last 3 ratings).  
 - `m_context` aggregates small, type-specific bonuses from new skills (caps noted below).  
 
+**NOTE: REVISE CONTEXT BONUSES**
 **Context bonuses (apply only to relevant moment types; each capped at +2):**
 - **Bravery**: +`0.04*(Bravery − 50)` to **Stand Tackle** and **Aerial Clear**. (cap +2)  
 - **Technique**: +`0.03*(Technique − 50)` to **1v1 vs GK** and **Edge Shot** ball control phases. (cap +1.5)  
@@ -25,7 +27,7 @@
 - **Power**: +`0.04*(Power − 50)` to **Long Shot**. (cap +2)  
 - **Leadership (captain on pitch)**: team aura adds `+team_lead` to every teammate’s `m_confidence`, where `team_lead = clamp( (CaptainLeadership − 60)/10, 0..2 )`.
 
-#### Difficulty (D) is continuous
+#### Difficulty (D)
 `D = baseD(type) + OppFac + k_league * (xp_index - 1.0) + TimeFatigue`  
 
 - `xp_index` comes from league JSON (0.85/1.00/1.15/1.30).  

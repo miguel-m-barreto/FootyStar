@@ -11,6 +11,10 @@ This module governs the **cashflow cycle** of the player. Money is earned mainly
 - **Performance bonuses** - Per goal/assist/MOM as defined in contract.
 - **Competition prizes** - Club payouts for wins, cups, progression in tournaments.
 - **Business income** - Weekly fixed returns from owned businesses (see Investments.md).
+- **Sponsorships** - Sponsorships & Lifestyle
+- **IAP / Cash packs** - Purchases in the SHOP
+- **Awards payouts** - Season close   
+- **Exchange inflows** (SP→$)
 
 *(Future)*  
 - **Sponsorships / endorsements** - Scale with Reputation, OVR and Social presence.  
@@ -22,11 +26,25 @@ This module governs the **cashflow cycle** of the player. Money is earned mainly
 - **Skill promotions** - Main sink. Use cost curve from Skills.md; promotions require $.
 - **Business purchases / upgrades** - Capital outflow when buying/upgrading a business (Investments.md).
 - **Casino bets** - Money staked in casino games; resolved immediately (see Investments.md).
+- **Exchange outflows** ($→SP)
 
 *(Future)*  
 - **Lifestyle** - Housing, vehicles, luxury, social spending (flavor + Confidence/CoachRelation effects).  
 - **Agent fees** - Fixed percentage (e.g. 10%) of salary/transfer bonuses.  
 - **Taxes** - League/country dependent percentage deduction.
+
+- **TO THINK** - Lifestyle upkeep (Sponsorships & Lifestyle) 
+
+### Conversions (Conversion Center)
+- **$→SP (Buy SP):** price shown in UI (from Tuning_Constants ▸ SP_Exchange); respects weekly caps and surge rules.
+- **SP→$ (Sell SP):** only SP **earned in‑game**; applies spread and weekly caps.
+- Ledger tag: `source="Exchange"` for both operations.
+
+
+### Notifications
+- “Weekly statement ready: +$X / -$Y → $Z”
+- “Exchange: +N SP for $X / +$Y for N SP”
+
 
 ---
 
@@ -44,6 +62,8 @@ balance_next = balance_current
 - After matches: Bonuses/prizes applied.
 - End of week: Income from businesses credited, expenses deducted (skill promotions, business upgrades, casino net).  
 - Home screen: Notification “Weekly statement ready: +$X income, -$Y expenses, new balance $Z”.
+- Home: Notification “Weekly statement ready: +$X, -$Y, balance $Z”.
+- Ledger tags: source="Salary|Bonus|Prize|Business|Sponsor|Award|IAP|Promotion|Upgrade|Casino|Lifestyle".
 
 ---
 

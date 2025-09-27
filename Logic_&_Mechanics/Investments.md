@@ -20,11 +20,11 @@ Each business has:
 
 Parameters:
 - **Income step** per upgrade: `ΔW = W0 * (1 + β)` with default **β = 0.125** (12.5%).
-- **Upgrade cost** series: first upgrade cost `U1 = u * C0` with default **u = 0.5`; subsequent upgrades grow by **25%**:
-  - `U(k+1) = 1.25 * U(k)`
+- **Upgrade costs (global rule):** multiplier **×1.5** with rounding **up** from **U2** to the nearest $1,000
+  - `U(n) = ceil( U(n-1) × 1.5, to nearest $1,000 )` for n ≥ 2
 - **Weekly income at Level L (L ≥ 1):**
-  - `W(L) = W0 + (L - 1) * ΔW`, where `ΔW = 1.125 * W0` by default.
-- **Max level** per business: default **Lmax = 5** (purchase = L1 + up to 4 upgrades).
+  - `W(L) = W0 + (L - 1) × ΔW`, where `ΔW = 1.125 × W0` by default.
+- **Max level** per business: default **Lmax = 5** (purchase = L1 + up to 5 upgrades).
 
 Notes:
 - This is deterministic. No random price swings in v1.0.1.
@@ -41,23 +41,20 @@ Notes:
 - Weekly income is credited at the end of the week as **Income**.
 - Selling is disabled in v1.0.1 (no liquidation).
 
-### 1.4 Business slots (by Reputation)
-- Rep 0-9: **1 slot**
-- Rep 10-19: **2 slots**
-- Rep 20+: **3 slots**
-- Future: raise caps with story events or special sponsors.
+### 1.4 Business (by Reputation)
+- You need certain reputation + OVR to buy each business, for example the café needs 5 OVR and 5 rep
 
 ### 1.5 Catalog (v1 defaults)
 All follow the same formulas. Adjust C0/W0/requisites to tune pacing.
 
-| Business | Requirements | C0 | W0 (L1) | U1 (50% C0) | ΔW (per upgrade) |
-|---|---|---:|---:|---:|---:|
-| Café | OVR ≥ 5 | $10,000 | $120 | $5,000 | $135 |
-| Spa | Rep ≥ 10 | $25,000 | $300 | $12,500 | $337.5 |
-| Gym (Neighborhood) | OVR ≥ 12, Rep ≥ 8 | $40,000 | $500 | $20,000 | $562.5 |
-| Sports Bar | OVR ≥ 15, Rep ≥ 12 | $60,000 | $720 | $30,000 | $810 |
-| Merch / Streetwear | Rep ≥ 18 | $90,000 | $1,050 | $45,000 | $1,181.25 |
-| Fitness & Wellness Studio | OVR ≥ 20, Rep ≥ 20 | $140,000 | $1,600 | $70,000 | $1,800 |
+| Business | Requirements | C0 | W0 (L1) | ΔW/upgrade | U1 | U2 | U3 | U4 | U5 |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Café | OVR ≥ 5 | $10,000 | $120 | $135 | $15,000 | $23,000 | $35,000 | $53,000 | $80,000 |
+| Spa | Rep ≥ 10 | $25,000 | $300 | $337.5 | $37,500 | $57,000 | $86,000 | $129,000 | $194,000 |
+| Gym (Neighborhood) | OVR ≥ 12, Rep ≥ 8 | $40,000 | $500 | $562.5 | $60,000 | $90,000 | $135,000 | $203,000 | $305,000 |
+| Sports Bar | OVR ≥ 15, Rep ≥ 12 | $60,000 | $720 | $810 | $90,000 | $135,000 | $203,000 | $305,000 | $458,000 |
+| Merch / Streetwear | Rep ≥ 18 | $90,000 | $1,050 | $1,181.25 | $135,000 | $203,000 | $305,000 | $458,000 | $687,000 |
+| Fitness & Wellness Studio | OVR ≥ 20, Rep ≥ 20 | $140,000 | $1,600 | $1,800 | $210,000 | $315,000 | $473,000 | $710,000 | $1,065,000 |
 
 Examples of weekly income by level (Café, W0=120, ΔW=135):
 - L1: $120
@@ -67,10 +64,10 @@ Examples of weekly income by level (Café, W0=120, ΔW=135):
 - L5: $660
 
 ### 1.6 Example build (Café to L3)
-- Buy Café: C0 = $10,000 -> L1 income $120.
-- Upgrade 1: U1 = $5,000 -> L2 income $255.
-- Upgrade 2: U2 = $6,250 -> L3 income $390.
-- Total invested: $21,250; weekly income now $390.
+- Buy Café: C0 = $10,000 → L1 income $120.
+- Upgrade 1: U1 = $15,000 → L2 income $255.
+- Upgrade 2: U2 = $23,000 → L3 income $390.
+- Total invested so far: $48,000; weekly income now $390.
 
 ---
 
@@ -122,19 +119,53 @@ The casino is a pure RNG sink with a **negative expected value** (house edge). I
 ---
 
 ## 4 Tuning constants (defaults)
-- Business income step: `β = 0.125` -> `ΔW = 1.125×W0`.
-- Upgrade cost factor: `u = 0.50`; growth: `×1.25` per upgrade.
+- Business income step: `β = 0.125` → `ΔW = 1.125×W0`.
+- **Upgrade cost rule:** global multiplier ×1.5; round up from U2 to nearest $1,000.
 - Max business level: `Lmax = 5`; business slots by Rep: 1/2/3 at 0/10/20.
 - Casino edges: Slots 5%, Blackjack 2%, Sportsbook margin 4-7%.
-- Weekly casino cap: `min($5,000, 0.5×salary)`; per‑bet cap $500; 5 bets/week.
+- Weekly casino cap: `min($5,000, 0.5×salary)`; per-bet cap $500; 5 bets/week.
 - Addiction flag threshold: wager ≥ 50% of salary for 3 consecutive weeks.
 - All constants are data‑driven and can be tuned per league/difficulty.
 
 ---
 
 ## 5 Dev notes
-- Implement businesses as data objects `{id, name, C0, W0, req_OVR, req_Rep, Lmax, u, growth, beta}`.
+- Implement businesses as data objects `{id, name, C0, W0, req_OVR, req_Rep, Lmax, beta}`; upgrade costs are computed from the **global rule** (×1.5 with rounding from U2).
 - Persist per‑player ownership `{business_id, current_level, invested_total}`.
 - Weekly tick computes business income and appends to the statement log.
 - Casino outcomes recorded per bet `{game, stake, outcome, net}`; enforce caps before placing.
 - Add unit tests for payback math and caps.
+
+---
+
+### Income step definition
+Choose **one** mode (default = `linear`).
+
+- **linear mode (default):** `ΔW = β × W0` per upgrade (e.g., β=0.125 → +12.5% of W0 each level).
+  - Level n income: `W(n) = W0 + n × ΔW`
+
+- **multiplicative mode:** define step factor `m = 1 + β`; income scales geometrically.
+  - Level n income: `W(n) = W0 × m^n`
+
+> Set `business_step_mode = "linear"|"multiplicative"` in Tuning_Constants. Document chosen β.
+
+All other rules (upgrade costs ×1.5 from U2, caps, ROI examples) remain unchanged.
+
+
+## Extended Business Catalog (v1.1 data)
+
+This extends the fixed‑income business list. Rules remain the same for income; **upgrade costs now follow the global ×1.5 rule with rounding up from U2**.
+
+### New businesses
+| Business | Requirements | C0 | W0 (L1) | ΔW/upgrade | U1 | U2 | U3 | U4 | U5 |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Food Truck Duo | OVR ≥ 8 | $18,000 | $220 | $247.5 | $27,000 | $41,000 | $62,000 | $93,000 | $140,000 |
+| Bakery Franchise Kiosk | Rep ≥ 8 | $28,000 | $320 | $360 | $42,000 | $63,000 | $95,000 | $143,000 | $215,000 |
+| Esports Lounge | Rep ≥ 14 | $55,000 | $680 | $765 | $82,500 | $124,000 | $186,000 | $279,000 | $419,000 |
+| Nightclub (Small) | Rep ≥ 22 | $110,000 | $1,350 | $1,518.75 | $165,000 | $248,000 | $372,000 | $558,000 | $837,000 |
+| Football Academy (Local) | OVR ≥ 24, Rep ≥ 24 | $180,000 | $2,100 | $2,362.5 | $270,000 | $405,000 | $608,000 | $912,000 | $1,368,000 |
+| Streetwear Flagship Store | Rep ≥ 26 | $250,000 | $2,900 | $3,262.5 | $375,000 | $563,000 | $845,000 | $1,268,000 | $1,902,000 |
+
+Notes:
+- Nightclub may unlock variance/narrative in later versions (events), but is fixed income in v1.0.1.
+- Football Academy can unlock narrative hooks (youth cameo events) in later patches.

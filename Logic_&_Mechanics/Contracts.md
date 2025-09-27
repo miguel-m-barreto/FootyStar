@@ -1,5 +1,8 @@
 # Footy Star v1.0.1
 
+**Transfer windows are authoritative from `League_Calendar.md` per league/season.**  
+Any week numbers shown here (e.g., **weeks 9–11** and **19–20** for MVP) are **defaults** only.
+
 ## Contracts System
 
 I’ve concluded that generic “tiers” are weak for simulating real-world football. This system is fully **data-driven** by league, club and player.
