@@ -4,6 +4,7 @@ import 'screens/squad_screen.dart';
 import 'screens/training_screen.dart';
 import 'screens/economy_screen.dart';
 import 'screens/match_screen.dart';
+import 'screens/standings_screen.dart'; // NEW
 
 class AppShell extends StatefulWidget {
   const AppShell({super.key});
@@ -19,6 +20,7 @@ class _AppShellState extends State<AppShell> {
     TrainingScreen(),
     EconomyScreen(),
     MatchScreen(),
+    StandingsScreen(), // NEW
   ];
 
   @override
@@ -34,6 +36,7 @@ class _AppShellState extends State<AppShell> {
           NavigationDestination(icon: Icon(Icons.fitness_center_outlined), label: 'Training'),
           NavigationDestination(icon: Icon(Icons.attach_money_outlined), label: 'Economy'),
           NavigationDestination(icon: Icon(Icons.sports_soccer_outlined), label: 'Match'),
+          NavigationDestination(icon: Icon(Icons.table_chart_outlined), label: 'Standings'), // NEW
         ],
       ),
     );

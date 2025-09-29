@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:footy_star/state/game_controller.dart';
+import 'package:footy_star/providers/game_controller.dart';
 import 'package:footy_star/state/game_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:footy_star/providers/providers.dart';
