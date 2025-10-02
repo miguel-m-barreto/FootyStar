@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../providers/providers.dart';
+import 'package:footy_star/providers/providers.dart';
 
 class EconomyScreen extends ConsumerStatefulWidget {
   const EconomyScreen({super.key});
@@ -9,8 +9,6 @@ class EconomyScreen extends ConsumerStatefulWidget {
 }
 
 class _EconomyScreenState extends ConsumerState<EconomyScreen> {
-  final _ctrl = TextEditingController(text: '100');
-
   @override
   Widget build(BuildContext context) {
     final s = ref.watch(gameControllerProvider);
@@ -24,35 +22,19 @@ class _EconomyScreenState extends ConsumerState<EconomyScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Cash: \$${s.economy.cash}'),
-            const SizedBox(height: 12),
-            TextField(
-              controller: _ctrl,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Wager amount',
-                hintText: 'Enter any amount (up to your cash)',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 12),
-            FilledButton(
-              onPressed: () {
-                final amount = int.tryParse(_ctrl.text.trim()) ?? 0;
-                g.casinoWager(amount);
-              },
-              child: const Text('Casino — Place Bet'),
-            ),
             const SizedBox(height: 8),
-            FilledButton(
-              onPressed: () {
-                final allIn = s.economy.cash;
-                g.casinoWager(allIn);
-              },
-              child: const Text('Casino — All In'),
-            ),
+            Text('Weekly Income: \$${s.economy.weeklyIncome}'),
+            Text('Weekly Costs:  \$${s.economy.weeklyCosts}'),
+            const Divider(height: 24),
+            Text('Spent — This Week:   \$${s.economy.spentWeek}'),
+            Text('Spent — This Season: \$${s.economy.spentSeason}'),
+            Text('Spent — All Time:    \$${s.economy.spentAllTime}'),
+            const SizedBox(height: 12),
+            Text('Earned — This Season: \$${s.economy.earnedSeason}'),
+            Text('Earned — All Time:    \$${s.economy.earnedAllTime}'),
             const Spacer(),
             FilledButton(
-              onPressed: ()=> g.endOfWeekEconomy(),
+              onPressed: () => g.endOfWeekEconomy(),
               child: const Text('End Week (Apply Income/Costs)'),
             ),
           ],

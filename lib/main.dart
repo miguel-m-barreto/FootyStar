@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'ui/app_shell.dart';
+import 'ui/screens/shell_tabs.dart';
 
-void main() {
-  runApp(const ProviderScope(child: FootyStarApp()));
-}
+void main() => runApp(const ProviderScope(child: MyApp()));
 
-class FootyStarApp extends StatelessWidget {
-  const FootyStarApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Footy Star',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2E7D32)),
-        useMaterial3: true,
-      ),
-      home: const AppShell(),
+      theme: ThemeData(useMaterial3: true, colorSchemeSeed: const Color(0xFF1E88E5)),
+      home: const ShellTabs(),
     );
   }
 }

@@ -1,6 +1,7 @@
 import '../domain/team.dart';
 import '../domain/league.dart';
 import '../domain/economy.dart';
+import '../domain/business.dart';
 import '../models/played_match.dart';
 import '../models/fixture.dart';
 import '../models/league_table.dart';
@@ -12,9 +13,13 @@ class GameState {
   final Economy economy;
   final int week;                     // drives the current fixture
   final List<PlayedMatch> history;
-  final List<Fixture> fixtures;       // NEW
-  final LeagueTable table;            // NEW
-  final List<String> aiTeams;         // NEW
+  final List<Fixture> fixtures;
+  final LeagueTable table;
+  final List<String> aiTeams;
+
+  // NEW: businesses
+  final List<Business> catalogBusinesses; // available to buy (templates)
+  final List<Business> myBusinesses;      // owned with levels
 
   const GameState({
     required this.myTeam,
@@ -23,9 +28,11 @@ class GameState {
     required this.economy,
     required this.week,
     required this.history,
-    required this.fixtures,           // NEW
-    required this.table,              // NEW
-    required this.aiTeams,            // NEW
+    required this.fixtures,
+    required this.table,
+    required this.aiTeams,
+    this.catalogBusinesses = const [],
+    this.myBusinesses = const [],
   });
 
   GameState copyWith({
@@ -38,15 +45,21 @@ class GameState {
     List<Fixture>? fixtures,
     LeagueTable? table,
     List<String>? aiTeams,
-  }) => GameState(
-    myTeam: myTeam ?? this.myTeam,
-    opponent: opponent ?? this.opponent,
-    league: league ?? this.league,
-    economy: economy ?? this.economy,
-    week: week ?? this.week,
-    history: history ?? this.history,
-    fixtures: fixtures ?? this.fixtures,
-    table: table ?? this.table,
-    aiTeams: aiTeams ?? this.aiTeams,
-  );
+    List<Business>? catalogBusinesses,
+    List<Business>? myBusinesses,
+  }) {
+    return GameState(
+      myTeam: myTeam ?? this.myTeam,
+      opponent: opponent ?? this.opponent,
+      league: league ?? this.league,
+      economy: economy ?? this.economy,
+      week: week ?? this.week,
+      history: history ?? this.history,
+      fixtures: fixtures ?? this.fixtures,
+      table: table ?? this.table,
+      aiTeams: aiTeams ?? this.aiTeams,
+      catalogBusinesses: catalogBusinesses ?? this.catalogBusinesses,
+      myBusinesses: myBusinesses ?? this.myBusinesses,
+    );
+  }
 }
