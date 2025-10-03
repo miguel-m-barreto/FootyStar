@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:footy_star/domain/player.dart';
 import 'package:footy_star/domain/skill.dart';
 import 'package:footy_star/domain/team.dart';
-import 'package:footy_star/services/match_service.dart';
+import 'package:footy_star/data/services/match_service.dart';
 
 Player _mkPlayer(int id, int base) => Player(
   id: 'p$id',

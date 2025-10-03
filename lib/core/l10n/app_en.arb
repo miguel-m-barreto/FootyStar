@@ -1,0 +1,137 @@
+{
+  "@@locale": "en",
+
+  "activeContract": "Active Contract",
+  "addDemoMessage": "Add demo message",
+  "advanceWeek": "Advance Week",
+  "ageAge": "Age {age}",
+  "@ageAge": {
+    "placeholders": { "age": { "type": "int" } }
+  },
+  "annual": "Annual",
+  "cancel": "Cancel",
+  "careerStatistics": "Career statistics",
+  "careerStats": "Career Stats",
+  "casino": "Casino",
+  "casinoAllIn": "Casino — All In",
+  "casinoLoss": "Casino loss! You lost {loss}. New cash: {cash}",
+  "@casinoLoss": {
+    "placeholders": {
+      "loss": { "type": "double" },
+      "cash": { "type": "double" }
+    }
+  },
+  "casinoPlaceBet": "Casino — Place Bet",
+  "casinoWin": "Casino win! You won {delta}. New cash: {cash}",
+  "@casinoWin": {
+    "placeholders": {
+      "delta": { "type": "double" },
+      "cash": { "type": "double" }
+    }
+  },
+  "cash": "Cash",
+  "clauses": "Clauses",
+  "clearAll": "Clear all",
+  "contractDetails": "Contract Details",
+  "costs": "Costs",
+  "delta": "Delta",
+  "duration": "Duration",
+  "economy": "Economy",
+  "enterAnyAmount": "Enter any amount (up to your cash)",
+  "finance": "Finance",
+  "general": "General",
+  "goToMatches": "Go to Matches",
+  "home": "Home",
+  "income": "Income",
+  "language": "Language",
+  "languageChanged": "Language changed",
+  "leagueTable": "League table",
+  "loyaltyBonus": "Loyalty Bonus",
+  "lvLevel": "Lv {level}",
+  "@lvLevel": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "matchPlayedFriendly": "Match played\n{home} vs {away} (friendly/unscheduled)",
+  "@matchPlayedFriendly": {
+    "placeholders": { "home": {}, "away": {} }
+  },
+  "matchResult": "Match result — Week {week}\n{home} {hg} - {ag} {away}",
+  "@matchResult": {
+    "placeholders": {
+      "week": { "type": "int" },
+      "home": {},
+      "hg": { "type": "int" },
+      "ag": { "type": "int" },
+      "away": {}
+    }
+  },
+  "matchScheduled": "Match scheduled",
+  "myTeam": "My Team",
+  "nationalStandings": "National Standings",
+  "negotiate": "Negotiate",
+  "nextMatch": "Next match",
+  "nextOpponent": "Next opponent: {opponent}",
+  "@nextOpponent": {
+    "placeholders": { "opponent": {} }
+  },
+  "noFixturesScheduled": "No fixtures scheduled",
+  "noNotifications": "No notifications yet",
+  "noStandingsYet": "No standings yet. Play a match to populate the table.",
+  "notifications": "Notifications",
+  "ok": "OK",
+  "perAssist": "Per Assist",
+  "perGoal": "Per Goal",
+  "performanceBonuses": "Performance Bonuses",
+  "play": "Play",
+  "playAdvance": "Play & Advance",
+  "playersStandings": "Players Standings",
+  "preview": "Preview",
+  "previewSubtitle": "Quick preview of common labels",
+  "raiseApproved": "Raise approved (+{inc}/week). New salary: {next}/week.",
+  "@raiseApproved": {
+    "placeholders": {
+      "inc": { "type": "double" },
+      "next": { "type": "double" }
+    }
+  },
+  "raiseDenied": "Raise denied for now. Improve your form & reputation to increase chances.",
+  "reject": "Reject",
+  "releaseClause": "Release Clause",
+  "requestSalaryRaise": "Request Salary Raise",
+  "requestTransfer": "Request Transfer",
+  "resultScore": "Result: {hg} - {ag}",
+  "@resultScore": {
+    "placeholders": {
+      "hg": { "type": "int" },
+      "ag": { "type": "int" }
+    }
+  },
+  "restAllSquad": "Rest All Squad",
+  "salary": "Salary",
+  "selectLanguage": "Select language",
+  "settings": "Settings",
+  "skills": "Skills",
+  "statusPercent": "Status: {status} ({value}%)",
+  "@statusPercent": {
+    "placeholders": {
+      "status": {},
+      "value": { "type": "int" }
+    }
+  },
+  "store": "Store",
+  "topAssists": "Top Assists",
+  "topScorers": "Top Scorers",
+  "train": "Train",
+  "trophiesMilestones": "Trophies & milestones",
+  "tryYourLuck": "Try your luck",
+  "viewContract": "View Contract",
+  "wWeek": "W{week}",
+  "@wWeek": {
+    "placeholders": { "week": { "type": "int" } }
+  },
+  "wagerAmount": "Wager amount",
+  "week": "Week",
+  "weekly": "Weekly",
+  "weeklyCosts": "Weekly Costs",
+  "weeklyIncome": "Weekly Income"
+}

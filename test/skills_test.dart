@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:footy_star/domain/player.dart';
 import 'package:footy_star/domain/skill.dart';
-import 'package:footy_star/services/training_service.dart';
+import 'package:footy_star/data/services/training_service.dart';
 
 void main() {
   group('TrainingService', () {
