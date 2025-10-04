@@ -1,5 +1,23 @@
 {
   "@@locale": "pt",
+
+  "startDate": "Data de início",
+  "endDate": "Data de fim",
+  "cleanSheet": "Baliza invicta",
+  "manOfTheMatch": "Homem do jogo",
+  "wageRiseAfter20Games": "Aumento salarial após 20 jogos",
+  "afterNYears": "após {years} anos",
+  "@afterNYears": {
+    "placeholders": { "years": { "type": "int" } }
+  },
+
+  "yearsDur": "{count} anos",
+  "@yearsDur": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
   "positionShort": "#",
   "acceleration": "Aceleração",
   "agility": "Agilidade",

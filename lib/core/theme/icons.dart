@@ -34,4 +34,17 @@ class AppIcons {
   static const IconData add         = Icons.add;
   static const IconData win         = Icons.trending_up;
   static const IconData transfer    = Icons.flight_takeoff;
+
+  static const IconData share         = Icons.share;
+  static const IconData verified      = Icons.verified;
+  static const IconData assist        = Icons.assistant;
+  static const IconData cleanSheet    = Icons.shield;
+  static const IconData manOfTheMatch = Icons.star;
+  static const IconData housing       = Icons.home;
+  static const IconData business      = Icons.business;
+  static const IconData chevronRight  = Icons.chevron_right;
+  static const IconData payment       = Icons.payment;
+  static const IconData hourly        = Icons.timer;
+  static const IconData loss          = Icons.trending_down;
+  static const IconData contract      = Icons.description;
 }

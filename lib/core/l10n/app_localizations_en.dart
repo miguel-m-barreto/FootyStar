@@ -9,6 +9,31 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get startDate => 'Start Date';
+
+  @override
+  String get endDate => 'End Date';
+
+  @override
+  String get cleanSheet => 'Clean Sheet';
+
+  @override
+  String get manOfTheMatch => 'Man of the Match';
+
+  @override
+  String get wageRiseAfter20Games => 'Wage Rise After 20 Games';
+
+  @override
+  String afterNYears(int years) {
+    return 'after $years years';
+  }
+
+  @override
+  String yearsDur(int count) {
+    return '$count years';
+  }
+
+  @override
   String get positionShort => '#';
 
   @override

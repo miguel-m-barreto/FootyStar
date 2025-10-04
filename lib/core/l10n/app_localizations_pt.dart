@@ -9,6 +9,31 @@ class AppLocalizationsPt extends AppLocalizations {
   AppLocalizationsPt([String locale = 'pt']) : super(locale);
 
   @override
+  String get startDate => 'Data de início';
+
+  @override
+  String get endDate => 'Data de fim';
+
+  @override
+  String get cleanSheet => 'Baliza invicta';
+
+  @override
+  String get manOfTheMatch => 'Homem do jogo';
+
+  @override
+  String get wageRiseAfter20Games => 'Aumento salarial após 20 jogos';
+
+  @override
+  String afterNYears(int years) {
+    return 'após $years anos';
+  }
+
+  @override
+  String yearsDur(int count) {
+    return '$count anos';
+  }
+
+  @override
   String get positionShort => '#';
 
   @override

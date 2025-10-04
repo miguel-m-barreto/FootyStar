@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/providers/providers.dart';
+import 'package:footy_star/core/l10n/app_localizations.dart';
+import 'package:footy_star/core/theme/icons.dart';
 
 class ContractScreen extends ConsumerWidget {
   const ContractScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(gameControllerProvider);
     final economy = state.economy;
 
@@ -17,7 +20,8 @@ class ContractScreen extends ConsumerWidget {
     const duration = 2; // years
     const startDate = '01/07/2024';
     const endDate = '30/06/2026';
-    const role = 'Rotation';
+    // role value em l10n (em vez de string fixa)
+    final role = l10n.roleRotation;
 
     // Bonuses
     const bonusGoal = 500;
@@ -27,10 +31,10 @@ class ContractScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Contract Details'),
+        title: Text(l10n.contractDetails),
         actions: [
           IconButton(
-            icon: const Icon(Icons.share),
+            icon: const Icon(AppIcons.share),
             onPressed: () {
               // Share contract
             },
@@ -55,17 +59,17 @@ class ContractScreen extends ConsumerWidget {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'Active Contract',
+                        l10n.activeContract,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ],
                   ),
                   const SizedBox(height: 12),
-                  _ContractRow(label: 'Club', value: state.myTeam.name),
-                  _ContractRow(label: 'Duration', value: '$duration years'),
-                  _ContractRow(label: 'Start Date', value: startDate),
-                  _ContractRow(label: 'End Date', value: endDate),
-                  _ContractRow(label: 'Role', value: role),
+                  _ContractRow(label: l10n.team, value: state.myTeam.name),
+                  _ContractRow(label: l10n.duration, value: l10n.yearsDur(duration)),
+                  _ContractRow(label: l10n.startDate, value: startDate),
+                  _ContractRow(label: l10n.endDate, value: endDate),
+                  _ContractRow(label: l10n.role, value: role),
                 ],
               ),
             ),
@@ -74,7 +78,7 @@ class ContractScreen extends ConsumerWidget {
           const SizedBox(height: 16),
 
           // Salary Section
-          Text('Salary', style: Theme.of(context).textTheme.titleMedium),
+          Text(l10n.salary, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 8),
 
           Card(
@@ -85,7 +89,7 @@ class ContractScreen extends ConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Weekly'),
+                      Text(l10n.weekly),
                       Text(
                         '\$$weekly',
                         style: Theme.of(context).textTheme.titleLarge,
@@ -96,7 +100,7 @@ class ContractScreen extends ConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Annual'),
+                      Text(l10n.annual),
                       Text(
                         '\$$annual',
                         style: Theme.of(context).textTheme.titleMedium,
@@ -111,19 +115,19 @@ class ContractScreen extends ConsumerWidget {
           const SizedBox(height: 16),
 
           // Bonuses Section
-          Text('Performance Bonuses', style: Theme.of(context).textTheme.titleMedium),
+          Text(l10n.performanceBonuses, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 8),
 
           Card(
             child: Column(
               children: [
-                _BonusTile(label: 'Per Goal', amount: bonusGoal, icon: Icons.sports_soccer),
+                _BonusTile(label: l10n.perGoal, amount: bonusGoal, icon: Icons.sports_soccer),
                 const Divider(height: 1),
-                _BonusTile(label: 'Per Assist', amount: bonusAssist, icon: Icons.assistant),
+                _BonusTile(label: l10n.perAssist, amount: bonusAssist, icon: Icons.assistant),
                 const Divider(height: 1),
-                _BonusTile(label: 'Clean Sheet', amount: bonusCleanSheet, icon: Icons.shield),
+                _BonusTile(label: l10n.cleanSheet, amount: bonusCleanSheet, icon: Icons.shield),
                 const Divider(height: 1),
-                _BonusTile(label: 'Man of the Match', amount: bonusMotm, icon: Icons.star),
+                _BonusTile(label: l10n.manOfTheMatch, amount: bonusMotm, icon: Icons.star),
               ],
             ),
           ),
@@ -131,7 +135,7 @@ class ContractScreen extends ConsumerWidget {
           const SizedBox(height: 16),
 
           // Clauses Section
-          Text('Clauses', style: Theme.of(context).textTheme.titleMedium),
+          Text(l10n.clauses, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 8),
 
           Card(
@@ -140,11 +144,14 @@ class ContractScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _ClauseItem(label: 'Release Clause', value: '\$5,000,000'),
+                  _ClauseItem(label: l10n.releaseClause, value: '\$5,000,000'),
                   const SizedBox(height: 8),
-                  _ClauseItem(label: 'Wage Rise After 20 Games', value: '+10%'),
+                  _ClauseItem(label: l10n.wageRiseAfter20Games, value: '+10%'),
                   const SizedBox(height: 8),
-                  _ClauseItem(label: 'Loyalty Bonus', value: '\$50,000 after 2 years'),
+                  _ClauseItem(
+                    label: l10n.loyaltyBonus,
+                    value: '\$50,000 ${l10n.afterNYears(2)}',
+                  ),
                 ],
               ),
             ),

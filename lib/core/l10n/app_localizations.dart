@@ -98,6 +98,48 @@ abstract class AppLocalizations {
     Locale('pt'),
   ];
 
+  /// No description provided for @startDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Date'**
+  String get startDate;
+
+  /// No description provided for @endDate.
+  ///
+  /// In en, this message translates to:
+  /// **'End Date'**
+  String get endDate;
+
+  /// No description provided for @cleanSheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Clean Sheet'**
+  String get cleanSheet;
+
+  /// No description provided for @manOfTheMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Man of the Match'**
+  String get manOfTheMatch;
+
+  /// No description provided for @wageRiseAfter20Games.
+  ///
+  /// In en, this message translates to:
+  /// **'Wage Rise After 20 Games'**
+  String get wageRiseAfter20Games;
+
+  /// No description provided for @afterNYears.
+  ///
+  /// In en, this message translates to:
+  /// **'after {years} years'**
+  String afterNYears(int years);
+
+  /// No description provided for @yearsDur.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} years'**
+  String yearsDur(int count);
+
   /// No description provided for @positionShort.
   ///
   /// In en, this message translates to:

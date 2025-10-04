@@ -1,5 +1,24 @@
 {
   "@@locale": "en",
+
+  "startDate": "Start Date",
+  "endDate": "End Date",
+  "cleanSheet": "Clean Sheet",
+  "manOfTheMatch": "Man of the Match",
+  "wageRiseAfter20Games": "Wage Rise After 20 Games",
+  "afterNYears": "after {years} years",
+  "@afterNYears": {
+    "placeholders": { "years": { "type": "int" } }
+  },
+
+  "yearsDur": "{count} years",
+  "@yearsDur": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+
   "positionShort": "#",
   "acceleration": "Acceleration",
   "achievements": "Achievements",
