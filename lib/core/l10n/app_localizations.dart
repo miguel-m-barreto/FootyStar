@@ -98,6 +98,528 @@ abstract class AppLocalizations {
     Locale('pt'),
   ];
 
+  /// No description provided for @positionShort.
+  ///
+  /// In en, this message translates to:
+  /// **'#'**
+  String get positionShort;
+
+  /// No description provided for @acceleration.
+  ///
+  /// In en, this message translates to:
+  /// **'Acceleration'**
+  String get acceleration;
+
+  /// No description provided for @achievements.
+  ///
+  /// In en, this message translates to:
+  /// **'Achievements'**
+  String get achievements;
+
+  /// No description provided for @actions.
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get actions;
+
+  /// No description provided for @agility.
+  ///
+  /// In en, this message translates to:
+  /// **'Agility'**
+  String get agility;
+
+  /// No description provided for @annual.
+  ///
+  /// In en, this message translates to:
+  /// **'Annual'**
+  String get annual;
+
+  /// No description provided for @anticipation.
+  ///
+  /// In en, this message translates to:
+  /// **'Anticipation'**
+  String get anticipation;
+
+  /// No description provided for @assists.
+  ///
+  /// In en, this message translates to:
+  /// **'Assists'**
+  String get assists;
+
+  /// No description provided for @bravery.
+  ///
+  /// In en, this message translates to:
+  /// **'Bravery'**
+  String get bravery;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @career.
+  ///
+  /// In en, this message translates to:
+  /// **'Career'**
+  String get career;
+
+  /// No description provided for @cash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get cash;
+
+  /// No description provided for @casino.
+  ///
+  /// In en, this message translates to:
+  /// **'Casino'**
+  String get casino;
+
+  /// No description provided for @clauses.
+  ///
+  /// In en, this message translates to:
+  /// **'Clauses'**
+  String get clauses;
+
+  /// No description provided for @composure.
+  ///
+  /// In en, this message translates to:
+  /// **'Composure'**
+  String get composure;
+
+  /// No description provided for @consistency.
+  ///
+  /// In en, this message translates to:
+  /// **'Consistency'**
+  String get consistency;
+
+  /// No description provided for @costs.
+  ///
+  /// In en, this message translates to:
+  /// **'Costs'**
+  String get costs;
+
+  /// No description provided for @drawsShort.
+  ///
+  /// In en, this message translates to:
+  /// **'D'**
+  String get drawsShort;
+
+  /// No description provided for @determination.
+  ///
+  /// In en, this message translates to:
+  /// **'Determination'**
+  String get determination;
+
+  /// No description provided for @dribbling.
+  ///
+  /// In en, this message translates to:
+  /// **'Dribbling'**
+  String get dribbling;
+
+  /// No description provided for @duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get duration;
+
+  /// No description provided for @economy.
+  ///
+  /// In en, this message translates to:
+  /// **'Economy'**
+  String get economy;
+
+  /// No description provided for @english.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @fatigue.
+  ///
+  /// In en, this message translates to:
+  /// **'Fatigue'**
+  String get fatigue;
+
+  /// No description provided for @finance.
+  ///
+  /// In en, this message translates to:
+  /// **'Finance'**
+  String get finance;
+
+  /// No description provided for @finishing.
+  ///
+  /// In en, this message translates to:
+  /// **'Finishing'**
+  String get finishing;
+
+  /// No description provided for @flexibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Flexibility'**
+  String get flexibility;
+
+  /// No description provided for @form.
+  ///
+  /// In en, this message translates to:
+  /// **'Form'**
+  String get form;
+
+  /// No description provided for @goalsAgainstShort.
+  ///
+  /// In en, this message translates to:
+  /// **'GA'**
+  String get goalsAgainstShort;
+
+  /// No description provided for @goalDifferenceShort.
+  ///
+  /// In en, this message translates to:
+  /// **'GD'**
+  String get goalDifferenceShort;
+
+  /// No description provided for @general.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get general;
+
+  /// No description provided for @goalsForShort.
+  ///
+  /// In en, this message translates to:
+  /// **'GF'**
+  String get goalsForShort;
+
+  /// No description provided for @goals.
+  ///
+  /// In en, this message translates to:
+  /// **'Goals'**
+  String get goals;
+
+  /// No description provided for @good.
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get good;
+
+  /// No description provided for @heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Heading'**
+  String get heading;
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// No description provided for @income.
+  ///
+  /// In en, this message translates to:
+  /// **'Income'**
+  String get income;
+
+  /// No description provided for @investments.
+  ///
+  /// In en, this message translates to:
+  /// **'Investments'**
+  String get investments;
+
+  /// No description provided for @jumping.
+  ///
+  /// In en, this message translates to:
+  /// **'Jumping'**
+  String get jumping;
+
+  /// No description provided for @lossesShort.
+  ///
+  /// In en, this message translates to:
+  /// **'L'**
+  String get lossesShort;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @leadership.
+  ///
+  /// In en, this message translates to:
+  /// **'Leadership'**
+  String get leadership;
+
+  /// No description provided for @lifestyle.
+  ///
+  /// In en, this message translates to:
+  /// **'Lifestyle'**
+  String get lifestyle;
+
+  /// No description provided for @marking.
+  ///
+  /// In en, this message translates to:
+  /// **'Marking'**
+  String get marking;
+
+  /// No description provided for @matches.
+  ///
+  /// In en, this message translates to:
+  /// **'Matches'**
+  String get matches;
+
+  /// No description provided for @mental.
+  ///
+  /// In en, this message translates to:
+  /// **'Mental'**
+  String get mental;
+
+  /// No description provided for @morale.
+  ///
+  /// In en, this message translates to:
+  /// **'Morale'**
+  String get morale;
+
+  /// No description provided for @negotiate.
+  ///
+  /// In en, this message translates to:
+  /// **'Negotiate'**
+  String get negotiate;
+
+  /// No description provided for @newOffer.
+  ///
+  /// In en, this message translates to:
+  /// **'NEW'**
+  String get newOffer;
+
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// No description provided for @ovr.
+  ///
+  /// In en, this message translates to:
+  /// **'OVR'**
+  String get ovr;
+
+  /// No description provided for @playedShort.
+  ///
+  /// In en, this message translates to:
+  /// **'P'**
+  String get playedShort;
+
+  /// No description provided for @physical.
+  ///
+  /// In en, this message translates to:
+  /// **'Physical'**
+  String get physical;
+
+  /// No description provided for @play.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get play;
+
+  /// No description provided for @portuguese.
+  ///
+  /// In en, this message translates to:
+  /// **'Portuguese'**
+  String get portuguese;
+
+  /// No description provided for @positioning.
+  ///
+  /// In en, this message translates to:
+  /// **'Positioning'**
+  String get positioning;
+
+  /// No description provided for @power.
+  ///
+  /// In en, this message translates to:
+  /// **'Power'**
+  String get power;
+
+  /// No description provided for @preview.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get preview;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// No description provided for @pointsShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Pts'**
+  String get pointsShort;
+
+  /// No description provided for @ratings.
+  ///
+  /// In en, this message translates to:
+  /// **'Ratings'**
+  String get ratings;
+
+  /// No description provided for @recovery.
+  ///
+  /// In en, this message translates to:
+  /// **'Recovery'**
+  String get recovery;
+
+  /// No description provided for @reject.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get reject;
+
+  /// No description provided for @rep.
+  ///
+  /// In en, this message translates to:
+  /// **'Rep'**
+  String get rep;
+
+  /// No description provided for @role.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get role;
+
+  /// No description provided for @roleRotation.
+  ///
+  /// In en, this message translates to:
+  /// **'Rotation'**
+  String get roleRotation;
+
+  /// No description provided for @salary.
+  ///
+  /// In en, this message translates to:
+  /// **'Salary'**
+  String get salary;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @skills.
+  ///
+  /// In en, this message translates to:
+  /// **'Skills'**
+  String get skills;
+
+  /// No description provided for @squad.
+  ///
+  /// In en, this message translates to:
+  /// **'Squad'**
+  String get squad;
+
+  /// No description provided for @stamina.
+  ///
+  /// In en, this message translates to:
+  /// **'Stamina'**
+  String get stamina;
+
+  /// No description provided for @standings.
+  ///
+  /// In en, this message translates to:
+  /// **'Standings'**
+  String get standings;
+
+  /// No description provided for @roleStarter.
+  ///
+  /// In en, this message translates to:
+  /// **'Starter'**
+  String get roleStarter;
+
+  /// No description provided for @stats.
+  ///
+  /// In en, this message translates to:
+  /// **'Stats'**
+  String get stats;
+
+  /// No description provided for @store.
+  ///
+  /// In en, this message translates to:
+  /// **'Store'**
+  String get store;
+
+  /// No description provided for @tackling.
+  ///
+  /// In en, this message translates to:
+  /// **'Tackling'**
+  String get tackling;
+
+  /// No description provided for @team.
+  ///
+  /// In en, this message translates to:
+  /// **'Team'**
+  String get team;
+
+  /// No description provided for @technical.
+  ///
+  /// In en, this message translates to:
+  /// **'Technical'**
+  String get technical;
+
+  /// No description provided for @technique.
+  ///
+  /// In en, this message translates to:
+  /// **'Technique'**
+  String get technique;
+
+  /// No description provided for @train.
+  ///
+  /// In en, this message translates to:
+  /// **'Train'**
+  String get train;
+
+  /// No description provided for @vision.
+  ///
+  /// In en, this message translates to:
+  /// **'Vision'**
+  String get vision;
+
+  /// No description provided for @winsShort.
+  ///
+  /// In en, this message translates to:
+  /// **'W'**
+  String get winsShort;
+
+  /// No description provided for @week.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get week;
+
+  /// No description provided for @weekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get weekly;
+
+  /// No description provided for @wWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'W{week}'**
+  String wWeek(int week);
+
+  /// No description provided for @years.
+  ///
+  /// In en, this message translates to:
+  /// **'years'**
+  String get years;
+
   /// No description provided for @activeContract.
   ///
   /// In en, this message translates to:
@@ -122,17 +644,29 @@ abstract class AppLocalizations {
   /// **'Age {age}'**
   String ageAge(int age);
 
-  /// No description provided for @annual.
+  /// No description provided for @agentRelationship.
   ///
   /// In en, this message translates to:
-  /// **'Annual'**
-  String get annual;
+  /// **'Agent Relationship'**
+  String get agentRelationship;
 
-  /// No description provided for @cancel.
+  /// No description provided for @bestRatings.
   ///
   /// In en, this message translates to:
-  /// **'Cancel'**
-  String get cancel;
+  /// **'Best Ratings'**
+  String get bestRatings;
+
+  /// No description provided for @bodyStrength.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Strength'**
+  String get bodyStrength;
+
+  /// No description provided for @investmentsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Business portfolio'**
+  String get investmentsSubtitle;
 
   /// No description provided for @careerStatistics.
   ///
@@ -146,17 +680,11 @@ abstract class AppLocalizations {
   /// **'Career Stats'**
   String get careerStats;
 
-  /// No description provided for @casino.
+  /// No description provided for @cashPacksAndPremium.
   ///
   /// In en, this message translates to:
-  /// **'Casino'**
-  String get casino;
-
-  /// No description provided for @casinoAllIn.
-  ///
-  /// In en, this message translates to:
-  /// **'Casino — All In'**
-  String get casinoAllIn;
+  /// **'Cash packs & Premium'**
+  String get cashPacksAndPremium;
 
   /// No description provided for @casinoLoss.
   ///
@@ -164,29 +692,29 @@ abstract class AppLocalizations {
   /// **'Casino loss! You lost {loss}. New cash: {cash}'**
   String casinoLoss(double loss, double cash);
 
-  /// No description provided for @casinoPlaceBet.
-  ///
-  /// In en, this message translates to:
-  /// **'Casino — Place Bet'**
-  String get casinoPlaceBet;
-
   /// No description provided for @casinoWin.
   ///
   /// In en, this message translates to:
   /// **'Casino win! You won {delta}. New cash: {cash}'**
   String casinoWin(double delta, double cash);
 
-  /// No description provided for @cash.
+  /// No description provided for @casinoAllIn.
   ///
   /// In en, this message translates to:
-  /// **'Cash'**
-  String get cash;
+  /// **'Casino — All In'**
+  String get casinoAllIn;
 
-  /// No description provided for @clauses.
+  /// No description provided for @casinoPlaceBet.
   ///
   /// In en, this message translates to:
-  /// **'Clauses'**
-  String get clauses;
+  /// **'Casino — Place Bet'**
+  String get casinoPlaceBet;
+
+  /// No description provided for @claimFreeRewards.
+  ///
+  /// In en, this message translates to:
+  /// **'Claim free rewards'**
+  String get claimFreeRewards;
 
   /// No description provided for @clearAll.
   ///
@@ -194,35 +722,53 @@ abstract class AppLocalizations {
   /// **'Clear all'**
   String get clearAll;
 
+  /// No description provided for @coachTrust.
+  ///
+  /// In en, this message translates to:
+  /// **'Coach Trust'**
+  String get coachTrust;
+
   /// No description provided for @contractDetails.
   ///
   /// In en, this message translates to:
   /// **'Contract Details'**
   String get contractDetails;
 
-  /// No description provided for @costs.
+  /// No description provided for @profileSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Costs'**
-  String get costs;
+  /// **'Contract, wages & agent'**
+  String get profileSubtitle;
 
-  /// No description provided for @delta.
+  /// No description provided for @contractWagesAgent.
   ///
   /// In en, this message translates to:
-  /// **'Delta'**
-  String get delta;
+  /// **'Contract, wages & agent'**
+  String get contractWagesAgent;
 
-  /// No description provided for @duration.
+  /// No description provided for @nationalStandingsSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Duration'**
-  String get duration;
+  /// **'Country rankings'**
+  String get nationalStandingsSubtitle;
 
-  /// No description provided for @economy.
+  /// No description provided for @countryRankings.
   ///
   /// In en, this message translates to:
-  /// **'Economy'**
-  String get economy;
+  /// **'Country rankings'**
+  String get countryRankings;
+
+  /// No description provided for @currentBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Balance'**
+  String get currentBalance;
+
+  /// No description provided for @endWeekApplyEconomy.
+  ///
+  /// In en, this message translates to:
+  /// **'End Week (Apply Economy)'**
+  String get endWeekApplyEconomy;
 
   /// No description provided for @enterAnyAmount.
   ///
@@ -230,17 +776,17 @@ abstract class AppLocalizations {
   /// **'Enter any amount (up to your cash)'**
   String get enterAnyAmount;
 
-  /// No description provided for @finance.
+  /// No description provided for @firstTouch.
   ///
   /// In en, this message translates to:
-  /// **'Finance'**
-  String get finance;
+  /// **'First Touch'**
+  String get firstTouch;
 
-  /// No description provided for @general.
+  /// No description provided for @footyStar.
   ///
   /// In en, this message translates to:
-  /// **'General'**
-  String get general;
+  /// **'Footy Star'**
+  String get footyStar;
 
   /// No description provided for @goToMatches.
   ///
@@ -248,23 +794,35 @@ abstract class AppLocalizations {
   /// **'Go to Matches'**
   String get goToMatches;
 
-  /// No description provided for @home.
+  /// No description provided for @hourlyRewards.
   ///
   /// In en, this message translates to:
-  /// **'Home'**
-  String get home;
+  /// **'Hourly Rewards'**
+  String get hourlyRewards;
 
-  /// No description provided for @income.
+  /// No description provided for @lifestyleSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Income'**
-  String get income;
+  /// **'Housing, cars, luxury items'**
+  String get lifestyleSubtitle;
 
-  /// No description provided for @language.
+  /// No description provided for @housingCarsLuxuryItems.
   ///
   /// In en, this message translates to:
-  /// **'Language'**
-  String get language;
+  /// **'Housing, cars, luxury items'**
+  String get housingCarsLuxuryItems;
+
+  /// No description provided for @inboundTransfers.
+  ///
+  /// In en, this message translates to:
+  /// **'Inbound Transfers'**
+  String get inboundTransfers;
+
+  /// No description provided for @weekSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Income: \${earned} • Costs: \${spent} • Delta: {delta} • Cash: \${cash}'**
+  String weekSummary(int earned, int spent, int delta, int cash);
 
   /// No description provided for @languageChanged.
   ///
@@ -277,6 +835,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'League table'**
   String get leagueTable;
+
+  /// No description provided for @longPassing.
+  ///
+  /// In en, this message translates to:
+  /// **'Long Passing'**
+  String get longPassing;
+
+  /// No description provided for @longShots.
+  ///
+  /// In en, this message translates to:
+  /// **'Long Shots'**
+  String get longShots;
 
   /// No description provided for @loyaltyBonus.
   ///
@@ -314,17 +884,23 @@ abstract class AppLocalizations {
   /// **'My Team'**
   String get myTeam;
 
+  /// No description provided for @myTraining.
+  ///
+  /// In en, this message translates to:
+  /// **'My Training'**
+  String get myTraining;
+
+  /// No description provided for @nationalRankingsPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'National rankings will be shown here'**
+  String get nationalRankingsPlaceholder;
+
   /// No description provided for @nationalStandings.
   ///
   /// In en, this message translates to:
   /// **'National Standings'**
   String get nationalStandings;
-
-  /// No description provided for @negotiate.
-  ///
-  /// In en, this message translates to:
-  /// **'Negotiate'**
-  String get negotiate;
 
   /// No description provided for @nextMatch.
   ///
@@ -356,18 +932,6 @@ abstract class AppLocalizations {
   /// **'No standings yet. Play a match to populate the table.'**
   String get noStandingsYet;
 
-  /// No description provided for @notifications.
-  ///
-  /// In en, this message translates to:
-  /// **'Notifications'**
-  String get notifications;
-
-  /// No description provided for @ok.
-  ///
-  /// In en, this message translates to:
-  /// **'OK'**
-  String get ok;
-
   /// No description provided for @perAssist.
   ///
   /// In en, this message translates to:
@@ -386,12 +950,6 @@ abstract class AppLocalizations {
   /// **'Performance Bonuses'**
   String get performanceBonuses;
 
-  /// No description provided for @play.
-  ///
-  /// In en, this message translates to:
-  /// **'Play'**
-  String get play;
-
   /// No description provided for @playAdvance.
   ///
   /// In en, this message translates to:
@@ -404,35 +962,23 @@ abstract class AppLocalizations {
   /// **'Players Standings'**
   String get playersStandings;
 
-  /// No description provided for @preview.
-  ///
-  /// In en, this message translates to:
-  /// **'Preview'**
-  String get preview;
-
   /// No description provided for @previewSubtitle.
   ///
   /// In en, this message translates to:
   /// **'Quick preview of common labels'**
   String get previewSubtitle;
 
-  /// No description provided for @raiseApproved.
+  /// No description provided for @realMoneyPurchases.
   ///
   /// In en, this message translates to:
-  /// **'Raise approved (+{inc}/week). New salary: {next}/week.'**
-  String raiseApproved(double inc, double next);
+  /// **'Real Money Purchases'**
+  String get realMoneyPurchases;
 
-  /// No description provided for @raiseDenied.
+  /// No description provided for @recoverySession.
   ///
   /// In en, this message translates to:
-  /// **'Raise denied for now. Improve your form & reputation to increase chances.'**
-  String get raiseDenied;
-
-  /// No description provided for @reject.
-  ///
-  /// In en, this message translates to:
-  /// **'Reject'**
-  String get reject;
+  /// **'Recovery Session'**
+  String get recoverySession;
 
   /// No description provided for @releaseClause.
   ///
@@ -452,23 +998,29 @@ abstract class AppLocalizations {
   /// **'Request Transfer'**
   String get requestTransfer;
 
-  /// No description provided for @resultScore.
-  ///
-  /// In en, this message translates to:
-  /// **'Result: {hg} - {ag}'**
-  String resultScore(int hg, int ag);
-
   /// No description provided for @restAllSquad.
   ///
   /// In en, this message translates to:
   /// **'Rest All Squad'**
   String get restAllSquad;
 
-  /// No description provided for @salary.
+  /// No description provided for @resultPending.
   ///
   /// In en, this message translates to:
-  /// **'Salary'**
-  String get salary;
+  /// **'Result pending'**
+  String get resultPending;
+
+  /// No description provided for @resultScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Result: {hg} - {ag}'**
+  String resultScore(int hg, int ag);
+
+  /// No description provided for @newSeason.
+  ///
+  /// In en, this message translates to:
+  /// **'Season {season} has started'**
+  String newSeason(int season);
 
   /// No description provided for @selectLanguage.
   ///
@@ -476,17 +1028,29 @@ abstract class AppLocalizations {
   /// **'Select language'**
   String get selectLanguage;
 
-  /// No description provided for @settings.
+  /// No description provided for @shortPassing.
   ///
   /// In en, this message translates to:
-  /// **'Settings'**
-  String get settings;
+  /// **'Short Passing'**
+  String get shortPassing;
 
-  /// No description provided for @skills.
+  /// No description provided for @shortShots.
   ///
   /// In en, this message translates to:
-  /// **'Skills'**
-  String get skills;
+  /// **'Short Shots'**
+  String get shortShots;
+
+  /// No description provided for @sprintSpeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Sprint Speed'**
+  String get sprintSpeed;
+
+  /// No description provided for @squadRested.
+  ///
+  /// In en, this message translates to:
+  /// **'Squad rested and recovered fatigue'**
+  String get squadRested;
 
   /// No description provided for @statusPercent.
   ///
@@ -494,11 +1058,17 @@ abstract class AppLocalizations {
   /// **'Status: {status} ({value}%)'**
   String statusPercent(Object status, int value);
 
-  /// No description provided for @store.
+  /// No description provided for @teamOverview.
   ///
   /// In en, this message translates to:
-  /// **'Store'**
-  String get store;
+  /// **'Team overview'**
+  String get teamOverview;
+
+  /// No description provided for @thisWeeksMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'This week’s match'**
+  String get thisWeeksMatch;
 
   /// No description provided for @topAssists.
   ///
@@ -512,11 +1082,23 @@ abstract class AppLocalizations {
   /// **'Top Scorers'**
   String get topScorers;
 
-  /// No description provided for @train.
+  /// No description provided for @playersStandingsSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Train'**
-  String get train;
+  /// **'Top scorers & assists'**
+  String get playersStandingsSubtitle;
+
+  /// No description provided for @topScorersAssists.
+  ///
+  /// In en, this message translates to:
+  /// **'Top scorers & assists'**
+  String get topScorersAssists;
+
+  /// No description provided for @inboundTransfersSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer offers & negotiations'**
+  String get inboundTransfersSubtitle;
 
   /// No description provided for @trophiesMilestones.
   ///
@@ -536,29 +1118,17 @@ abstract class AppLocalizations {
   /// **'View Contract'**
   String get viewContract;
 
-  /// No description provided for @wWeek.
-  ///
-  /// In en, this message translates to:
-  /// **'W{week}'**
-  String wWeek(int week);
-
   /// No description provided for @wagerAmount.
   ///
   /// In en, this message translates to:
   /// **'Wager amount'**
   String get wagerAmount;
 
-  /// No description provided for @week.
+  /// No description provided for @weekEnded.
   ///
   /// In en, this message translates to:
-  /// **'Week'**
-  String get week;
-
-  /// No description provided for @weekly.
-  ///
-  /// In en, this message translates to:
-  /// **'Weekly'**
-  String get weekly;
+  /// **'Week {week} ended'**
+  String weekEnded(int week);
 
   /// No description provided for @weeklyCosts.
   ///
@@ -571,6 +1141,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Weekly Income'**
   String get weeklyIncome;
+
+  /// No description provided for @skillTrained.
+  ///
+  /// In en, this message translates to:
+  /// **'{player} improved {skill} to {level}'**
+  String skillTrained(Object player, Object skill, int level);
+
+  /// No description provided for @xpProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{xp} / {xpMax} XP'**
+  String xpProgress(int xp, int xpMax);
 }
 
 class _AppLocalizationsDelegate

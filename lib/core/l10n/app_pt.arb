@@ -1,137 +1,313 @@
 {
   "@@locale": "pt",
-
-  "activeContract": "Contrato Ativo",
-  "addDemoMessage": "Adicionar mensagem de demo",
-  "advanceWeek": "Avançar Semana",
-  "ageAge": "Idade {age}",
-  "@ageAge": {
-    "placeholders": { "age": { "type": "int" } }
-  },
+  "positionShort": "#",
+  "acceleration": "Aceleração",
+  "agility": "Agilidade",
+  "years": "anos",
+  "anticipation": "Antecipação",
   "annual": "Anual",
+  "assists": "Assistências",
+  "actions": "Ações",
+  "good": "Bom",
+  "composure": "Calma",
   "cancel": "Cancelar",
-  "careerStatistics": "Estatísticas de carreira",
-  "careerStats": "Estatísticas de Carreira",
+  "career": "Carreira",
   "casino": "Casino",
+  "standings": "Classificação",
+  "ratings": "Classificações",
+  "clauses": "Cláusulas",
+  "achievements": "Conquistas",
+  "consistency": "Consistência",
+  "bravery": "Coragem",
+  "costs": "Custos",
+  "lossesShort": "D",
+  "settings": "Definições",
+  "tackling": "Desarme",
+  "determination": "Determinação",
+  "goalDifferenceShort": "DG",
+  "dribbling": "Drible",
+  "duration": "Duração",
+  "drawsShort": "E",
+  "economy": "Economia",
+  "team": "Equipa",
+  "stats": "Estatísticas",
+  "fatigue": "Fadiga",
+  "finishing": "Finalização",
+  "finance": "Finanças",
+  "flexibility": "Flexibilidade",
+  "form": "Forma",
+  "physical": "Físico",
+  "general": "Geral",
+  "goalsForShort": "GM",
+  "goals": "Golos",
+  "goalsAgainstShort": "GS",
+  "language": "Idioma",
+  "jumping": "Impulsão",
+  "english": "Inglês",
+  "investments": "Investimentos",
+  "home": "Início",
+  "playedShort": "J",
+  "play": "Jogar",
+  "matches": "Jogos",
+  "leadership": "Liderança",
+  "store": "Loja",
+  "marking": "Marcação",
+  "mental": "Mental",
+  "morale": "Moral",
+  "negotiate": "Negociar",
+  "notifications": "Notificações",
+  "newOffer": "NOVO",
+  "ok": "OK",
+  "ovr": "OVR",
+  "role": "Papel",
+  "profile": "Perfil",
+  "squad": "Plantel",
+  "portuguese": "Português",
+  "positioning": "Posicionamento",
+  "power": "Potência",
+  "preview": "Pré-visualização",
+  "pointsShort": "Pts",
+  "income": "Receitas",
+  "recovery": "Recuperação",
+  "reject": "Rejeitar",
+  "rep": "Reputação",
+  "stamina": "Resistência",
+  "roleRotation": "Rotação",
+  "cash": "Saldo",
+  "salary": "Salário",
+  "week": "Semana",
+  "weekly": "Semanal",
+  "skills": "Skills",
+  "wWeek": "S{week}",
+  "roleStarter": "Titular",
+  "train": "Treinar",
+  "technique": "Técnica",
+  "technical": "Técnico",
+  "winsShort": "V",
+  "vision": "Visão",
+  "myTeam": "A Minha Equipa",
+  "addDemoMessage": "Adicionar mensagem de demo",
+  "noStandingsYet": "Ainda não há classificação. Joga um jogo para preencher a tabela.",
+  "nationalRankingsPlaceholder": "As classificações nacionais serão mostradas aqui",
+  "advanceWeek": "Avançar Semana",
+  "performanceBonuses": "Bónus de Desempenho",
+  "loyaltyBonus": "Bónus de Lealdade",
+  "investmentsSubtitle": "Carteira de negócios",
   "casinoAllIn": "Casino — All In",
-  "casinoLoss": "Casino: perdeste {loss}. Novo saldo: {cash}",
-  "@casinoLoss": {
-    "placeholders": {
-      "loss": { "type": "double" },
-      "cash": { "type": "double" }
-    }
-  },
   "casinoPlaceBet": "Casino — Fazer Aposta",
   "casinoWin": "Casino: ganhaste {delta}. Novo saldo: {cash}",
-  "@casinoWin": {
+  "casinoLoss": "Casino: perdeste {loss}. Novo saldo: {cash}",
+  "playersStandings": "Classificação de Jogadores",
+  "nationalStandings": "Classificação Nacional",
+  "nationalStandingsSubtitle": "Classificação por países",
+  "countryRankings": "Classificação por países",
+  "releaseClause": "Cláusula de Rescisão",
+  "realMoneyPurchases": "Compras com Dinheiro Real",
+  "coachTrust": "Confiança do Treinador",
+  "activeContract": "Contrato Ativo",
+  "profileSubtitle": "Contrato, salários e agente",
+  "contractWagesAgent": "Contrato, salários e agente",
+  "weeklyCosts": "Custos Semanais",
+  "restAllSquad": "Descansar Plantel",
+  "contractDetails": "Detalhes do Contrato",
+  "statusPercent": "Estado: {status} ({value}%)",
+  "careerStatistics": "Estatísticas de carreira",
+  "careerStats": "Estatísticas de Carreira",
+  "lifestyle": "Estilo de Vida",
+  "endWeekApplyEconomy": "Fechar Semana (Aplicar Economia)",
+  "footyStar": "Footy Star",
+  "bodyStrength": "Força Física",
+  "lifestyleSubtitle": "Habitação, carros, artigos de luxo",
+  "housingCarsLuxuryItems": "Habitação, carros, artigos de luxo",
+  "ageAge": "Idade {age}",
+  "languageChanged": "Idioma alterado",
+  "enterAnyAmount": "Introduz um valor (até ao saldo)",
+  "goToMatches": "Ir para Jogos",
+  "playAdvance": "Jogar e Avançar",
+  "matchScheduled": "Jogo agendado",
+  "heading": "Jogo Aéreo",
+  "thisWeeksMatch": "Jogo desta semana",
+  "matchPlayedFriendly": "Jogo realizado\n{home} vs {away} (amigável/fora de calendário)",
+  "clearAll": "Limpar tudo",
+  "topAssists": "Melhores Assistentes",
+  "bestRatings": "Melhores Classificações",
+  "topScorers": "Melhores Marcadores",
+  "playersStandingsSubtitle": "Melhores marcadores e assistências",
+  "topScorersAssists": "Melhores marcadores e assistências",
+  "lvLevel": "Nv {level}",
+  "myTraining": "O Meu Treino",
+  "cashPacksAndPremium": "Pacotes de saldo e Premium",
+  "shortPassing": "Passe Curto",
+  "longPassing": "Passe Longo",
+  "requestSalaryRaise": "Pedir Aumento",
+  "requestTransfer": "Pedir Transferência",
+  "squadRested": "Plantel descansado e fadiga recuperada",
+  "perAssist": "Por Assistência",
+  "perGoal": "Por Golo",
+  "firstTouch": "Primeiro Toque",
+  "inboundTransfersSubtitle": "Propostas e negociações",
+  "previewSubtitle": "Pré-visualização de etiquetas comuns",
+  "nextOpponent": "Próximo adversário: {opponent}",
+  "nextMatch": "Próximo jogo",
+  "weeklyIncome": "Receita Semanal",
+  "weekSummary": "Receitas: ${earned} • Custos: ${spent} • Delta: {delta} • Saldo: ${cash}",
+  "hourlyRewards": "Recompensas Horárias",
+  "agentRelationship": "Relação com o Agente",
+  "shortShots": "Remate Curto",
+  "longShots": "Remate Longo",
+  "claimFreeRewards": "Resgatar recompensas grátis",
+  "resultPending": "Resultado pendente",
+  "matchResult": "Resultado — Semana {week}\n{home} {hg} - {ag} {away}",
+  "resultScore": "Resultado: {hg} - {ag}",
+  "currentBalance": "Saldo Atual",
+  "selectLanguage": "Selecionar idioma",
+  "noFixturesScheduled": "Sem jogos agendados",
+  "noNotifications": "Sem notificações",
+  "weekEnded": "Semana {week} terminada",
+  "recoverySession": "Sessão de Recuperação",
+  "leagueTable": "Tabela da Liga",
+  "tryYourLuck": "Tenta a tua sorte",
+  "inboundTransfers": "Transferências Recebidas",
+  "trophiesMilestones": "Troféus e marcos",
+  "wagerAmount": "Valor da aposta",
+  "sprintSpeed": "Velocidade de Sprint",
+  "viewContract": "Ver Contrato",
+  "teamOverview": "Visão geral da equipa",
+  "skillTrained": "{player} melhorou {skill} para {level}",
+  "xpProgress": "{xp} / {xpMax} XP",
+  "newSeason": "Época {season} começou",
+  "@newSeason": {
     "placeholders": {
-      "delta": { "type": "double" },
-      "cash": { "type": "double" }
+      "season": {
+        "type": "int"
+      }
     }
   },
-  "cash": "Saldo",
-  "clauses": "Cláusulas",
-  "clearAll": "Limpar tudo",
-  "contractDetails": "Detalhes do Contrato",
-  "costs": "Custos",
-  "delta": "Delta",
-  "duration": "Duração",
-  "economy": "Economia",
-  "enterAnyAmount": "Introduz um valor (até ao saldo)",
-  "finance": "Finanças",
-  "general": "Geral",
-  "goToMatches": "Ir para Jogos",
-  "home": "Início",
-  "income": "Receitas",
-  "language": "Idioma",
-  "languageChanged": "Idioma alterado",
-  "leagueTable": "Tabela da Liga",
-  "loyaltyBonus": "Bónus de Lealdade",
-  "lvLevel": "Nv {level}",
-  "@lvLevel": {
-    "placeholders": { "level": { "type": "int" } }
-  },
-  "matchPlayedFriendly": "Jogo realizado\n{home} vs {away} (amigável/fora de calendário)",
-  "@matchPlayedFriendly": {
-    "placeholders": { "home": {}, "away": {} }
-  },
-  "matchResult": "Resultado — Semana {week}\n{home} {hg} - {ag} {away}",
-  "@matchResult": {
+  "@ageAge": {
     "placeholders": {
-      "week": { "type": "int" },
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "@casinoLoss": {
+    "placeholders": {
+      "loss": {
+        "type": "double"
+      },
+      "cash": {
+        "type": "double"
+      }
+    }
+  },
+  "@casinoWin": {
+    "placeholders": {
+      "delta": {
+        "type": "double"
+      },
+      "cash": {
+        "type": "double"
+      }
+    }
+  },
+  "@lvLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "@matchPlayedFriendly": {
+    "placeholders": {
       "home": {},
-      "hg": { "type": "int" },
-      "ag": { "type": "int" },
       "away": {}
     }
   },
-  "matchScheduled": "Jogo agendado",
-  "myTeam": "A Minha Equipa",
-  "nationalStandings": "Classificação Nacional",
-  "negotiate": "Negociar",
-  "nextMatch": "Próximo jogo",
-  "nextOpponent": "Próximo adversário: {opponent}",
-  "@nextOpponent": {
-    "placeholders": { "opponent": {} }
-  },
-  "noFixturesScheduled": "Sem jogos agendados",
-  "noNotifications": "Sem notificações",
-  "noStandingsYet": "Ainda não há classificação. Joga um jogo para preencher a tabela.",
-  "notifications": "Notificações",
-  "ok": "OK",
-  "perAssist": "Por Assistência",
-  "perGoal": "Por Golo",
-  "performanceBonuses": "Bónus de Desempenho",
-  "play": "Jogar",
-  "playAdvance": "Jogar e Avançar",
-  "playersStandings": "Classificação de Jogadores",
-  "preview": "Pré-visualização",
-  "previewSubtitle": "Pré-visualização de etiquetas comuns",
-  "raiseApproved": "Aumento aprovado (+{inc}/semana). Novo salário: {next}/semana.",
-  "@raiseApproved": {
+  "@matchResult": {
     "placeholders": {
-      "inc": { "type": "double" },
-      "next": { "type": "double" }
+      "week": {
+        "type": "int"
+      },
+      "home": {},
+      "hg": {
+        "type": "int"
+      },
+      "ag": {
+        "type": "int"
+      },
+      "away": {}
     }
   },
-  "raiseDenied": "Aumento recusado por agora. Melhora forma e reputação para aumentar as hipóteses.",
-  "reject": "Rejeitar",
-  "releaseClause": "Cláusula de Rescisão",
-  "requestSalaryRaise": "Pedir Aumento",
-  "requestTransfer": "Pedir Transferência",
-  "resultScore": "Resultado: {hg} - {ag}",
+  "@nextOpponent": {
+    "placeholders": {
+      "opponent": {}
+    }
+  },
   "@resultScore": {
     "placeholders": {
-      "hg": { "type": "int" },
-      "ag": { "type": "int" }
+      "hg": {
+        "type": "int"
+      },
+      "ag": {
+        "type": "int"
+      }
     }
   },
-  "restAllSquad": "Descansar Plantel",
-  "salary": "Salário",
-  "selectLanguage": "Selecionar idioma",
-  "settings": "Definições",
-  "skills": "Skills",
-  "statusPercent": "Estado: {status} ({value}%)",
+  "@skillTrained": {
+    "placeholders": {
+      "player": {},
+      "skill": {},
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "@statusPercent": {
     "placeholders": {
       "status": {},
-      "value": { "type": "int" }
+      "value": {
+        "type": "int"
+      }
     }
   },
-  "store": "Loja",
-  "topAssists": "Melhores Assistentes",
-  "topScorers": "Melhores Marcadores",
-  "train": "Treinar",
-  "trophiesMilestones": "Troféus e marcos",
-  "tryYourLuck": "Tenta a tua sorte",
-  "viewContract": "Ver Contrato",
-  "wWeek": "S{week}",
   "@wWeek": {
-    "placeholders": { "week": { "type": "int" } }
+    "placeholders": {
+      "week": {
+        "type": "int"
+      }
+    }
   },
-  "wagerAmount": "Valor da aposta",
-  "week": "Semana",
-  "weekly": "Semanal",
-  "weeklyCosts": "Custos Semanais",
-  "weeklyIncome": "Receita Semanal"
+  "@weekEnded": {
+    "placeholders": {
+      "week": {
+        "type": "int"
+      }
+    }
+  },
+  "@weekSummary": {
+    "placeholders": {
+      "earned": {
+        "type": "int"
+      },
+      "spent": {
+        "type": "int"
+      },
+      "delta": {
+        "type": "int"
+      },
+      "cash": {
+        "type": "int"
+      }
+    }
+  },
+  "@xpProgress": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      },
+      "xpMax": {
+        "type": "int"
+      }
+    }
+  }
 }

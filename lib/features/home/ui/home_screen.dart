@@ -40,7 +40,8 @@ class HomeScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(l10n.cash),
-                  Text('\$${s.economy.cash}', style: Theme.of(context).textTheme.titleMedium),
+                  Text('\$${s.economy.cash}',
+                      style: Theme.of(context).textTheme.titleMedium),
                 ],
               ),
             ),
@@ -72,7 +73,9 @@ class HomeScreen extends ConsumerWidget {
             child: ListTile(
               leading: const Icon(Icons.sports_soccer),
               title: Text(l10n.nextMatch),
-              subtitle: Text('${l10n.week} ${s.week}: ${s.myTeam.name} vs ${s.opponent.name}'),
+              subtitle: Text(
+                '${l10n.week} ${s.week}: ${s.myTeam.name} vs ${s.opponent.name}',
+              ),
             ),
           ),
           const SizedBox(height: 16),
@@ -81,7 +84,8 @@ class HomeScreen extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(l10n.notifications, style: Theme.of(context).textTheme.titleMedium),
+              Text(l10n.notifications,
+                  style: Theme.of(context).textTheme.titleMedium),
               TextButton(
                 onPressed: () {
                   ref.read(notificationsProvider.notifier).clearAll();
@@ -109,7 +113,9 @@ class HomeScreen extends ConsumerWidget {
                 onPressed: () {
                   ref.read(notificationsProvider.notifier).push(
                     AppMessage(
-                      id: DateTime.now().microsecondsSinceEpoch.toString(),
+                      id: DateTime.now()
+                          .microsecondsSinceEpoch
+                          .toString(),
                       title: l10n.matchScheduled,
                       body: l10n.nextOpponent(s.opponent.name),
                       ts: DateTime.now(),
@@ -121,7 +127,8 @@ class HomeScreen extends ConsumerWidget {
               OutlinedButton(
                 onPressed: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => const MatchScreen()),
+                    MaterialPageRoute(
+                        builder: (_) => const MatchScreen()),
                   );
                 },
                 child: Text(l10n.goToMatches),
@@ -170,11 +177,14 @@ class _MessageTile extends ConsumerWidget {
       child: ListTile(
         title: Text(
           msg.title,
-          style: TextStyle(fontWeight: isRead ? FontWeight.normal : FontWeight.w600),
+          style: TextStyle(
+              fontWeight:
+              isRead ? FontWeight.normal : FontWeight.w600),
         ),
         subtitle: Text(msg.body),
         trailing: IconButton(
-          icon: Icon(isRead ? Icons.mark_email_read : Icons.mark_email_unread),
+          icon: Icon(
+              isRead ? Icons.mark_email_read : Icons.mark_email_unread),
           onPressed: () {
             ref.read(notificationsProvider.notifier).markRead(msg.id);
           },

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/theme/app_theme.dart';
 import 'routes/shell_tabs.dart';
 import 'core/l10n/app_localizations.dart';
+import 'core/l10n/l10n_singleton.dart'; // adiciona isto
 
 // Controls current app locale (null = system)
 final localeProvider = StateProvider<Locale?>((_) => null);
@@ -31,6 +32,14 @@ class MyApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [Locale('en'), Locale('pt')],
+      // builder to update the singleton
+      builder: (context, child) {
+        final l10n = AppLocalizations.of(context);
+        if (l10n != null) {
+          L10n.set(l10n);
+        }
+        return child ?? const SizedBox.shrink();
+      },
       home: const ShellTabs(),
     );
   }

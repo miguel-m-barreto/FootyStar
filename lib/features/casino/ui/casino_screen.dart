@@ -46,8 +46,14 @@ class _CasinoScreenState extends ConsumerState<CasinoScreen> {
                 final amount = int.tryParse(_ctrl.text.trim()) ?? 0;
                 final res = game.casinoWagerWithResult(amount);
                 final txt = res.win
-                    ? l10n.casinoWin(res.delta.abs().toDouble(), state.economy.cash.toDouble())
-                    : l10n.casinoLoss(res.delta.abs().toDouble(), state.economy.cash.toDouble());
+                    ? l10n.casinoWin(
+                  res.delta.abs().toDouble(),
+                  state.economy.cash.toDouble(),
+                )
+                    : l10n.casinoLoss(
+                  res.delta.abs().toDouble(),
+                  state.economy.cash.toDouble(),
+                );
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text(txt)),
                 );
@@ -61,8 +67,14 @@ class _CasinoScreenState extends ConsumerState<CasinoScreen> {
                   : () {
                 final res = game.casinoWagerWithResult(state.economy.cash);
                 final txt = res.win
-                    ? l10n.casinoWin(res.delta.abs().toDouble(), state.economy.cash.toDouble())
-                    : l10n.casinoLoss(res.delta.abs().toDouble(), state.economy.cash.toDouble());
+                    ? l10n.casinoWin(
+                  res.delta.abs().toDouble(),
+                  state.economy.cash.toDouble(),
+                )
+                    : l10n.casinoLoss(
+                  res.delta.abs().toDouble(),
+                  state.economy.cash.toDouble(),
+                );
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text(txt)),
                 );

@@ -44,9 +44,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           const SizedBox(height: 8),
           DropdownButtonFormField<String>(
             value: _localeCode,
-            items: const [
-              DropdownMenuItem(value: 'en', child: Text('English')),
-              DropdownMenuItem(value: 'pt', child: Text('Português')),
+            items: [
+              DropdownMenuItem(value: 'en', child: Text(l10n.english)),
+              DropdownMenuItem(value: 'pt', child: Text(l10n.portuguese)),
             ],
             onChanged: _changeLocale,
             decoration: InputDecoration(

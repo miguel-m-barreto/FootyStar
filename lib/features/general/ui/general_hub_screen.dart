@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:footy_star/core/l10n/app_localizations.dart';
 
 import '../../achievements/ui/achievements_screen.dart';
 import '../../profile/ui/profile_screen.dart';
@@ -15,56 +16,58 @@ class GeneralHubScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('General')),
+      appBar: AppBar(title: Text(l10n.general)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           _HubCard(
-            title: 'Profile',
-            subtitle: 'Contract, wages & agent',
+            title: l10n.profile,
+            subtitle: l10n.profileSubtitle,
             icon: Icons.person,
             onTap: () => _navigateTo(context, const ProfileScreen()),
           ),
           _HubCard(
-            title: 'Squad',
-            subtitle: 'Team overview',
+            title: l10n.squad,
+            subtitle: l10n.teamOverview,
             icon: Icons.group,
             onTap: () => _navigateTo(context, const SquadScreen()),
           ),
           _HubCard(
-            title: 'Standings',
-            subtitle: 'League table',
+            title: l10n.standings,
+            subtitle: l10n.leagueTable,
             icon: Icons.emoji_events,
             onTap: () => _navigateTo(context, const StandingsScreen()),
           ),
           _HubCard(
-            title: 'Inbound Transfers',
-            subtitle: 'Transfer offers & negotiations',
+            title: l10n.inboundTransfers,
+            subtitle: l10n.inboundTransfersSubtitle,
             icon: Icons.swap_horiz,
             onTap: () => _navigateTo(context, const TransfersScreen()),
           ),
           _HubCard(
-            title: 'National Standings',
-            subtitle: 'Country rankings',
+            title: l10n.nationalStandings,
+            subtitle: l10n.nationalStandingsSubtitle,
             icon: Icons.flag,
             onTap: () => _navigateTo(context, const NationalStandingsScreen()),
           ),
           _HubCard(
-            title: 'Players Standings',
-            subtitle: 'Top scorers & assists',
+            title: l10n.playersStandings,
+            subtitle: l10n.playersStandingsSubtitle,
             icon: Icons.sports_soccer,
             onTap: () => _navigateTo(context, const PlayersStandingsScreen()),
           ),
           _HubCard(
-            title: 'Achievements',
-            subtitle: 'Trophies & milestones',
+            title: l10n.achievements,
+            subtitle: l10n.trophiesMilestones,
             icon: Icons.military_tech,
             onTap: () => _navigateTo(context, const AchievementsScreen()),
           ),
           _HubCard(
-            title: 'Stats',
-            subtitle: 'Career statistics',
+            title: l10n.stats,
+            subtitle: l10n.careerStatistics,
             icon: Icons.bar_chart,
             onTap: () => _navigateTo(context, const StatsScreen()),
           ),

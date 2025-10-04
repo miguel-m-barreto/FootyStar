@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:footy_star/core/l10n/app_localizations.dart';
 import '../../../app/providers/providers.dart';
 import '../../../domain/player.dart';
 import '../../../domain/skill.dart';
@@ -10,35 +11,38 @@ class TrainingScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final s = ref.watch(gameControllerProvider);
     // assuming first player is "me"
     final me = s.myTeam.squad.first;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Training'),
+        title: Text(l10n.myTraining),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           _ProfileCard(me: me),
           const SizedBox(height: 12),
-          Text('Skills', style: Theme.of(context).textTheme.titleMedium),
+          Text(l10n.skills, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 8),
           Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: me.skills.values.map((sk) => _SkillActionChip(me: me, sk: sk)).toList(),
+            children: me.skills.values
+                .map((sk) => _SkillActionChip(me: me, sk: sk))
+                .toList(),
           ),
           const SizedBox(height: 16),
-          Text('Recovery', style: Theme.of(context).textTheme.titleMedium),
+          Text(l10n.recovery, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 8),
           FilledButton.icon(
             onPressed: () {
               ref.read(gameControllerProvider.notifier).recoverSelf();
             },
             icon: const Icon(Icons.health_and_safety),
-            label: const Text('Recovery Session'),
+            label: Text(l10n.recoverySession),
           ),
         ],
       ),
@@ -52,6 +56,8 @@ class _ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -64,9 +70,9 @@ class _ProfileCard extends StatelessWidget {
               spacing: 8,
               runSpacing: 8,
               children: [
-                _Badge(text: 'Form ${(me.form * 100).round()}%'),
-                _Badge(text: 'Fatigue ${(me.fatigue * 100).round()}%'),
-                _Badge(text: 'Rep ${me.reputation.round()}'),
+                _Badge(text: '${l10n.form} ${(me.form * 100).round()}%'),
+                _Badge(text: '${l10n.fatigue} ${(me.fatigue * 100).round()}%'),
+                _Badge(text: '${l10n.rep} ${me.reputation.round()}'),
               ],
             ),
           ],
@@ -83,7 +89,8 @@ class _SkillActionChip extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final label = '${sk.name} ${sk.level}${sk.stars > 0 ? " ★" * sk.stars : ""}';
+    final label =
+        '${sk.name} ${sk.level}${sk.stars > 0 ? " ★" * sk.stars : ""}';
     return ActionChip(
       label: Text(label),
       onPressed: () {

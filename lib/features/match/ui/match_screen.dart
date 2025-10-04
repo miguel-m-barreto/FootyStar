@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:footy_star/core/l10n/app_localizations.dart';
 
 import '../../../app/providers/providers.dart';
 import '../../../domain/models/fixture.dart';
@@ -9,18 +10,19 @@ class MatchScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final s = ref.watch(gameControllerProvider);
 
     final fixtures = s.fixtures;
     if (fixtures.isEmpty) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Matches')),
-        body: const Center(child: Text('No fixtures scheduled')),
+        appBar: AppBar(title: Text(l10n.matches)),
+        body: Center(child: Text(l10n.noFixturesScheduled)),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Matches')),
+      appBar: AppBar(title: Text(l10n.matches)),
       body: ListView.separated(
         padding: const EdgeInsets.symmetric(vertical: 8),
         itemCount: fixtures.length,
@@ -33,31 +35,34 @@ class MatchScreen extends ConsumerWidget {
           return Card(
             margin: const EdgeInsets.symmetric(horizontal: 12),
             child: ListTile(
-              leading: _WeekBadge(week: f.week, highlight: isCurrent && !played),
+              leading:
+              _WeekBadge(week: f.week, highlight: isCurrent && !played),
               title: Text('${f.homeTeam} vs ${f.awayTeam}'),
               subtitle: played
                   ? _ResultTag(hg: f.homeGoals, ag: f.awayGoals)
                   : isCurrent
-                  ? const Text('This week’s match')
+                  ? Text(l10n.thisWeeksMatch)
                   : null,
               trailing: (!played && isCurrent)
                   ? Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Só joga o match, mantém a mesma semana
                   OutlinedButton(
                     onPressed: () {
-                      ref.read(gameControllerProvider.notifier).playMatch();
+                      ref
+                          .read(gameControllerProvider.notifier)
+                          .playMatch();
                     },
-                    child: const Text('Play'),
+                    child: Text(l10n.play),
                   ),
                   const SizedBox(width: 8),
-                  // Joga e avança a semana (economia + treino passivo + week++)
                   ElevatedButton(
                     onPressed: () async {
-                      await ref.read(gameControllerProvider.notifier).advanceWeek();
+                      await ref
+                          .read(gameControllerProvider.notifier)
+                          .advanceWeek();
                     },
-                    child: const Text('Play & Advance'),
+                    child: Text(l10n.playAdvance),
                   ),
                 ],
               )
@@ -77,6 +82,8 @@ class _WeekBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     final bg = highlight
         ? Theme.of(context).colorScheme.primaryContainer
         : Theme.of(context).colorScheme.surfaceVariant;
@@ -93,7 +100,7 @@ class _WeekBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
-        'W$week',
+        l10n.wWeek(week),
         style: TextStyle(color: fg, fontWeight: FontWeight.w600),
       ),
     );
@@ -107,8 +114,9 @@ class _ResultTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final has = (hg != null && ag != null);
-    final text = has ? 'Result: $hg - $ag' : 'Result pending';
+    final text = has ? l10n.resultScore(hg!, ag!) : l10n.resultPending;
     return Text(text);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:footy_star/core/l10n/app_localizations.dart';
 import '../../../app/providers/providers.dart';
 
 class StandingsScreen extends ConsumerWidget {
@@ -7,29 +8,30 @@ class StandingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final s = ref.watch(gameControllerProvider);
     final rows = s.table.sorted();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Standings')),
+      appBar: AppBar(title: Text(l10n.standings)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: rows.isEmpty
-            ? const Center(child: Text('No standings yet. Play a match to populate the table.'))
+            ? Center(child: Text(l10n.noStandingsYet))
             : SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: DataTable(
-            columns: const [
-              DataColumn(label: Text('#')),
-              DataColumn(label: Text('Team')),
-              DataColumn(label: Text('P')),
-              DataColumn(label: Text('W')),
-              DataColumn(label: Text('D')),
-              DataColumn(label: Text('L')),
-              DataColumn(label: Text('GF')),
-              DataColumn(label: Text('GA')),
-              DataColumn(label: Text('GD')),
-              DataColumn(label: Text('Pts')),
+            columns: [
+              DataColumn(label: Text(l10n.positionShort)), // "#"
+              DataColumn(label: Text(l10n.team)),
+              DataColumn(label: Text(l10n.playedShort)), // "P"
+              DataColumn(label: Text(l10n.winsShort)),   // "W"
+              DataColumn(label: Text(l10n.drawsShort)),  // "D"
+              DataColumn(label: Text(l10n.lossesShort)), // "L"
+              DataColumn(label: Text(l10n.goalsForShort)), // "GF"
+              DataColumn(label: Text(l10n.goalsAgainstShort)), // "GA"
+              DataColumn(label: Text(l10n.goalDifferenceShort)), // "GD"
+              DataColumn(label: Text(l10n.pointsShort)), // "Pts"
             ],
             rows: [
               for (int i = 0; i < rows.length; i++)

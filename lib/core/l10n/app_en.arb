@@ -1,137 +1,313 @@
 {
   "@@locale": "en",
-
+  "positionShort": "#",
+  "acceleration": "Acceleration",
+  "achievements": "Achievements",
+  "actions": "Actions",
+  "agility": "Agility",
+  "annual": "Annual",
+  "anticipation": "Anticipation",
+  "assists": "Assists",
+  "bravery": "Bravery",
+  "cancel": "Cancel",
+  "career": "Career",
+  "cash": "Cash",
+  "casino": "Casino",
+  "clauses": "Clauses",
+  "composure": "Composure",
+  "consistency": "Consistency",
+  "costs": "Costs",
+  "drawsShort": "D",
+  "determination": "Determination",
+  "dribbling": "Dribbling",
+  "duration": "Duration",
+  "economy": "Economy",
+  "english": "English",
+  "fatigue": "Fatigue",
+  "finance": "Finance",
+  "finishing": "Finishing",
+  "flexibility": "Flexibility",
+  "form": "Form",
+  "goalsAgainstShort": "GA",
+  "goalDifferenceShort": "GD",
+  "general": "General",
+  "goalsForShort": "GF",
+  "goals": "Goals",
+  "good": "Good",
+  "heading": "Heading",
+  "home": "Home",
+  "income": "Income",
+  "investments": "Investments",
+  "jumping": "Jumping",
+  "lossesShort": "L",
+  "language": "Language",
+  "leadership": "Leadership",
+  "lifestyle": "Lifestyle",
+  "marking": "Marking",
+  "matches": "Matches",
+  "mental": "Mental",
+  "morale": "Morale",
+  "negotiate": "Negotiate",
+  "newOffer": "NEW",
+  "notifications": "Notifications",
+  "ok": "OK",
+  "ovr": "OVR",
+  "playedShort": "P",
+  "physical": "Physical",
+  "play": "Play",
+  "portuguese": "Portuguese",
+  "positioning": "Positioning",
+  "power": "Power",
+  "preview": "Preview",
+  "profile": "Profile",
+  "pointsShort": "Pts",
+  "ratings": "Ratings",
+  "recovery": "Recovery",
+  "reject": "Reject",
+  "rep": "Rep",
+  "role": "Role",
+  "roleRotation": "Rotation",
+  "salary": "Salary",
+  "settings": "Settings",
+  "skills": "Skills",
+  "squad": "Squad",
+  "stamina": "Stamina",
+  "standings": "Standings",
+  "roleStarter": "Starter",
+  "stats": "Stats",
+  "store": "Store",
+  "tackling": "Tackling",
+  "team": "Team",
+  "technical": "Technical",
+  "technique": "Technique",
+  "train": "Train",
+  "vision": "Vision",
+  "winsShort": "W",
+  "week": "Week",
+  "weekly": "Weekly",
+  "wWeek": "W{week}",
+  "years": "years",
   "activeContract": "Active Contract",
   "addDemoMessage": "Add demo message",
   "advanceWeek": "Advance Week",
   "ageAge": "Age {age}",
-  "@ageAge": {
-    "placeholders": { "age": { "type": "int" } }
-  },
-  "annual": "Annual",
-  "cancel": "Cancel",
+  "agentRelationship": "Agent Relationship",
+  "bestRatings": "Best Ratings",
+  "bodyStrength": "Body Strength",
+  "investmentsSubtitle": "Business portfolio",
   "careerStatistics": "Career statistics",
   "careerStats": "Career Stats",
-  "casino": "Casino",
-  "casinoAllIn": "Casino — All In",
+  "cashPacksAndPremium": "Cash packs & Premium",
   "casinoLoss": "Casino loss! You lost {loss}. New cash: {cash}",
-  "@casinoLoss": {
-    "placeholders": {
-      "loss": { "type": "double" },
-      "cash": { "type": "double" }
-    }
-  },
-  "casinoPlaceBet": "Casino — Place Bet",
   "casinoWin": "Casino win! You won {delta}. New cash: {cash}",
-  "@casinoWin": {
-    "placeholders": {
-      "delta": { "type": "double" },
-      "cash": { "type": "double" }
-    }
-  },
-  "cash": "Cash",
-  "clauses": "Clauses",
+  "casinoAllIn": "Casino — All In",
+  "casinoPlaceBet": "Casino — Place Bet",
+  "claimFreeRewards": "Claim free rewards",
   "clearAll": "Clear all",
+  "coachTrust": "Coach Trust",
   "contractDetails": "Contract Details",
-  "costs": "Costs",
-  "delta": "Delta",
-  "duration": "Duration",
-  "economy": "Economy",
+  "profileSubtitle": "Contract, wages & agent",
+  "contractWagesAgent": "Contract, wages & agent",
+  "nationalStandingsSubtitle": "Country rankings",
+  "countryRankings": "Country rankings",
+  "currentBalance": "Current Balance",
+  "endWeekApplyEconomy": "End Week (Apply Economy)",
   "enterAnyAmount": "Enter any amount (up to your cash)",
-  "finance": "Finance",
-  "general": "General",
+  "firstTouch": "First Touch",
+  "footyStar": "Footy Star",
   "goToMatches": "Go to Matches",
-  "home": "Home",
-  "income": "Income",
-  "language": "Language",
+  "hourlyRewards": "Hourly Rewards",
+  "lifestyleSubtitle": "Housing, cars, luxury items",
+  "housingCarsLuxuryItems": "Housing, cars, luxury items",
+  "inboundTransfers": "Inbound Transfers",
+  "weekSummary": "Income: ${earned} • Costs: ${spent} • Delta: {delta} • Cash: ${cash}",
   "languageChanged": "Language changed",
   "leagueTable": "League table",
+  "longPassing": "Long Passing",
+  "longShots": "Long Shots",
   "loyaltyBonus": "Loyalty Bonus",
   "lvLevel": "Lv {level}",
-  "@lvLevel": {
-    "placeholders": { "level": { "type": "int" } }
-  },
   "matchPlayedFriendly": "Match played\n{home} vs {away} (friendly/unscheduled)",
-  "@matchPlayedFriendly": {
-    "placeholders": { "home": {}, "away": {} }
-  },
   "matchResult": "Match result — Week {week}\n{home} {hg} - {ag} {away}",
-  "@matchResult": {
-    "placeholders": {
-      "week": { "type": "int" },
-      "home": {},
-      "hg": { "type": "int" },
-      "ag": { "type": "int" },
-      "away": {}
-    }
-  },
   "matchScheduled": "Match scheduled",
   "myTeam": "My Team",
+  "myTraining": "My Training",
+  "nationalRankingsPlaceholder": "National rankings will be shown here",
   "nationalStandings": "National Standings",
-  "negotiate": "Negotiate",
   "nextMatch": "Next match",
   "nextOpponent": "Next opponent: {opponent}",
-  "@nextOpponent": {
-    "placeholders": { "opponent": {} }
-  },
   "noFixturesScheduled": "No fixtures scheduled",
   "noNotifications": "No notifications yet",
   "noStandingsYet": "No standings yet. Play a match to populate the table.",
-  "notifications": "Notifications",
-  "ok": "OK",
   "perAssist": "Per Assist",
   "perGoal": "Per Goal",
   "performanceBonuses": "Performance Bonuses",
-  "play": "Play",
   "playAdvance": "Play & Advance",
   "playersStandings": "Players Standings",
-  "preview": "Preview",
   "previewSubtitle": "Quick preview of common labels",
-  "raiseApproved": "Raise approved (+{inc}/week). New salary: {next}/week.",
-  "@raiseApproved": {
-    "placeholders": {
-      "inc": { "type": "double" },
-      "next": { "type": "double" }
-    }
-  },
-  "raiseDenied": "Raise denied for now. Improve your form & reputation to increase chances.",
-  "reject": "Reject",
+  "realMoneyPurchases": "Real Money Purchases",
+  "recoverySession": "Recovery Session",
   "releaseClause": "Release Clause",
   "requestSalaryRaise": "Request Salary Raise",
   "requestTransfer": "Request Transfer",
-  "resultScore": "Result: {hg} - {ag}",
-  "@resultScore": {
-    "placeholders": {
-      "hg": { "type": "int" },
-      "ag": { "type": "int" }
-    }
-  },
   "restAllSquad": "Rest All Squad",
-  "salary": "Salary",
+  "resultPending": "Result pending",
+  "resultScore": "Result: {hg} - {ag}",
+  "newSeason": "Season {season} has started",
   "selectLanguage": "Select language",
-  "settings": "Settings",
-  "skills": "Skills",
+  "shortPassing": "Short Passing",
+  "shortShots": "Short Shots",
+  "sprintSpeed": "Sprint Speed",
+  "squadRested": "Squad rested and recovered fatigue",
   "statusPercent": "Status: {status} ({value}%)",
-  "@statusPercent": {
-    "placeholders": {
-      "status": {},
-      "value": { "type": "int" }
-    }
-  },
-  "store": "Store",
+  "teamOverview": "Team overview",
+  "thisWeeksMatch": "This week’s match",
   "topAssists": "Top Assists",
   "topScorers": "Top Scorers",
-  "train": "Train",
+  "playersStandingsSubtitle": "Top scorers & assists",
+  "topScorersAssists": "Top scorers & assists",
+  "inboundTransfersSubtitle": "Transfer offers & negotiations",
   "trophiesMilestones": "Trophies & milestones",
   "tryYourLuck": "Try your luck",
   "viewContract": "View Contract",
-  "wWeek": "W{week}",
-  "@wWeek": {
-    "placeholders": { "week": { "type": "int" } }
-  },
   "wagerAmount": "Wager amount",
-  "week": "Week",
-  "weekly": "Weekly",
+  "weekEnded": "Week {week} ended",
   "weeklyCosts": "Weekly Costs",
-  "weeklyIncome": "Weekly Income"
+  "weeklyIncome": "Weekly Income",
+  "skillTrained": "{player} improved {skill} to {level}",
+  "xpProgress": "{xp} / {xpMax} XP",
+  "@newSeason": {
+    "placeholders": {
+      "season": {
+        "type": "int"
+      }
+    }
+  },
+  "@ageAge": {
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "@casinoLoss": {
+    "placeholders": {
+      "loss": {
+        "type": "double"
+      },
+      "cash": {
+        "type": "double"
+      }
+    }
+  },
+  "@casinoWin": {
+    "placeholders": {
+      "delta": {
+        "type": "double"
+      },
+      "cash": {
+        "type": "double"
+      }
+    }
+  },
+  "@lvLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "@matchPlayedFriendly": {
+    "placeholders": {
+      "home": {},
+      "away": {}
+    }
+  },
+  "@matchResult": {
+    "placeholders": {
+      "week": {
+        "type": "int"
+      },
+      "home": {},
+      "hg": {
+        "type": "int"
+      },
+      "ag": {
+        "type": "int"
+      },
+      "away": {}
+    }
+  },
+  "@nextOpponent": {
+    "placeholders": {
+      "opponent": {}
+    }
+  },
+  "@resultScore": {
+    "placeholders": {
+      "hg": {
+        "type": "int"
+      },
+      "ag": {
+        "type": "int"
+      }
+    }
+  },
+  "@skillTrained": {
+    "placeholders": {
+      "player": {},
+      "skill": {},
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "@statusPercent": {
+    "placeholders": {
+      "status": {},
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "@wWeek": {
+    "placeholders": {
+      "week": {
+        "type": "int"
+      }
+    }
+  },
+  "@weekEnded": {
+    "placeholders": {
+      "week": {
+        "type": "int"
+      }
+    }
+  },
+  "@weekSummary": {
+    "placeholders": {
+      "earned": {
+        "type": "int"
+      },
+      "spent": {
+        "type": "int"
+      },
+      "delta": {
+        "type": "int"
+      },
+      "cash": {
+        "type": "int"
+      }
+    }
+  },
+  "@xpProgress": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      },
+      "xpMax": {
+        "type": "int"
+      }
+    }
+  }
 }

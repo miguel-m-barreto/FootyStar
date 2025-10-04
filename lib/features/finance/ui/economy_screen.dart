@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:footy_star/core/l10n/app_localizations.dart';
 import '../../../app/providers/providers.dart';
 import '../../casino/ui/casino_screen.dart';
 
@@ -8,11 +9,12 @@ class EconomyScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(gameControllerProvider);
     final eco = state.economy;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Economy')),
+      appBar: AppBar(title: Text(l10n.economy)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -23,11 +25,15 @@ class EconomyScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Current Balance',
-                      style: Theme.of(context).textTheme.titleMedium),
+                  Text(
+                    l10n.currentBalance,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                   const SizedBox(height: 8),
-                  Text('\$${eco.cash}',
-                      style: Theme.of(context).textTheme.headlineLarge),
+                  Text(
+                    '\$${eco.cash}',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
                 ],
               ),
             ),
@@ -40,7 +46,7 @@ class EconomyScreen extends ConsumerWidget {
             children: [
               Expanded(
                 child: _MetricCard(
-                  title: 'Weekly Income',
+                  title: l10n.weeklyIncome,
                   value: '\$${eco.weeklyIncome}',
                   icon: Icons.trending_up,
                   color: Colors.green,
@@ -49,7 +55,7 @@ class EconomyScreen extends ConsumerWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: _MetricCard(
-                  title: 'Weekly Costs',
+                  title: l10n.weeklyCosts,
                   value: '\$${eco.weeklyCosts}',
                   icon: Icons.trending_down,
                   color: Colors.red,
@@ -62,8 +68,8 @@ class EconomyScreen extends ConsumerWidget {
 
           // Sub-sections
           _SectionCard(
-            title: 'Lifestyle',
-            subtitle: 'Housing, cars, luxury items',
+            title: l10n.lifestyle,
+            subtitle: l10n.lifestyleSubtitle,
             icon: Icons.home,
             onTap: () {
               // Navigate to Lifestyle screen
@@ -71,8 +77,8 @@ class EconomyScreen extends ConsumerWidget {
           ),
 
           _SectionCard(
-            title: 'Investments',
-            subtitle: 'Business portfolio',
+            title: l10n.investments,
+            subtitle: l10n.investmentsSubtitle,
             icon: Icons.business,
             onTap: () {
               // Navigate to Investments screen
@@ -80,12 +86,14 @@ class EconomyScreen extends ConsumerWidget {
           ),
 
           _SectionCard(
-            title: 'Casino',
-            subtitle: 'Try your luck',
+            title: l10n.casino,
+            subtitle: l10n.tryYourLuck,
             icon: Icons.casino,
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const CasinoScreen()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const CasinoScreen()),
+              );
             },
           ),
         ],

@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:footy_star/core/l10n/app_localizations.dart';
 
 class SkillsScreen extends ConsumerWidget {
   const SkillsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Skills'),
-          bottom: const TabBar(
+          title: Text(l10n.skills),
+          bottom: TabBar(
             tabs: [
-              Tab(text: 'Physical'),
-              Tab(text: 'Technical'),
-              Tab(text: 'Mental'),
+              Tab(text: l10n.physical),
+              Tab(text: l10n.technical),
+              Tab(text: l10n.mental),
             ],
           ),
         ),
@@ -36,16 +39,18 @@ class _PhysicalSkillsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final skills = [
-      'Acceleration',
-      'Sprint Speed',
-      'Agility',
-      'Body Strength',
-      'Jumping',
-      'Stamina',
-      'Power',
-      'Flexibility',
-      'Recovery',
+    final l10n = AppLocalizations.of(context)!;
+
+    final skills = <String>[
+      l10n.acceleration,
+      l10n.sprintSpeed,
+      l10n.agility,
+      l10n.bodyStrength,
+      l10n.jumping,
+      l10n.stamina,
+      l10n.power,
+      l10n.flexibility,
+      l10n.recovery,
     ];
 
     return _SkillsList(skills: skills);
@@ -57,17 +62,19 @@ class _TechnicalSkillsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final skills = [
-      'First Touch',
-      'Dribbling',
-      'Technique',
-      'Short Passing',
-      'Long Passing',
-      'Vision',
-      'Finishing',
-      'Short Shots',
-      'Long Shots',
-      'Heading',
+    final l10n = AppLocalizations.of(context)!;
+
+    final skills = <String>[
+      l10n.firstTouch,
+      l10n.dribbling,
+      l10n.technique,
+      l10n.shortPassing,
+      l10n.longPassing,
+      l10n.vision,
+      l10n.finishing,
+      l10n.shortShots,
+      l10n.longShots,
+      l10n.heading,
     ];
 
     return _SkillsList(skills: skills);
@@ -79,16 +86,18 @@ class _MentalSkillsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final skills = [
-      'Anticipation',
-      'Positioning',
-      'Marking',
-      'Tackling',
-      'Composure',
-      'Consistency',
-      'Leadership',
-      'Determination',
-      'Bravery',
+    final l10n = AppLocalizations.of(context)!;
+
+    final skills = <String>[
+      l10n.anticipation,
+      l10n.positioning,
+      l10n.marking,
+      l10n.tackling,
+      l10n.composure,
+      l10n.consistency,
+      l10n.leadership,
+      l10n.determination,
+      l10n.bravery,
     ];
 
     return _SkillsList(skills: skills);
@@ -131,6 +140,8 @@ class _SkillCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
       child: Padding(
@@ -146,7 +157,7 @@ class _SkillCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
-                  'Lv $level',
+                  l10n.lvLevel(level),
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],
@@ -159,7 +170,7 @@ class _SkillCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              '$xp / $xpMax XP',
+              l10n.xpProgress(xp, xpMax),
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],

@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:footy_star/core/l10n/app_localizations.dart';
 
 class TransfersScreen extends ConsumerWidget {
   const TransfersScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Inbound Transfers')),
+      appBar: AppBar(title: Text(l10n.inboundTransfers)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           _TransferOfferCard(
             club: 'Real Madrid',
             salary: 50000,
-            role: 'Starter',
+            role: l10n.roleStarter,
             duration: 3,
           ),
           _TransferOfferCard(
             club: 'Manchester City',
             salary: 45000,
-            role: 'Rotation',
+            role: l10n.roleRotation,
             duration: 2,
           ),
         ],
@@ -44,6 +47,8 @@ class _TransferOfferCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       child: Padding(
@@ -59,23 +64,27 @@ class _TransferOfferCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primaryContainer,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Text('NEW'),
+                  child: Text(l10n.newOffer),
                 ),
               ],
             ),
             const SizedBox(height: 8),
             Row(
               children: [
-                _OfferDetail(label: 'Salary', value: '\$$salary/week'),
+                _OfferDetail(
+                    label: l10n.salary, value: '\$$salary/${l10n.weekly}'),
                 const SizedBox(width: 16),
-                _OfferDetail(label: 'Role', value: role),
+                _OfferDetail(label: l10n.role, value: role),
                 const SizedBox(width: 16),
-                _OfferDetail(label: 'Duration', value: '$duration years'),
+                _OfferDetail(
+                    label: l10n.duration,
+                    value: '$duration ${l10n.years}'),
               ],
             ),
             const SizedBox(height: 12),
@@ -84,14 +93,14 @@ class _TransferOfferCard extends StatelessWidget {
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () {},
-                    child: const Text('Reject'),
+                    child: Text(l10n.reject),
                   ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: FilledButton(
                     onPressed: () {},
-                    child: const Text('Negotiate'),
+                    child: Text(l10n.negotiate),
                   ),
                 ),
               ],
