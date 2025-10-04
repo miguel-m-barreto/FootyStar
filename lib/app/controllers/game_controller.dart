@@ -1,7 +1,8 @@
 import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/player.dart';
+import '../../domain/models/player.dart';
+import '../../domain/models/skill.dart';
 import '../../domain/skill.dart';
 import '../../domain/team.dart';
 import '../../domain/league.dart';
@@ -25,6 +26,8 @@ import '../../messages/economy_messages.dart';
 import '../../messages/match_messages.dart';
 import '../../messages/skill_messages.dart';
 import '../../messages/casino_messages.dart';
+import '../../domain/models/skills_catalog.dart';
+
 
 class GameController extends Notifier<GameState> {
   late final _training = TrainingService();
@@ -141,7 +144,6 @@ class GameController extends Notifier<GameState> {
   // PLAYER-CENTRIC UTILITIES
   // =========================
 
-  /// ID do jogador controlado (ajusta se tiveres outra flag)
   String get _meId => state.myTeam.squad.first.id;
   Player get _me => state.myTeam.squad.firstWhere((p) => p.id == _meId);
 
@@ -581,5 +583,117 @@ class GameController extends Notifier<GameState> {
   }
 
 
+  // DUMMY PLAYER //
+
+  Player _createInitialPlayer() {
+    // Initialize all 28 skills with base values
+    final Map<String, Skill> allSkills = {};
+
+    for (final entry in SkillsCatalog.all28Skills.entries) {
+      allSkills[entry.key] = entry.value.copyWith(
+        level: 45 + _rng.nextInt(20), // Random 45-65
+        currentXp: _rng.nextInt(30),
+      );
+    }
+
+    return Player(
+      id: "p1",
+      name: "Rui Silva",
+      age: 22,
+      role: PlayerRole.midfielder, // Or striker/defender
+      skills: allSkills,
+      form: 0.8,
+      fatigue: 0.2,
+      reputation: 15.0,
+      sp: 10, // Starting SP
+      consistency: 55.0,
+      determination: 60.0,
+      leadership: 45.0,
+    );
+  }
+
+  // =========================
+  // SKILLS SYSTEM
+  // =========================
+
+  /// Train a specific skill using the new XP system
+  void trainSkillWithXP(String skillId) {
+    final me = _me;
+    final updatedPlayer = _training.trainSkill(me, skillId, baseXp: 30);
+    _commitMe(updatedPlayer);
+
+    final skill = updatedPlayer.skills[skillId];
+    if (skill != null) {
+      _notify(
+        'Training',
+        'Trained ${skill.getLocalizedName(context)} - Level ${skill.level}',
+      );
+    }
+  }
+
+  /// Use SP to boost a skill
+  void useSpOnSkill(String skillId, int spAmount) {
+    if (spAmount <= 0 || spAmount > _me.sp) return;
+
+    final updatedPlayer = _training.useSpOnSkill(_me, skillId, spAmount);
+    _commitMe(updatedPlayer);
+
+    _notify(
+      'Skills',
+      'Used $spAmount SP on ${skillId}',
+    );
+  }
+
+  /// Promote a single skill (pay cost)
+  void promoteSkill(String skillId) {
+    final skill = _me.skills[skillId];
+    if (skill == null || skill.queuedLevels <= 0) return;
+
+    final cost = skill.promotionCost(skill.level);
+    if (state.economy.cash < cost) {
+      _notify('Skills', 'Not enough cash to promote (need \$$cost)');
+      return;
+    }
+
+    final (updatedPlayer, success, _) = _training.promoteSkill(
+      _me,
+      skillId,
+      state.economy.cash,
+    );
+
+    if (success) {
+      _commitMe(updatedPlayer);
+      addExpense(cost);
+      _notify(
+        'Skills',
+        'Promoted ${skill.getLocalizedName(context)} to level ${updatedPlayer.skills[skillId]?.level}',
+      );
+    }
+  }
+
+  /// Promote all queued skills
+  void promoteAllSkills() {
+    final (updatedPlayer, totalCost, promotedSkills) = _training.promoteAllSkills(
+      _me,
+      state.economy.cash,
+    );
+
+    if (promotedSkills.isNotEmpty) {
+      _commitMe(updatedPlayer);
+      addExpense(totalCost);
+      _notify(
+        'Skills',
+        'Promoted ${promotedSkills.length} skills for \$$totalCost',
+      );
+    } else {
+      _notify('Skills', 'No skills to promote or insufficient funds');
+    }
+  }
+
+  /// Weekly passive training (called in advanceWeek)
+  void _applyWeeklyTraining() {
+    final updatedPlayer = _training.passiveWeeklyTraining(_me);
+    _commitMe(updatedPlayer);
+  }
 
 }

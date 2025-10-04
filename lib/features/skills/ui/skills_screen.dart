@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:footy_star/core/l10n/app_localizations.dart';
+import '../../../app/providers/providers.dart';
+import '../../../domain/models/skill.dart';
+import '../../../core/l10n/app_localizations.dart';
 
 class SkillsScreen extends ConsumerWidget {
   const SkillsScreen({super.key});
@@ -8,6 +10,20 @@ class SkillsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
+    final state = ref.watch(gameControllerProvider);
+    final controller = ref.read(gameControllerProvider.notifier);
+
+    // Get player skills
+    final player = state.myTeam.squad.first;
+    final skills = player.skills;
+
+    // Group skills by category
+    final physicalSkills = skills.values.where((s) => s.category == SkillCategory.physical).toList();
+    final technicalSkills = skills.values.where((s) => s.category == SkillCategory.technical).toList();
+    final mentalSkills = skills.values.where((s) => s.category == SkillCategory.mental).toList();
+
+    // Count skills ready to promote
+    final readyToPromote = skills.values.where((s) => s.queuedLevels > 0).length;
 
     return DefaultTabController(
       length: 3,
@@ -21,126 +37,153 @@ class SkillsScreen extends ConsumerWidget {
               Tab(text: l10n.mental),
             ],
           ),
+          actions: [
+            if (readyToPromote > 0)
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Center(
+                  child: FilledButton(
+                    onPressed: () => _showPromoteAllDialog(context, ref),
+                    child: Text('Promote All ($readyToPromote)'),
+                  ),
+                ),
+              ),
+          ],
         ),
-        body: const TabBarView(
+        body: Column(
           children: [
-            _PhysicalSkillsTab(),
-            _TechnicalSkillsTab(),
-            _MentalSkillsTab(),
+            // SP Bar
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surfaceVariant,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Skill Points (SP)',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      '${player.sp} SP',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Skills tabs
+            Expanded(
+              child: TabBarView(
+                children: [
+                  _SkillsList(skills: physicalSkills),
+                  _SkillsList(skills: technicalSkills),
+                  _SkillsList(skills: mentalSkills),
+                ],
+              ),
+            ),
           ],
         ),
       ),
     );
   }
-}
 
-class _PhysicalSkillsTab extends StatelessWidget {
-  const _PhysicalSkillsTab();
+  void _showPromoteAllDialog(BuildContext context, WidgetRef ref) {
+    final state = ref.read(gameControllerProvider);
+    final player = state.myTeam.squad.first;
 
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    // Calculate total cost
+    int totalCost = 0;
+    final skillsToPromote = player.skills.values.where((s) => s.queuedLevels > 0).toList();
+    for (final skill in skillsToPromote) {
+      totalCost += skill.totalPromotionCost;
+    }
 
-    final skills = <String>[
-      l10n.acceleration,
-      l10n.sprintSpeed,
-      l10n.agility,
-      l10n.bodyStrength,
-      l10n.jumping,
-      l10n.stamina,
-      l10n.power,
-      l10n.flexibility,
-      l10n.recovery,
-    ];
+    final canAfford = state.economy.cash >= totalCost;
 
-    return _SkillsList(skills: skills);
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Promote All Skills'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('${skillsToPromote.length} skills ready to promote'),
+            const SizedBox(height: 8),
+            Text(
+              'Total Cost: \$$totalCost',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            Text(
+              'Current Cash: \$${state.economy.cash}',
+              style: TextStyle(
+                color: canAfford ? Colors.green : Colors.red,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(AppLocalizations.of(context)!.cancel),
+          ),
+          FilledButton(
+            onPressed: canAfford
+                ? () {
+              // TODO: Implement promote all in controller
+              Navigator.pop(context);
+            }
+                : null,
+            child: const Text('Promote'),
+          ),
+        ],
+      ),
+    );
   }
 }
 
-class _TechnicalSkillsTab extends StatelessWidget {
-  const _TechnicalSkillsTab();
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-
-    final skills = <String>[
-      l10n.firstTouch,
-      l10n.dribbling,
-      l10n.technique,
-      l10n.shortPassing,
-      l10n.longPassing,
-      l10n.vision,
-      l10n.finishing,
-      l10n.shortShots,
-      l10n.longShots,
-      l10n.heading,
-    ];
-
-    return _SkillsList(skills: skills);
-  }
-}
-
-class _MentalSkillsTab extends StatelessWidget {
-  const _MentalSkillsTab();
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-
-    final skills = <String>[
-      l10n.anticipation,
-      l10n.positioning,
-      l10n.marking,
-      l10n.tackling,
-      l10n.composure,
-      l10n.consistency,
-      l10n.leadership,
-      l10n.determination,
-      l10n.bravery,
-    ];
-
-    return _SkillsList(skills: skills);
-  }
-}
-
-class _SkillsList extends StatelessWidget {
-  final List<String> skills;
+class _SkillsList extends ConsumerWidget {
+  final List<Skill> skills;
   const _SkillsList({required this.skills});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: skills.length,
       itemBuilder: (context, index) {
-        return _SkillCard(
-          name: skills[index],
-          level: 50 + index * 3, // placeholder
-          xp: 45, // placeholder
-          xpMax: 100,
-        );
+        final skill = skills[index];
+        return _SkillCard(skill: skill);
       },
     );
   }
 }
 
-class _SkillCard extends StatelessWidget {
-  final String name;
-  final int level;
-  final int xp;
-  final int xpMax;
-
-  const _SkillCard({
-    required this.name,
-    required this.level,
-    required this.xp,
-    required this.xpMax,
-  });
+class _SkillCard extends ConsumerWidget {
+  final Skill skill;
+  const _SkillCard({required this.skill});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
+    final state = ref.read(gameControllerProvider);
+
+    final hasQueuedLevels = skill.queuedLevels > 0;
+    final promotionCost = skill.promotionCost(skill.level);
+    final canAfford = state.economy.cash >= promotionCost;
 
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
@@ -152,26 +195,66 @@ class _SkillCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  name,
-                  style: Theme.of(context).textTheme.titleMedium,
+                Expanded(
+                  child: Text(
+                    skill.getLocalizedName(context),
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                 ),
-                Text(
-                  l10n.lvLevel(level),
-                  style: Theme.of(context).textTheme.titleLarge,
+                Row(
+                  children: [
+                    Text(
+                      l10n.lvLevel(skill.level),
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    if (hasQueuedLevels) ...[
+                      const SizedBox(width: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          '+${skill.queuedLevels}',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
               ],
             ),
             const SizedBox(height: 8),
-            LinearProgressIndicator(
-              value: xp / xpMax,
-              minHeight: 8,
+            ClipRRect(
               borderRadius: BorderRadius.circular(4),
+              child: LinearProgressIndicator(
+                value: skill.progressPercent,
+                minHeight: 8,
+                backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+              ),
             ),
             const SizedBox(height: 4),
-            Text(
-              l10n.xpProgress(xp, xpMax),
-              style: Theme.of(context).textTheme.bodySmall,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  l10n.xpProgress(skill.currentXp, skill.xpCapForLevel(skill.level)),
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                if (hasQueuedLevels)
+                  FilledButton.tonal(
+                    onPressed: canAfford
+                        ? () {
+                      // TODO: Implement promote single skill
+                    }
+                        : null,
+                    child: Text('Promote (\$$promotionCost)'),
+                  ),
+              ],
             ),
           ],
         ),

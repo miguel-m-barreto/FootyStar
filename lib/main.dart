@@ -18,9 +18,10 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = ref.watch(localeProvider);
+    final l10 = L10n.i;
 
     return MaterialApp(
-      title: 'Footy Star',
+      title: l10.footyStar,
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
       themeMode: ThemeMode.light,
