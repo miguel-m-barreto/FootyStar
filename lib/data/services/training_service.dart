@@ -8,23 +8,16 @@ class TrainingService {
     final skill = p.skills[skillId];
     if (skill == null) return p;
 
-    // Calculate XP gain with modifiers
-    final determinationBoost = 1 + 0.004 * (p.determination - 50); // ±20% at extremes
+    // Reduz ganho para que SP seja a via principal
+    final determinationBoost = 1 + 0.004 * (p.determination - 50); // ±20%
     final fatiguePenalty = (1 - 0.5 * p.fatigue).clamp(0.5, 1.0);
-    final consistencyFactor = 1 + 0.002 * (p.consistency - 50); // ±10% at extremes
+    final consistencyFactor = 1 + 0.002 * (p.consistency - 50); // ±10%
 
-    final xpGain = (baseXp * determinationBoost * fatiguePenalty * consistencyFactor).round();
+    // 40% do baseXp → treino é útil mas lento
+    final xpGain = (baseXp * 0.4 * determinationBoost * fatiguePenalty * consistencyFactor).round();
 
-    // Add XP with banking system
     final updatedSkill = _addXpToSkill(skill, xpGain, p.sp);
 
-    // Convert excess XP to SP if skill is maxed
-    int spGained = 0;
-    if (skill.level + skill.queuedLevels >= 100 && xpGain > 0) {
-      spGained = (xpGain * 0.5).round(); // Convert 50% to SP
-    }
-
-    // Update player
     final newSkills = Map<String, Skill>.from(p.skills);
     newSkills[skillId] = updatedSkill;
 
@@ -35,91 +28,92 @@ class TrainingService {
       skills: newSkills,
       fatigue: newFatigue,
       form: newForm,
-      sp: p.sp + spGained,
     );
   }
+
 
   // Add XP to skill with banked progress
   Skill _addXpToSkill(Skill skill, int xpAmount, int playerSp) {
     if (xpAmount <= 0) return skill;
 
-    // If skill is at max level, don't add XP (convert to SP in caller)
+    // Se já atingiu o teto (nível real + bancados >= 100), ignora XP
     if (skill.level + skill.queuedLevels >= 100) {
       return skill;
     }
 
-    int remaining = xpAmount;
-    int currentXp = skill.currentXp;
-    int queuedLevels = skill.queuedLevels;
-    int queuedXp = skill.queuedXp;
+    var lvl = skill.level;
+    var cur = skill.currentXp;
+    var qLvls = skill.queuedLevels;
+    var qXp = skill.queuedXp;
+    var remaining = xpAmount;
 
-    // Add to current level first if no queued levels
-    if (queuedLevels == 0) {
-      final cap = skill.xpCapForLevel(skill.level);
-      final space = cap - currentXp;
+    // 1) Preenche o nível atual primeiro (se ainda estamos nele)
+    if (qLvls == 0) {
+      final cap = skill.xpCapForLevel(lvl);
+      final space = cap - cur;
 
-      if (remaining <= space) {
-        // Fits in current level
-        return skill.copyWith(currentXp: currentXp + remaining);
-      } else {
-        // Overflows to queued
-        remaining -= space;
-        queuedLevels = 1;
-        currentXp = 0;
+      if (remaining < space) {
+        return skill.copyWith(currentXp: cur + remaining);
       }
+
+      // enche e transborda para fila
+      remaining -= space;
+      cur = 0;
+      qLvls = 1;
+      qXp = 0;
     }
 
-    // Add remaining XP to queued levels
-    while (remaining > 0 && skill.level + queuedLevels < 100) {
-      final virtualLevel = skill.level + queuedLevels;
+    // 2) Enche níveis bancados consecutivos
+    while (remaining > 0 && (lvl + qLvls) < 100) {
+      final virtualLevel = lvl + qLvls;         // próximo nível “futuro”
       final cap = skill.xpCapForLevel(virtualLevel);
-      final currentQueuedXp = queuedLevels == 1 && currentXp == 0 ? 0 : queuedXp;
-      final space = cap - currentQueuedXp;
+      final space = cap - qXp;
 
-      if (remaining <= space) {
-        queuedXp = currentQueuedXp + remaining;
+      if (remaining < space) {
+        qXp += remaining;
         remaining = 0;
       } else {
+        // enche este nível futuro e cria mais um slot
         remaining -= space;
-        queuedLevels++;
-        queuedXp = 0;
+        qLvls += 1;
+        qXp = 0;
+        // se acabámos de encher o 100, sai
+        if (lvl + qLvls >= 100) break;
       }
     }
 
     return skill.copyWith(
-      currentXp: queuedLevels == 0 ? currentXp : 0,
-      queuedLevels: queuedLevels,
-      queuedXp: queuedXp,
+      currentXp: qLvls == 0 ? (skill.currentXp + xpAmount) : 0,
+      queuedLevels: qLvls,
+      queuedXp: qXp,
     );
   }
-
   // Weekly passive training (coach-driven)
   Player passiveWeeklyTraining(Player p) {
-    // Coach decides which skills to train based on role and weaknesses
     final weakSkills = _identifyWeakSkills(p);
     final roleSkills = _getRolePrioritySkills(p);
 
-    // Apply small XP to 3-5 skills
     var updatedPlayer = p;
     int skillsTrained = 0;
 
-    // Train weak skills first
+    // Muito pouco XP por semana para endurecer progressão
     for (final skillId in weakSkills) {
       if (skillsTrained >= 2) break;
-      updatedPlayer = trainSkill(updatedPlayer, skillId, baseXp: 15);
+      updatedPlayer = trainSkill(updatedPlayer, skillId, baseXp: 10); // 10 * 0.4 = 4 XP aprox
       skillsTrained++;
     }
 
-    // Then role-important skills
     for (final skillId in roleSkills) {
-      if (skillsTrained >= 5) break;
+      if (skillsTrained >= 4) break;
       if (!weakSkills.contains(skillId)) {
-        updatedPlayer = trainSkill(updatedPlayer, skillId, baseXp: 10);
+        updatedPlayer = trainSkill(updatedPlayer, skillId, baseXp: 8); // ~3 XP
         skillsTrained++;
       }
     }
 
-    return updatedPlayer;
+    // SP semanal mínimo
+    final spGain = 1;
+    return updatedPlayer.copyWith(sp: updatedPlayer.sp + spGain);
   }
 
   // Identify weakest skills for the player's role
@@ -164,8 +158,11 @@ class TrainingService {
 
   // Weekly recovery session
   Player rest(Player p) {
-    final recoveryBonus = 0.002 * p.skills['recovery']!.level ?? 50; // Recovery skill helps
-    final flexibilityBonus = 0.001 * p.skills['flexibility']!.level ?? 50; // Flexibility helps
+    final recoverySkill = p.skills['recovery'];
+    final flexibilitySkill = p.skills['flexibility'];
+
+    final recoveryBonus = recoverySkill != null ? 0.002 * recoverySkill.level : 0;
+    final flexibilityBonus = flexibilitySkill != null ? 0.001 * flexibilitySkill.level : 0;
 
     final fatigueReduction = 0.2 + recoveryBonus + flexibilityBonus;
     final newFatigue = (p.fatigue - fatigueReduction).clamp(0.0, 1.0);
@@ -181,17 +178,36 @@ class TrainingService {
     final skill = p.skills[skillId];
     if (skill == null) return p;
 
-    // 1 SP = 10 XP
-    final xpToAdd = spAmount * 10;
-    final updatedSkill = _addXpToSkill(skill, xpToAdd, p.sp - spAmount);
+    const xpPerSp = 10;
+
+    // Quanto falta para completar o nível atual
+    final xpCap = skill.xpCapForLevel(skill.level);
+    final missingXp = (xpCap - skill.currentXp).clamp(0, xpCap);
+
+    final maxXpFromSp = spAmount * xpPerSp;
+    final xpToAdd = maxXpFromSp.clamp(0, missingXp);
+    final spUsed = (xpToAdd / xpPerSp).ceil();
+
+    if (xpToAdd <= 0) return p;
+
+    final updatedSkill = _addXpToSkill(skill, xpToAdd, p.sp - spUsed);
 
     final newSkills = Map<String, Skill>.from(p.skills);
     newSkills[skillId] = updatedSkill;
 
     return p.copyWith(
       skills: newSkills,
-      sp: p.sp - spAmount,
+      sp: p.sp - spUsed,
     );
+  }
+
+  Player applyMinimalMatchXp(Player p, {int perSkill = 2}) {
+    if (perSkill <= 0) return p;
+    final newSkills = <String, Skill>{};
+    p.skills.forEach((id, s) {
+      newSkills[id] = _addXpToSkill(s, perSkill, p.sp);
+    });
+    return p.copyWith(skills: newSkills);
   }
 
   // Promote a single skill (pay cost and apply level)

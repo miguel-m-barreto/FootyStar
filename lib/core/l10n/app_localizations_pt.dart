@@ -9,6 +9,48 @@ class AppLocalizationsPt extends AppLocalizations {
   AppLocalizationsPt([String locale = 'pt']) : super(locale);
 
   @override
+  String get notifications_economy => 'Economia';
+
+  @override
+  String get notifications_general => 'Geral';
+
+  @override
+  String get notifications_match => 'Jogo';
+
+  @override
+  String get notifications_skills => 'Skills';
+
+  @override
+  String notifications_economy_week_summary(
+    Object balance,
+    Object costs,
+    Object delta,
+    Object revenue,
+  ) {
+    return 'Receitas: $revenue • Custos: $costs • Delta: $delta • Saldo: $balance';
+  }
+
+  @override
+  String notifications_week_finished(Object week) {
+    return 'Semana $week terminada';
+  }
+
+  @override
+  String notifications_match_result(
+    Object away,
+    Object home,
+    Object score,
+    Object week,
+  ) {
+    return 'Resultado — Semana $week\n$home $score $away';
+  }
+
+  @override
+  String notifications_skills_promoted_count(Object cost, Object count) {
+    return 'Promovidas $count skills por $cost';
+  }
+
+  @override
   String get startDate => 'Data de início';
 
   @override

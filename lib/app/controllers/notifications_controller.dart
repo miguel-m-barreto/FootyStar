@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../domain/app_message.dart';
+import '../../domain/models/app_message.dart';
 
 class NotificationsController extends StateNotifier<List<AppMessage>> {
   NotificationsController() : super(const []);

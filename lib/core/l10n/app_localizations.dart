@@ -98,6 +98,64 @@ abstract class AppLocalizations {
     Locale('pt'),
   ];
 
+  /// No description provided for @notifications_economy.
+  ///
+  /// In en, this message translates to:
+  /// **'Economy'**
+  String get notifications_economy;
+
+  /// No description provided for @notifications_general.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get notifications_general;
+
+  /// No description provided for @notifications_match.
+  ///
+  /// In en, this message translates to:
+  /// **'Match'**
+  String get notifications_match;
+
+  /// No description provided for @notifications_skills.
+  ///
+  /// In en, this message translates to:
+  /// **'Skills'**
+  String get notifications_skills;
+
+  /// No description provided for @notifications_economy_week_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue: {revenue} • Costs: {costs} • Delta: {delta} • Balance: {balance}'**
+  String notifications_economy_week_summary(
+    Object balance,
+    Object costs,
+    Object delta,
+    Object revenue,
+  );
+
+  /// No description provided for @notifications_week_finished.
+  ///
+  /// In en, this message translates to:
+  /// **'Week {week} finished'**
+  String notifications_week_finished(Object week);
+
+  /// No description provided for @notifications_match_result.
+  ///
+  /// In en, this message translates to:
+  /// **'Result — Week {week}\n{home} {score} {away}'**
+  String notifications_match_result(
+    Object away,
+    Object home,
+    Object score,
+    Object week,
+  );
+
+  /// No description provided for @notifications_skills_promoted_count.
+  ///
+  /// In en, this message translates to:
+  /// **'Promoted {count} skills for {cost}'**
+  String notifications_skills_promoted_count(Object cost, Object count);
+
   /// No description provided for @startDate.
   ///
   /// In en, this message translates to:

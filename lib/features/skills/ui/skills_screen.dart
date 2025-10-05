@@ -141,11 +141,11 @@ class SkillsScreen extends ConsumerWidget {
           FilledButton(
             onPressed: canAfford
                 ? () {
-              // TODO: Implement promote all in controller
+              ref.read(gameControllerProvider.notifier).promoteAllSkills();
               Navigator.pop(context);
             }
                 : null,
-            child: const Text('Promote'),
+            child: const Text('Promote All'),
           ),
         ],
       ),
@@ -184,6 +184,17 @@ class _SkillCard extends ConsumerWidget {
     final hasQueuedLevels = skill.queuedLevels > 0;
     final promotionCost = skill.promotionCost(skill.level);
     final canAfford = state.economy.cash >= promotionCost;
+
+    // --- NOVO: calcula progresso e label consoante queued ---
+    final cap = skill.xpCapForLevel(skill.level);
+    final progressValue = hasQueuedLevels
+        ? 1.0
+        : (cap > 0 ? (skill.currentXp / cap).clamp(0.0, 1.0) : 0.0);
+
+    final xpText = hasQueuedLevels
+        ? 'Ready to promote'
+        : l10n.xpProgress(skill.currentXp, cap);
+    // --------------------------------------------------------
 
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
@@ -232,7 +243,8 @@ class _SkillCard extends ConsumerWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(4),
               child: LinearProgressIndicator(
-                value: skill.progressPercent,
+                // --- NOVO: barra fica 100% quando queued ---
+                value: progressValue,
                 minHeight: 8,
                 backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
               ),
@@ -242,14 +254,15 @@ class _SkillCard extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  l10n.xpProgress(skill.currentXp, skill.xpCapForLevel(skill.level)),
+                  // --- NOVO: texto muda para "Ready to promote" quando queued ---
+                  xpText,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 if (hasQueuedLevels)
                   FilledButton.tonal(
                     onPressed: canAfford
                         ? () {
-                      // TODO: Implement promote single skill
+                      ref.read(gameControllerProvider.notifier).promoteSkill(skill.id);
                     }
                         : null,
                     child: Text('Promote (\$$promotionCost)'),

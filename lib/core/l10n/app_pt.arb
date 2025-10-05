@@ -1,6 +1,16 @@
 {
   "@@locale": "pt",
 
+  "notifications_economy": "Economia",
+  "notifications_general": "Geral",
+  "notifications_match": "Jogo",
+  "notifications_skills": "Skills",
+
+  "notifications_economy_week_summary": "Receitas: {revenue} • Custos: {costs} • Delta: {delta} • Saldo: {balance}",
+  "notifications_week_finished": "Semana {week} terminada",
+  "notifications_match_result": "Resultado — Semana {week}\n{home} {score} {away}",
+  "notifications_skills_promoted_count": "Promovidas {count} skills por {cost}",
+
   "startDate": "Data de início",
   "endDate": "Data de fim",
   "cleanSheet": "Baliza invicta",

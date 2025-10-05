@@ -1,4 +1,4 @@
-import '../../domain/team.dart';
+import '../../domain/models/team.dart';
 import '../../core/utils/rng.dart';
 
 class MatchResult {

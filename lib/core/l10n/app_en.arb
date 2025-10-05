@@ -1,6 +1,16 @@
 {
   "@@locale": "en",
 
+  "notifications_economy": "Economy",
+  "notifications_general": "General",
+  "notifications_match": "Match",
+  "notifications_skills": "Skills",
+
+  "notifications_economy_week_summary": "Revenue: {revenue} • Costs: {costs} • Delta: {delta} • Balance: {balance}",
+  "notifications_week_finished": "Week {week} finished",
+  "notifications_match_result": "Result — Week {week}\n{home} {score} {away}",
+  "notifications_skills_promoted_count": "Promoted {count} skills for {cost}",
+
   "startDate": "Start Date",
   "endDate": "End Date",
   "cleanSheet": "Clean Sheet",

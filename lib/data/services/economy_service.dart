@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:footy_star/domain/economy.dart';
+import 'package:footy_star/domain/models/economy.dart';
 
 /// Pure functions to transform Economy while keeping counters consistent.
 /// Keep UI and controller logic thin by delegating cash/metrics math here.

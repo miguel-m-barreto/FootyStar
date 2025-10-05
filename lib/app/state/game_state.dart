@@ -1,17 +1,18 @@
-import '../../domain/team.dart';
-import '../../domain/league.dart';
-import '../../domain/economy.dart';
-import '../../domain/business.dart';
+import '../../domain/models/team.dart';
+import '../../domain/models/league.dart';
+import '../../domain/models/economy.dart';
+import '../../domain/models/business.dart';
 import '../../domain/models/played_match.dart';
 import '../../domain/models/fixture.dart';
 import '../../domain/models/league_table.dart';
+import '../../features/match/models/match_moment.dart';
 
 class GameState {
   final Team myTeam;
   final Team opponent;
   final League league;
   final Economy economy;
-  final int week;                     // drives the current fixture
+  final int week; // drives the current fixture
   final List<PlayedMatch> history;
   final List<Fixture> fixtures;
   final LeagueTable table;
@@ -19,7 +20,12 @@ class GameState {
 
   // NEW: businesses
   final List<Business> catalogBusinesses; // available to buy (templates)
-  final List<Business> myBusinesses;      // owned with levels
+  final List<Business> myBusinesses; // owned with levels
+
+  //for match moments
+  final List<MatchMoment> lastMatchMoments;
+  final MatchScore? lastMatchScore;
+  final Map<String, PlayerStats> lastMatchPlayerStats;
 
   const GameState({
     required this.myTeam,
@@ -33,6 +39,9 @@ class GameState {
     required this.aiTeams,
     this.catalogBusinesses = const [],
     this.myBusinesses = const [],
+    this.lastMatchMoments = const <MatchMoment>[],
+    this.lastMatchScore,
+    this.lastMatchPlayerStats = const <String, PlayerStats>{},
   });
 
   GameState copyWith({
@@ -47,6 +56,9 @@ class GameState {
     List<String>? aiTeams,
     List<Business>? catalogBusinesses,
     List<Business>? myBusinesses,
+    Iterable<MatchMoment>? lastMatchMoments,
+    MatchScore? lastMatchScore,
+    Map<String, PlayerStats>? lastMatchPlayerStats,
   }) {
     return GameState(
       myTeam: myTeam ?? this.myTeam,
@@ -60,6 +72,11 @@ class GameState {
       aiTeams: aiTeams ?? this.aiTeams,
       catalogBusinesses: catalogBusinesses ?? this.catalogBusinesses,
       myBusinesses: myBusinesses ?? this.myBusinesses,
+      lastMatchMoments: lastMatchMoments != null
+          ? List<MatchMoment>.from(lastMatchMoments)
+          : this.lastMatchMoments,
+      lastMatchScore: lastMatchScore ?? this.lastMatchScore,
+      lastMatchPlayerStats: lastMatchPlayerStats ?? this.lastMatchPlayerStats,
     );
   }
 }

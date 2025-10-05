@@ -1,12 +1,12 @@
 import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../domain/models/app_message.dart';
 import '../../domain/models/player.dart';
 import '../../domain/models/skill.dart';
-import '../../domain/skill.dart';
-import '../../domain/team.dart';
-import '../../domain/league.dart';
-import '../../domain/economy.dart';
+import '../../domain/models/team.dart';
+import '../../domain/models/league.dart';
+import '../../domain/models/economy.dart';
 
 import '../../domain/models/played_match.dart';
 import '../../domain/models/fixture.dart';
@@ -16,11 +16,12 @@ import '../../data/services/training_service.dart';
 import '../../data/services/match_service.dart';
 import '../../data/services/economy_service.dart';
 
+import '../../features/match/models/match_moment.dart';
+import '../../features/match/services/match_moments_engine.dart';
 import '../providers/providers.dart';
 import '../state/game_state.dart';
 
 // Notifications & message templates
-import '../../domain/app_message.dart';
 import '../../messages/general_messages.dart';
 import '../../messages/economy_messages.dart';
 import '../../messages/match_messages.dart';
@@ -28,47 +29,35 @@ import '../../messages/skill_messages.dart';
 import '../../messages/casino_messages.dart';
 import '../../domain/models/skills_catalog.dart';
 
-
 class GameController extends Notifier<GameState> {
   late final _training = TrainingService();
   late final _match = MatchService();
   late final _eco = EconomyService();
   final _rng = Random();
+  late final _moments = MatchMomentsEngine();
 
   @override
   GameState build() => _initialState();
 
   GameState _initialState() {
     // Seed players
-    final p = Player(
-      id: "p1",
-      name: "Rui Silva",
-      age: 22,
-      form: 0.8,
-      fatigue: 0.2,
-      reputation: 15,
-      skills: const {
-        "fin": Skill(id: "fin", name: "Finishing", level: 62, stars: 1),
-        "pas": Skill(id: "pas", name: "Passing", level: 58, stars: 0),
-        "spd": Skill(id: "spd", name: "Speed", level: 64, stars: 0),
-      },
-    );
-    final q = Player(
-      id: "p2",
+    final p = _createInitialPlayer();
+    final q = _createInitialPlayer().copyWith(
       name: "Joao Costa",
-      age: 24,
-      form: 0.7,
-      fatigue: 0.3,
-      reputation: 12,
-      skills: const {
-        "fin": Skill(id: "fin", name: "Finishing", level: 55, stars: 0),
-        "pas": Skill(id: "pas", name: "Passing", level: 61, stars: 1),
-        "spd": Skill(id: "spd", name: "Speed", level: 59, stars: 0),
-      },
+      role: PlayerRole.striker,
+    );
+    final my = Team(
+      id: "t1",
+      name: "HashStorm FC",
+      squad: [p, q],
+      morale: 0.75,
     );
 
-    final my = Team(id: "t1", name: "HashStorm FC", squad: [p, q], morale: 0.75);
-    final lg = const League(id: "pt2", name: "Second Division", multiplier: 1.00);
+    final lg = const League(
+      id: "pt2",
+      name: "Second Division",
+      multiplier: 1.00,
+    );
     final eco = const Economy(cash: 10000, weeklyIncome: 800, weeklyCosts: 500);
 
     // Generate AI teams
@@ -89,11 +78,9 @@ class GameController extends Notifier<GameState> {
     // Create fixtures: my team plays each AI team once, one per week
     final fixtures = <Fixture>[];
     for (var i = 0; i < aiTeams.length; i++) {
-      fixtures.add(Fixture(
-        week: i + 1,
-        homeTeam: my.name,
-        awayTeam: aiTeams[i],
-      ));
+      fixtures.add(
+        Fixture(week: i + 1, homeTeam: my.name, awayTeam: aiTeams[i]),
+      );
     }
 
     // Seed empty table with all teams
@@ -117,25 +104,71 @@ class GameController extends Notifier<GameState> {
   }
 
   Team _generateAIOpponent(String name) {
-    // Create a basic AI team by cloning template players with noise
-    Player mk(int idx) => Player(
-      id: "ai$idx",
-      name: "AI-$idx",
-      age: 22 + (_rng.nextInt(6)),
-      form: 0.6 + _rng.nextDouble() * 0.3,
-      fatigue: 0.1 + _rng.nextDouble() * 0.3,
-      reputation: 10 + _rng.nextDouble() * 15,
-      skills: {
-        "fin": Skill(id: "fin", name: "Finishing", level: 55 + _rng.nextInt(16), stars: _rng.nextInt(2)),
-        "pas": Skill(id: "pas", name: "Passing", level: 55 + _rng.nextInt(16), stars: _rng.nextInt(2)),
-        "spd": Skill(id: "spd", name: "Speed", level: 55 + _rng.nextInt(16), stars: _rng.nextInt(2)),
-      },
-    );
-    final squad = List.generate(12, (i) => mk(i));
+    // Local helpers -------------------------------------------------------------
+    PlayerRole _findRole(List<String> hints) {
+      for (final h in hints) {
+        final hint = h.toLowerCase();
+        for (final r in PlayerRole.values) {
+          if (r.name.toLowerCase().contains(hint)) return r;
+        }
+      }
+      return PlayerRole.values.first; // fallback
+    }
+
+    Map<String, Skill> _baseSkillsWithNoise() {
+      final skills = <String, Skill>{};
+      SkillsCatalog.all28Skills.forEach((id, base) {
+        skills[id] = base.copyWith(
+          level: 45 + _rng.nextInt(26), // 45..70
+          currentXp: _rng.nextInt(30),
+        );
+      });
+      return skills;
+    }
+
+    Player _mk(int idx, PlayerRole role) {
+      return Player(
+        id: "ai$idx",
+        name: "AI-$idx",
+        age: 18 + _rng.nextInt(15),
+        role: role,
+        skills: _baseSkillsWithNoise(),
+        form: 0.6 + _rng.nextDouble() * 0.3,
+        fatigue: 0.1 + _rng.nextDouble() * 0.3,
+        reputation: 10 + _rng.nextDouble() * 15,
+        sp: 0,
+        consistency: 45 + _rng.nextInt(20).toDouble(),
+        determination: 45 + _rng.nextInt(20).toDouble(),
+        leadership: 40 + _rng.nextInt(25).toDouble(),
+      );
+    }
+    // --------------------------------------------------------------------------
+
+    // Target XI (4-4-2-ish)
+    final templateRoles = <PlayerRole>[
+      _findRole(['gk', 'goal']), // GK
+      _findRole(['cb', 'def']), // CB
+      _findRole(['cb', 'def']), // CB
+      _findRole(['back', 'wing', 'def']), // LB/RB/WB
+      _findRole(['back', 'wing', 'def']), // LB/RB/WB
+      _findRole(['mid', 'cm']), // CM
+      _findRole(['mid', 'cm']), // CM
+      _findRole(['mid', 'cm']), // CM/Wide mid
+      _findRole(['mid', 'cm']), // CM/Wide mid
+      _findRole(['st', 'striker', 'forward']), // ST
+      _findRole(['st', 'striker', 'forward']), // ST
+    ];
+
+    final squad = <Player>[];
+    for (int i = 0; i < templateRoles.length; i++) {
+      squad.add(_mk(i, templateRoles[i]));
+    }
+    squad.shuffle(_rng); // randomize order a bit
+
     return Team(
       id: "ai_${name.hashCode}",
       name: name,
-      squad: squad,
+      squad: squad, // exactly 11 with a GK guaranteed by hints
       morale: 0.6 + _rng.nextDouble() * 0.3,
     );
   }
@@ -145,6 +178,7 @@ class GameController extends Notifier<GameState> {
   // =========================
 
   String get _meId => state.myTeam.squad.first.id;
+
   Player get _me => state.myTeam.squad.firstWhere((p) => p.id == _meId);
 
   void _commitMe(Player updated) {
@@ -156,40 +190,30 @@ class GameController extends Notifier<GameState> {
     }
   }
 
-  double _clamp01(double v) => v < 0 ? 0 : (v > 1 ? 1 : v);
-
-  Player _passiveTrainOne(Player p) {
-    // +1 em skills com estrela (até 99)
-    final updated = <String, Skill>{};
-    p.skills.forEach((id, sk) {
-      if (sk.stars > 0) {
-        updated[id] = sk.copyWith(level: (sk.level + 1).clamp(1, 99));
-      } else {
-        updated[id] = sk;
-      }
-    });
-    return p.copyWith(skills: updated);
-  }
-
-  Player _recoverOne(Player p) {
-    // recupera fadiga e “recentra” forma lentamente
-    final newFatigue = _clamp01(p.fatigue - 0.10);
-    final newForm = _clamp01(p.form * 0.96 + 0.02);
-    return p.copyWith(fatigue: newFatigue, form: newForm);
-  }
-
-  /// Treino pessoal numa skill específica (não altera colegas).
+  /// Treino pessoal numa skill específica usando o novo sistema XP
   void selfTrain(String skillId) {
     final me0 = _me;
-    final trained = _training.trainSkill(me0, skillId).copyWith(
-      fatigue: (me0.fatigue + 0.12).clamp(0, 1),
-      form: (me0.form * 0.98 + 0.02).clamp(0, 1),
-    );
-    _commitMe(trained);
 
-    final lvl = trained.skills[skillId]?.level;
-    if (lvl != null) {
-      _notify('Training', SkillMessages.trained(trained.name, skillId, lvl));
+    // Usa o novo sistema de trainSkill com XP
+    final trained = _training.trainSkill(me0, skillId, baseXp: 30);
+
+    // Aplica fadiga e forma adicionais do treino manual
+    final updatedPlayer = trained.copyWith(
+      fatigue: (trained.fatigue + 0.05).clamp(0, 1),
+      // Fadiga extra do treino manual
+      form: (trained.form * 0.99).clamp(0, 1), // Pequeno ajuste na forma
+    );
+
+    _commitMe(updatedPlayer);
+
+    // Notificação com skill name localizado
+    final skill = updatedPlayer.skills[skillId];
+    if (skill != null) {
+      _notify(
+        'Training',
+        'Trained ${skill.id} - Level ${skill.level}' +
+            (skill.queuedLevels > 0 ? ' (+${skill.queuedLevels} queued)' : ''),
+      );
     }
   }
 
@@ -275,7 +299,7 @@ class GameController extends Notifier<GameState> {
     var nextOpponent = state.opponent;
     try {
       final nextFixture = state.fixtures.firstWhere(
-            (f) => f.week == nextWeek,
+        (f) => f.week == nextWeek,
         orElse: () => const Fixture(week: -1, homeTeam: '', awayTeam: ''),
       );
       if (nextFixture.week > 0) {
@@ -294,7 +318,10 @@ class GameController extends Notifier<GameState> {
 
     // 7) Notify (general + economy summary)
     _notify('General', GeneralMessages.weekEnded(nextWeek - 1));
-    _notify('Economy', EconomyMessages.weekSummary(earned, spent, delta, economyNextWeek.cash));
+    _notify(
+      'Economy',
+      EconomyMessages.weekSummary(earned, spent, delta, economyNextWeek.cash),
+    );
   }
 
   /// Place a casino wager. Updates cash and tracks spent/earned metrics accordingly.
@@ -353,85 +380,169 @@ class GameController extends Notifier<GameState> {
   // MATCH / FIXTURES
   // =========================
 
+  double _calculateRatingAux(PlayerStats? stats) {
+    if (stats == null) return 6.0;
+
+    // 6.0 base + contributos - penalizações
+    final rating = 6.0
+        + 1.2 * (stats.goals)
+        + 0.6 * (stats.assists)
+        - 0.3 * (stats.yellow)
+        - 1.0 * (stats.red);
+
+    return rating.clamp(4.0, 10.0);
+  }
+
   void playMatch() {
     // Allow only one official match per week (based on fixtures)
     final fxIndex = state.fixtures.indexWhere((f) => f.week == state.week);
     if (fxIndex == -1) {
       // No fixture defined for this week; fallback to current opponent (friendly)
-      _playAndRecord(state.myTeam.name, state.opponent.name);
-      _notify('Match', MatchMessages.friendly(state.myTeam.name, state.opponent.name));
+      final fullHome = _ensureXI(state.myTeam);
+      final fullAway = _ensureXI(state.opponent);
+      final sim = _moments.simulate(home: fullHome, away: fullAway);
+      final homeGoals = sim.score.home;
+      final awayGoals = sim.score.away;
+
+      _playAndRecord(fullHome.name, fullAway.name);
+      _notify('Match', MatchMessages.friendly(fullHome.name, fullAway.name));
+
+      // SP: rating * multiplier(moments) — friendly still dá SP
+      final myStats = sim.playerStats[_meId];
+      final double rating = _calculateRatingAux(myStats);
+      final momentsMult = (1.0 + (sim.moments.length * 0.05)).clamp(1.0, 2.0);
+      final spGain = (rating * momentsMult).round().clamp(1, 20);
+
+      // Minimal XP por match nas skills (progresso lento)
+      final meAfterMinimalXp = _training.applyMinimalMatchXp(
+        fullHome.squad.firstWhere((p) => p.id == _meId),
+        perSkill: 2,
+      ).copyWith(sp: fullHome.squad.firstWhere((p) => p.id == _meId).sp + spGain);
+
+      // Atualiza squad (apenas eu mudo aqui)
+      final newSquad = fullHome.squad.map((p) {
+        if (p.id != _meId) return p;
+        return meAfterMinimalXp.copyWith(
+          form: (meAfterMinimalXp.form * 0.98 + (homeGoals > 0 ? 0.04 : 0.02)).clamp(0, 1),
+          fatigue: (meAfterMinimalXp.fatigue + 0.15).clamp(0, 1),
+        );
+      }).toList();
+
+      state = state.copyWith(
+        myTeam: fullHome.copyWith(squad: newSquad),
+        opponent: fullAway,
+        lastMatchMoments: sim.moments,
+        lastMatchScore: sim.score,
+        lastMatchPlayerStats: sim.playerStats,
+      );
+
+      _notify('Skills', 'Earned $spGain SP from match performance!');
       return;
     }
+
     final fx = state.fixtures[fxIndex];
-    if (fx.played) {
-      // Already played; ignore
-      return;
-    }
+    if (fx.played) return;
 
-    // Ensure opponent matches fixture
     final oppName = fx.awayTeam;
-    final ensuredOpp = state.opponent.name == oppName ? state.opponent : _generateAIOpponent(oppName);
+    final ensuredOpp = state.opponent.name == oppName
+        ? state.opponent
+        : _generateAIOpponent(oppName);
 
-    // Simulate my match
-    final r = _match.play(state.myTeam, ensuredOpp);
+    final fullHome = _ensureXI(state.myTeam);
+    final fullAway = _ensureXI(ensuredOpp);
 
-    // Update my players stats
-    final upd = state.myTeam.squad
-        .map((p) => p.id == _meId
-        ? p.copyWith(
-      reputation: (p.reputation + r.homeRepDelta).clamp(0, 100),
-      form: (p.form * 0.98 + (r.homeGoals > 0 ? 0.04 : 0.02)).clamp(0, 1),
-      fatigue: (p.fatigue + 0.15).clamp(0, 1),
-    )
-        : p)
-        .toList();
+    final sim = _moments.simulate(home: fullHome, away: fullAway);
+
+    final homeGoals = sim.score.home;
+    final awayGoals = sim.score.away;
+
+    // Reputação simples para lado da casa (mantém lógica existente)
+    final homeRepDelta = homeGoals > awayGoals ? 0.5 : (homeGoals < awayGoals ? -0.5 : 0.1);
+
+    // SP: rating * multiplier(moments)
+    final myStats = sim.playerStats[_meId];
+    final rating = (myStats?.rating ?? 6.0);
+    final momentsMult = (1.0 + (sim.moments.length * 0.05)).clamp(1.0, 2.0);
+    final int spGain = (rating * momentsMult).round().clamp(1, 20);
+
+    // Minimal XP por match nas skills (progresso lento)
+    final me0 = fullHome.squad.firstWhere((p) => p.id == _meId);
+    final meAfterMinimalXp = _training.applyMinimalMatchXp(me0, perSkill: 2)
+        .copyWith(sp: me0.sp + spGain);
+
+    // Atualiza apenas o meu jogador com rep/form/fadiga + SP e XP mínimo
+    final finalSquad = fullHome.squad.map((p) {
+      if (p.id != _meId) return p;
+      return meAfterMinimalXp.copyWith(
+        reputation: (meAfterMinimalXp.reputation + homeRepDelta).clamp(0, 100),
+        form: (meAfterMinimalXp.form * 0.98 + (homeGoals > 0 ? 0.04 : 0.02)).clamp(0, 1),
+        fatigue: (meAfterMinimalXp.fatigue + 0.15).clamp(0, 1),
+      );
+    }).toList();
 
     // Record PlayedMatch
     final played = PlayedMatch(
       week: state.week,
-      homeName: state.myTeam.name,
-      awayName: ensuredOpp.name,
-      homeGoals: r.homeGoals,
-      awayGoals: r.awayGoals,
+      homeName: fullHome.name,
+      awayName: fullAway.name,
+      homeGoals: homeGoals,
+      awayGoals: awayGoals,
     );
 
     // Mark fixture as played
     final newFixtures = [...state.fixtures];
-    newFixtures[fxIndex] = fx.markPlayed(r.homeGoals, r.awayGoals);
+    newFixtures[fxIndex] = fx.markPlayed(homeGoals, awayGoals);
 
-    // Update table for my match
+    // Update table
     var newTable = state.table.applyMatch(
-      home: state.myTeam.name,
-      away: ensuredOpp.name,
-      homeGoals: r.homeGoals,
-      awayGoals: r.awayGoals,
+      home: fullHome.name,
+      away: fullAway.name,
+      homeGoals: homeGoals,
+      awayGoals: awayGoals,
     );
 
-    // Simulate AI vs AI matches this week (pair remaining AI teams randomly)
-    final others = state.aiTeams.where((t) => t != ensuredOpp.name).toList();
+    // Simulate AI vs AI
+    final others = state.aiTeams.where((t) => t != fullAway.name).toList();
     others.shuffle(_rng);
     for (int i = 0; i + 1 < others.length; i += 2) {
       final a = others[i];
       final b = others[i + 1];
-      final hg = _poisson(1.4 + _rng.nextDouble()); // light scoring
+      final hg = _poisson(1.4 + _rng.nextDouble());
       final ag = _poisson(1.2 + _rng.nextDouble());
-      newTable = newTable.applyMatch(home: a, away: b, homeGoals: hg, awayGoals: ag);
+      newTable = newTable.applyMatch(
+        home: a,
+        away: b,
+        homeGoals: hg,
+        awayGoals: ag,
+      );
     }
 
+    // Commit
     state = state.copyWith(
-      myTeam: state.myTeam.copyWith(squad: upd),
-      opponent: ensuredOpp,
+      myTeam: fullHome.copyWith(squad: finalSquad),
+      opponent: fullAway,
       history: [...state.history, played],
       fixtures: newFixtures,
       table: newTable,
+      lastMatchMoments: sim.moments,
+      lastMatchScore: sim.score,
+      lastMatchPlayerStats: sim.playerStats,
     );
 
-    // Notify result
+    // Notifies
+    _notify('Skills', 'Earned $spGain SP from match performance!');
     _notify(
       'Match',
-      MatchMessages.result(state.week, state.myTeam.name, r.homeGoals, ensuredOpp.name, r.awayGoals),
+      MatchMessages.result(
+        state.week,
+        fullHome.name,
+        homeGoals,
+        fullAway.name,
+        awayGoals,
+      ),
     );
   }
+
 
   int _poisson(double lambda) {
     final L = _exp(-lambda);
@@ -445,6 +556,7 @@ class GameController extends Notifier<GameState> {
   }
 
   double _exp(double x) => x == 0 ? 1 : (x > 0 ? _expPos(x) : 1 / _expPos(-x));
+
   double _expPos(double x) {
     double sum = 1, term = 1;
     for (int n = 1; n < 16; n++) {
@@ -457,14 +569,25 @@ class GameController extends Notifier<GameState> {
   // Convenience for potential fallback use-cases (not used in fixture flow)
   void _playAndRecord(String home, String away) {
     final r = _match.play(state.myTeam, state.opponent);
+
+    // Declarar as variáveis primeiro
+    final homeGoals = r.homeGoals;
+    final awayGoals = r.awayGoals;
+    final homeRepDelta = r.homeRepDelta;
+
     final upd = state.myTeam.squad
-        .map((p) => p.id == _meId
-        ? p.copyWith(
-      reputation: (p.reputation + r.homeRepDelta).clamp(0, 100),
-      form: (p.form * 0.98 + (r.homeGoals > 0 ? 0.04 : 0.02)).clamp(0, 1),
-      fatigue: (p.fatigue + 0.15).clamp(0, 1),
-    )
-        : p)
+        .map(
+          (p) => p.id == _meId
+              ? p.copyWith(
+                  reputation: (p.reputation + homeRepDelta).clamp(0, 100),
+                  form: (p.form * 0.98 + (homeGoals > 0 ? 0.04 : 0.02)).clamp(
+                    0,
+                    1,
+                  ),
+                  fatigue: (p.fatigue + 0.15).clamp(0, 1),
+                )
+              : p,
+        )
         .toList();
 
     final played = PlayedMatch(
@@ -475,8 +598,12 @@ class GameController extends Notifier<GameState> {
       awayGoals: r.awayGoals,
     );
 
-    final newTable =
-    state.table.applyMatch(home: home, away: away, homeGoals: r.homeGoals, awayGoals: r.awayGoals);
+    final newTable = state.table.applyMatch(
+      home: home,
+      away: away,
+      homeGoals: r.homeGoals,
+      awayGoals: r.awayGoals,
+    );
 
     state = state.copyWith(
       myTeam: state.myTeam.copyWith(squad: upd),
@@ -490,19 +617,16 @@ class GameController extends Notifier<GameState> {
   // =========================
 
   /// Advance full weekly loop focado no jogador:
-  /// 1) Joga a jornada atual (ou friendly)
-  /// 2) Treino passivo + recuperação do **teu** jogador
-  /// 3) Economia semanal + avançar semana
   Future<void> advanceWeek() async {
-    // 1) Jogo
+    // 1) match
     playMatch();
 
-    // 2) Passivo + recovery (só no "eu")
-    var me1 = _passiveTrainOne(_me);
-    me1 = _recoverOne(me1);
-    _commitMe(me1);
+    // 2) passive train + recovery
+    final trained = _training.passiveWeeklyTraining(_me);
+    final rested = _training.rest(trained);
+    _commitMe(rested);
 
-    // 3) Economia e avanço de semana (gera notificações)
+    // 3) Economy and next week
     endOfWeekEconomy();
   }
 
@@ -519,23 +643,37 @@ class GameController extends Notifier<GameState> {
   // =========================
 
   void _notify(String title, String body) {
-    ref.read(notificationsProvider.notifier).push(
-      AppMessage(
-        id: DateTime.now().microsecondsSinceEpoch.toString(),
-        title: title,
-        body: body,
-        ts: DateTime.now(),
-      ),
-    );
+    ref
+        .read(notificationsProvider.notifier)
+        .push(
+          AppMessage(
+            id: DateTime.now().microsecondsSinceEpoch.toString(),
+            title: title,
+            body: body,
+            ts: DateTime.now(),
+          ),
+        );
   }
+
+  // Em game_controller.dart, após o jogo:
+  void _notifyMatchSPRewards(Map<String, PlayerStats> stats) {
+    final meStats = stats[_meId];
+    if (meStats != null && meStats.spEarned > 0) {
+      _notify(
+        'Skills',
+        'Earned ${meStats.spEarned} SP from match performance!',
+      );
+    }
+  }
+
   // =========================
   // COACH TRUST (derived)
   // =========================
 
   /// Métrica derivada 0..1 baseada na tua forma (60%) e reputação (40%).
   double get coachTrust {
-    final f = _me.form;            // 0..1
-    final rep = _me.reputation;    // 0..100
+    final f = _me.form; // 0..1
+    final rep = _me.reputation; // 0..100
     final trust = 0.6 * f + 0.4 * (rep / 100.0);
     return trust.clamp(0, 1);
   }
@@ -565,10 +703,10 @@ class GameController extends Notifier<GameState> {
   /// Pede aumento com probabilidade baseada no Coach Trust.
   /// Base chance = coachTrust; “pedidos fáceis” têm +10% de bónus.
   void askForRaise() {
-    final base = coachTrust;                 // 0..1
-    final bonus = 0.10;                      // indulgência
-    final chance = (base + bonus).clamp(0, 0.95);  // cap 95%
-    final roll = _rng.nextDouble();          // 0..1
+    final base = coachTrust; // 0..1
+    final bonus = 0.10; // indulgência
+    final chance = (base + bonus).clamp(0, 0.95); // cap 95%
+    final roll = _rng.nextDouble(); // 0..1
 
     final cur = state.economy;
     if (roll < chance) {
@@ -576,12 +714,17 @@ class GameController extends Notifier<GameState> {
       final inc = (cur.weeklyIncome * 0.10).round();
       final next = cur.copyWith(weeklyIncome: cur.weeklyIncome + inc);
       state = state.copyWith(economy: next);
-      _notify('Agent', 'Raise approved (+\$${inc}/week). New salary: \$${next.weeklyIncome}/week.');
+      _notify(
+        'Agent',
+        'Raise approved (+\$${inc}/week). New salary: \$${next.weeklyIncome}/week.',
+      );
     } else {
-      _notify('Coach', 'Raise denied for now. Improve your form & reputation to increase chances.');
+      _notify(
+        'Coach',
+        'Raise denied for now. Improve your form & reputation to increase chances.',
+      );
     }
   }
-
 
   // DUMMY PLAYER //
 
@@ -600,12 +743,14 @@ class GameController extends Notifier<GameState> {
       id: "p1",
       name: "Rui Silva",
       age: 22,
-      role: PlayerRole.midfielder, // Or striker/defender
+      role: PlayerRole.midfielder,
+      // Or striker/defender
       skills: allSkills,
       form: 0.8,
       fatigue: 0.2,
       reputation: 15.0,
-      sp: 10, // Starting SP
+      sp: 10,
+      // Starting SP
       consistency: 55.0,
       determination: 60.0,
       leadership: 45.0,
@@ -624,10 +769,7 @@ class GameController extends Notifier<GameState> {
 
     final skill = updatedPlayer.skills[skillId];
     if (skill != null) {
-      _notify(
-        'Training',
-        'Trained ${skill.getLocalizedName(context)} - Level ${skill.level}',
-      );
+      _notify('Training', 'Trained $skillId - Level ${skill.level}');
     }
   }
 
@@ -638,10 +780,7 @@ class GameController extends Notifier<GameState> {
     final updatedPlayer = _training.useSpOnSkill(_me, skillId, spAmount);
     _commitMe(updatedPlayer);
 
-    _notify(
-      'Skills',
-      'Used $spAmount SP on ${skillId}',
-    );
+    _notify('Skills', 'Used $spAmount SP on ${skillId}');
   }
 
   /// Promote a single skill (pay cost)
@@ -655,7 +794,7 @@ class GameController extends Notifier<GameState> {
       return;
     }
 
-    final (updatedPlayer, success, _) = _training.promoteSkill(
+    final (updatedPlayer, success, actualCost) = _training.promoteSkill(
       _me,
       skillId,
       state.economy.cash,
@@ -663,20 +802,17 @@ class GameController extends Notifier<GameState> {
 
     if (success) {
       _commitMe(updatedPlayer);
-      addExpense(cost);
-      _notify(
-        'Skills',
-        'Promoted ${skill.getLocalizedName(context)} to level ${updatedPlayer.skills[skillId]?.level}',
-      );
+      addExpense(actualCost);
+
+      final newSkill = updatedPlayer.skills[skillId];
+      _notify('Skills', 'Promoted ${skillId} to level ${newSkill?.level ?? 0}');
     }
   }
 
   /// Promote all queued skills
   void promoteAllSkills() {
-    final (updatedPlayer, totalCost, promotedSkills) = _training.promoteAllSkills(
-      _me,
-      state.economy.cash,
-    );
+    final (updatedPlayer, totalCost, promotedSkills) = _training
+        .promoteAllSkills(_me, state.economy.cash);
 
     if (promotedSkills.isNotEmpty) {
       _commitMe(updatedPlayer);
@@ -696,4 +832,134 @@ class GameController extends Notifier<GameState> {
     _commitMe(updatedPlayer);
   }
 
+  // --- XI helpers ---
+
+  bool _isGK(Player p) {
+    final n = p.role.name.toLowerCase();
+    return n.contains('gk') ||
+        n.contains('goal'); // matches 'gk' or 'goalkeeper'
+  }
+
+  PlayerRole _findRole(List<String> hints) {
+    // Tries each hint until it finds a role name that contains it
+    for (final h in hints) {
+      final i = PlayerRole.values.indexWhere(
+        (r) => r.name.toLowerCase().contains(h),
+      );
+      if (i != -1) return PlayerRole.values[i];
+    }
+    // fallback to the first role if nothing matches
+    return PlayerRole.values.first;
+  }
+
+  String _randName() {
+    const first = [
+      'Joao',
+      'Miguel',
+      'Rui',
+      'Tiago',
+      'Luis',
+      'Pedro',
+      'Carlos',
+      'Bruno',
+      'Andre',
+      'Diogo',
+      'Marco',
+      'Ricardo',
+      'Daniel',
+      'Hugo',
+      'Paulo',
+    ];
+    const last = [
+      'Silva',
+      'Santos',
+      'Pereira',
+      'Rodrigues',
+      'Ferreira',
+      'Costa',
+      'Martins',
+      'Araujo',
+      'Gomes',
+      'Carvalho',
+      'Sousa',
+      'Rocha',
+      'Mendes',
+      'Barbosa',
+      'Almeida',
+    ];
+    return '${first[_rng.nextInt(first.length)]} ${last[_rng.nextInt(last.length)]}';
+  }
+
+  Map<String, Skill> _baseSkillsWithNoise() {
+    final out = <String, Skill>{};
+    // Uses your catalog; adjust import path if needed
+    SkillsCatalog.all28Skills.forEach((id, base) {
+      out[id] = base.copyWith(
+        level: 45 + _rng.nextInt(26), // 45..70
+        currentXp: _rng.nextInt(30),
+      );
+    });
+    return out;
+  }
+
+  Player _makeAIPlayer({
+    required String teamId,
+    required int index,
+    required PlayerRole role,
+  }) {
+    return Player(
+      id: 'ai_${teamId}_$index',
+      name: _randName(),
+      age: 18 + _rng.nextInt(15),
+      role: role,
+      skills: _baseSkillsWithNoise(),
+      form: 0.6 + _rng.nextDouble() * 0.3,
+      fatigue: _rng.nextDouble() * 0.25,
+      reputation: 5 + _rng.nextDouble() * 20,
+      sp: 0,
+      consistency: 50 + _rng.nextInt(30).toDouble(),
+      determination: 50 + _rng.nextInt(30).toDouble(),
+      leadership: 40 + _rng.nextInt(35).toDouble(),
+    );
+  }
+
+  Team _ensureXI(Team t) {
+    final squad = [...t.squad];
+
+    // Ensure exactly one GK if none present
+    if (!squad.any(_isGK)) {
+      final gkRole = _findRole(['gk', 'goal']);
+      squad.add(
+        _makeAIPlayer(teamId: t.id, index: squad.length + 1, role: gkRole),
+      );
+    }
+
+    // Fill up to 11 with a 4-4-2-ish template
+    final wantedOrder = <PlayerRole>[
+      _findRole(['cb', 'def']),
+      _findRole(['cb', 'def']),
+      _findRole(['wing', 'back', 'def']),
+      _findRole(['wing', 'back', 'def']),
+      _findRole(['mid', 'cm']),
+      _findRole(['mid', 'cm']),
+      _findRole(['mid', 'cm']),
+      _findRole(['mid', 'cm']),
+      _findRole(['striker', 'st', 'forward']),
+      _findRole(['striker', 'st', 'forward']),
+    ];
+
+    // Add from template until we reach 11
+    var idx = 0;
+    while (squad.length < 11) {
+      final role = (idx < wantedOrder.length)
+          ? wantedOrder[idx]
+          : _findRole(['mid', 'cm']);
+      squad.add(
+        _makeAIPlayer(teamId: t.id, index: squad.length + 1, role: role),
+      );
+      idx++;
+    }
+
+    return t.copyWith(squad: squad);
+  }
 }

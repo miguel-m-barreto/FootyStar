@@ -4,6 +4,7 @@ import 'package:footy_star/core/l10n/app_localizations.dart';
 
 import '../../../app/providers/providers.dart';
 import '../../../domain/models/fixture.dart';
+import 'match_moments_screen.dart'; // NEW
 
 class MatchScreen extends ConsumerWidget {
   const MatchScreen({super.key});
@@ -32,11 +33,13 @@ class MatchScreen extends ConsumerWidget {
           final isCurrent = f.week == s.week;
           final played = f.played;
 
+          // show "Moments" for current week's fixture once it's played and we have moments stored
+          final hasMoments = played && isCurrent && s.lastMatchMoments.isNotEmpty;
+
           return Card(
             margin: const EdgeInsets.symmetric(horizontal: 12),
             child: ListTile(
-              leading:
-              _WeekBadge(week: f.week, highlight: isCurrent && !played),
+              leading: _WeekBadge(week: f.week, highlight: isCurrent && !played),
               title: Text('${f.homeTeam} vs ${f.awayTeam}'),
               subtitle: played
                   ? _ResultTag(hg: f.homeGoals, ag: f.awayGoals)
@@ -49,24 +52,29 @@ class MatchScreen extends ConsumerWidget {
                 children: [
                   OutlinedButton(
                     onPressed: () {
-                      ref
-                          .read(gameControllerProvider.notifier)
-                          .playMatch();
+                      ref.read(gameControllerProvider.notifier).playMatch();
                     },
                     child: Text(l10n.play),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
                     onPressed: () async {
-                      await ref
-                          .read(gameControllerProvider.notifier)
-                          .advanceWeek();
+                      await ref.read(gameControllerProvider.notifier).advanceWeek();
                     },
                     child: Text(l10n.playAdvance),
                   ),
                 ],
               )
-                  : null,
+                  : (hasMoments
+                  ? TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const MatchMomentsScreen()),
+                  );
+                },
+                child: const Text('Moments'), // swap to l10n when you add the key
+              )
+                  : null),
             ),
           );
         },

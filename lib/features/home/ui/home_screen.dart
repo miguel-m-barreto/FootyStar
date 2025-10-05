@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/providers/providers.dart';
-import '../../../domain/app_message.dart';
+import '../../../domain/models/app_message.dart';
 import '../../match/ui/match_screen.dart';
 import 'package:footy_star/core/l10n/app_localizations.dart';
 
@@ -170,26 +170,38 @@ class _MessageTile extends ConsumerWidget {
   final AppMessage msg;
   const _MessageTile({required this.msg});
 
+  String _localizedTitle(AppLocalizations l10n, String raw) {
+    switch (raw) {
+      case 'Economy':  return l10n.economy;
+      case 'General':  return l10n.general;
+      case 'Match':    return l10n.matches;   // chave existente é 'matches'
+      case 'Skills':   return l10n.skills;
+      case 'Training': return l10n.myTraining; // usa a que tens no l10n
+      case 'Casino':   return l10n.casino;
+      case 'Agent':    return l10n.general;   // fallback até criares 'agent' no .arb
+      case 'Coach':    return l10n.general;   // idem (ou cria chave própria)
+      default:         return raw;            // caso apareça algo novo
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final isRead = msg.read;
+
     return Card(
       child: ListTile(
         title: Text(
-          msg.title,
+          _localizedTitle(l10n, msg.title),
           style: TextStyle(
-              fontWeight:
-              isRead ? FontWeight.normal : FontWeight.w600),
+            fontWeight: isRead ? FontWeight.normal : FontWeight.w600,
+          ),
         ),
         subtitle: Text(msg.body),
-        trailing: IconButton(
-          icon: Icon(
-              isRead ? Icons.mark_email_read : Icons.mark_email_unread),
-          onPressed: () {
-            ref.read(notificationsProvider.notifier).markRead(msg.id);
-          },
-        ),
+        trailing: Icon(isRead ? Icons.mark_email_read : Icons.mark_email_unread),
+        // ... resto igual
       ),
     );
   }
 }
+

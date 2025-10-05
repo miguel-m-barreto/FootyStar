@@ -1,4 +1,4 @@
-import '../../domain/business.dart';
+import '../../domain/models/business.dart';
 
 class BusinessService {
   const BusinessService();
