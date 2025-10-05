@@ -7,6 +7,7 @@ _Gerado automaticamente. Ignorado: cores dentro de lib/core/theme/._
 - L57: `Icons.verified,`
 - L124: `_BonusTile(label: l10n.perGoal, amount: bonusGoal, icon: Icons.sports_soccer),`
 - L126: `_BonusTile(label: l10n.perAssist, amount: bonusAssist, icon: Icons.assistant),`
+- L128: `_BonusTile(label: l10n.cleanSheet, amount: bonusCleanSheet, icon: Icons.shield),`
 - L130: `_BonusTile(label: l10n.manOfTheMatch, amount: bonusMotm, icon: Icons.star),`
 
 **lib/features/finance/ui/economy_screen.dart**
